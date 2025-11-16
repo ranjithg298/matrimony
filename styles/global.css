@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700&family=Roboto:wght@400;700&family=Merriweather:wght@400;700&family=Nunito:wght@400;700&family=Lora:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+}
+
+/* --- THEME DEFINITIONS --- */
+
+/* Imperial Gold Theme (NEW) */
+.imperial-gold {
+    --color-bg: #FFFBF5;
+    --color-surface: #FFFFFF;
+    --color-text-primary: #4F4A45;
+    --color-text-secondary: #6C635B;
+    --color-border: #EAE3D9;
+    --color-accent-primary: #D4A056; /* Gold */
+    --color-accent-secondary: #8B2525; /* Maroon */
+    --color-accent-light: #E5C384; /* Lighter Gold */
+    --gradient-accent: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-light));
+}
+
+/* Royal Purple Theme */
+.royal-purple {
+    --color-bg: #1A1A2E;
+    --color-surface: #16213E;
+    --color-text-primary: #E0E1DD;
+    --color-text-secondary: #9FA8DA;
+    --color-border: #0F3460;
+    --color-accent-primary: #E94560; /* Coral Red */
+    --color-accent-secondary: #533483; /* Deep Purple */
+    --color-accent-light: #F07486; /* Lighter Coral */
+    --gradient-accent: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-light));
+}
+
+/* Classic Blue (Light Theme) */
+.classic-blue {
+    --color-bg: #F0F2F5;
+    --color-surface: #FFFFFF;
+    --color-text-primary: #1C1E21; /* Dark Gray */
+    --color-text-secondary: #606770; /* Medium Gray */
+    --color-border: #DADDE1;
+    --color-accent-primary: #1877F2; /* Facebook Blue */
+    --color-accent-secondary: #42B72A; /* Green */
+    --color-accent-light: #6E9DEE; /* Lighter Blue */
+    --gradient-accent: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-light));
+}
+
+/* Elegant Teal Theme */
+.elegant-teal {
+    --color-bg: #F0F7F6;
+    --color-surface: #FFFFFF;
+    --color-text-primary: #033649;
+    --color-text-secondary: #5F737A;
+    --color-border: #DDE5E8;
+    --color-accent-primary: #008080; /* Teal */
+    --color-accent-secondary: #004D4D; /* Dark Teal */
+    --color-accent-light: #00AFAF; /* Light Teal */
+    --gradient-accent: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-light));
+}
+
+/* Sunset Rose Theme */
+.sunset-rose {
+    --color-bg: #FFF5F7;
+    --color-surface: #FFFFFF;
+    --color-text-primary: #5C232F;
+    --color-text-secondary: #8C6A72;
+    --color-border: #F5E8EB;
+    --color-accent-primary: #D96D84; /* Rose */
+    --color-accent-secondary: #8C4054; /* Deep Rose */
+    --color-accent-light: #E68FA2; /* Light Rose */
+    --gradient-accent: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-light));
+}
+
+/* Emerald Green Theme */
+.emerald-green {
+    --color-bg: #F0FDF4;
+    --color-surface: #FFFFFF;
+    --color-text-primary: #064E3B;
+    --color-text-secondary: #047857;
+    --color-border: #D1FAE5;
+    --color-accent-primary: #10B981; /* Emerald */
+    --color-accent-secondary: #065F46; /* Dark Green */
+    --color-accent-light: #6EE7B7; /* Light Green */
+    --gradient-accent: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-light));
+}
+
+/* Midnight Blue Theme */
+.midnight-blue {
+    --color-bg: #111827; /* Gray 900 */
+    --color-surface: #1F2937; /* Gray 800 */
+    --color-text-primary: #F9FAFB; /* Gray 50 */
+    --color-text-secondary: #9CA3AF; /* Gray 400 */
+    --color-border: #374151; /* Gray 700 */
+    --color-accent-primary: #60A5FA; /* Blue 400 */
+    --color-accent-secondary: #2563EB; /* Blue 600 */
+    --color-accent-light: #93C5FD; /* Blue 300 */
+    --gradient-accent: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-light));
+}
+
+
+/* --- FONT DEFINITIONS --- */
+.font-roboto { font-family: 'Roboto', sans-serif; }
+.font-merriweather { font-family: 'Merriweather', serif; }
+.font-nunito { font-family: 'Nunito', sans-serif; }
+.font-lora { font-family: 'Lora', serif; }
+
+
+/* Base style for card components */
+.card-style {
+    background-color: var(--color-surface);
+    border-radius: 0.75rem; /* 12px */
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.2s ease-in-out;
+}
+.card-style:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* For gradient text */
+.gradient-text {
+    @apply text-transparent bg-clip-text bg-theme-gradient;
+}

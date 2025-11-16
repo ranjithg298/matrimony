@@ -1,0 +1,7 @@
+{
+  "name": "3rd update",
+  "description": "A sleek, modern, AI-powered matrimony platform. This app provides a premium user experience with a dynamic discovery feed and live, in-depth compatibility analysis.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

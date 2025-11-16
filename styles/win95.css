@@ -1,0 +1,171 @@
+/* W95 Theme Styles */
+.windows-95 {
+    --color-bg: #008080;
+    --color-surface: #C0C0C0;
+    --color-text-primary: #000000;
+    --color-text-secondary: #808080;
+    --color-border: #808080;
+    --color-accent-primary: #000080;
+    --color-accent-secondary: #800000;
+    --color-accent-light: #0000FF;
+    --gradient-accent: linear-gradient(to right, #000080, #0000FF);
+}
+.windows-95, .windows-95 * {
+    font-family: 'MS Sans Serif', 'Pixelated MS Sans Serif', Arial, sans-serif;
+    font-smooth: never;
+    -webkit-font-smoothing: none;
+}
+.windows-95-desktop {
+    background-color: #008080;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Win95 Button Styles */
+.win95-button {
+    background-color: #C0C0C0;
+    border: 2px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    box-shadow: 1px 1px 0 1px #000;
+    padding: 4px 12px;
+    font-size: 14px;
+    cursor: default;
+}
+.win95-button:active, .win95-button.active {
+    border-color: #808080 #FFFFFF #FFFFFF #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+.border-outset {
+    border: 2px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+}
+.border-inset {
+    border: 2px solid;
+    border-color: #808080 #FFFFFF #FFFFFF #808080;
+}
+.sunken-panel {
+    padding: 2px;
+    border: 2px solid;
+    border-color: #808080 #FFFFFF #FFFFFF #808080;
+    background-color: #C0C0C0;
+}
+
+
+/* Win95 Window Styles */
+.win95-window {
+    position: absolute;
+    background-color: #C0C0C0;
+    border: 2px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    box-shadow: 2px 2px 0 2px #000;
+    min-width: 300px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+.win95-title-bar {
+    background-color: #808080;
+    color: #C0C0C0;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    cursor: move;
+}
+.win95-title-bar.active {
+    background-color: #000080;
+    color: white;
+}
+.win95-title-bar-buttons {
+    display: flex;
+    gap: 3px;
+}
+.win95-title-bar-button {
+    width: 20px;
+    height: 20px;
+    background-color: #C0C0C0;
+    border: 2px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    box-shadow: 1px 1px 0 1px #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: default;
+}
+.win95-window-content {
+    flex-grow: 1;
+    overflow: auto;
+    margin: 3px;
+    min-height: 0;
+}
+
+/* Taskbar */
+.win95-taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background-color: #C0C0C0;
+    border-top: 2px solid #FFFFFF;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 10000;
+}
+.win95-taskbar-item {
+    height: 26px;
+    flex-grow: 1;
+    max-width: 160px;
+    background-color: #C0C0C0;
+    border: 2px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: default;
+}
+.win95-taskbar-item.active {
+    border-color: #808080 #FFFFFF #FFFFFF #808080;
+    background-color: #e0e0e0;
+}
+
+/* Start Menu */
+.win95-start-menu-container {
+    position: relative;
+}
+.win95-start-menu {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 200px;
+    background-color: #C0C0C0;
+    border: 2px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    box-shadow: 2px 2px 0 2px #000;
+    padding: 2px;
+    z-index: 10001;
+}
+.win95-start-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: default;
+}
+.win95-start-menu-item:hover {
+    background-color: #000080;
+    color: white;
+}
