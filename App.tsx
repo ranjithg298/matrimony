@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Profile, Conversation, PricingPlan, WebsiteSettings, View, Page, Service, HappyStory, Attribute, Report, ContactQuery, Notification, LiveEvent, VendorReview, WeddingPlanner, OfflinePaymentRequest, Astrologer, Message, Quiz, AIWeddingPlan, Gift } from './types';
 import { PROFILES, CONVERSATIONS, PRICING_PLANS as initialPricingPlans, HAPPY_STORIES as initialHappyStories, ASTRO_PREDICTIONS, AUSPICIOUS_DATES, WEBSITE_SETTINGS as initialWebsiteSettings, PAGES as initialPages, SERVICES as initialServices, INITIAL_ATTRIBUTES, REPORTS as initialReports, CONTACT_QUERIES as initialContactQueries, LIVE_EVENTS as initialLiveEvents, VENDOR_REVIEWS as initialVendorReviews, OFFLINE_PAYMENT_REQUESTS as initialOfflinePaymentRequests, ASTROLOGERS as initialAstrologers, QUIZZES as initialQuizzes, AVAILABLE_GIFTS } from './constants';
@@ -104,6 +105,7 @@ export default function App() {
       window.scrollTo(0, 0);
     };
     window.addEventListener('hashchange', handleHashChange);
+    // Show "What's New" modal on first visit after login logic is handled in handleLogin
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
@@ -119,18 +121,28 @@ export default function App() {
   };
 
   const handleLogin = (email: string, password?: string) => {
-    if (email.toLowerCase() === 'admin' && password !== 'admin@123') {
-        setSnackbar({ message: 'Invalid password for admin user.' });
-        return;
-    }
-    const user = allProfiles.find(p => p.email.toLowerCase() === email.toLowerCase());
-    if (user) {
-      setCurrentUser(user);
+    let userToLogin: Profile | undefined;
+    const lowerEmail = email.toLowerCase();
+
+    if (lowerEmail === 'admin') {
+        if (password !== 'admin@123') {
+            setSnackbar({ message: 'Invalid password for admin user.' });
+            return;
+        }
+        userToLogin = allProfiles.find(p => p.role === 'admin');
     } else {
-      setCurrentUser(allProfiles[0]);
+        userToLogin = allProfiles.find(p => p.email.toLowerCase() === lowerEmail);
     }
+    
+    if (userToLogin) {
+        setCurrentUser(userToLogin);
+    } else {
+        // Fallback for demo purposes if user doesn't exist.
+        setCurrentUser(allProfiles[0]);
+    }
+
     window.location.hash = '#/app/home';
-    if (!localStorage.getItem('whatsNewSeen_v1')) {
+    if (localStorage.getItem('whatsNewSeen_v1') !== 'true') {
         setWhatsNewModalOpen(true);
     }
   };

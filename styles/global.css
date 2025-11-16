@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700&family=Roboto:wght@400;700&family=Merriweather:wght@400;700&family=Nunito:wght@400;700&family=Lora:wght@400;700&display=swap');
 
 @tailwind base;
@@ -132,6 +133,7 @@ body {
 /* Prose styles for dynamic content */
 .prose h2 { @apply text-3xl font-bold mt-8 mb-4 font-serif text-theme-text-primary; }
 .prose h3 { @apply text-2xl font-bold mt-6 mb-3 font-serif text-theme-text-primary; }
+.prose p { @apply my-4 text-theme-text-secondary; }
 .prose p.lead { @apply text-lg text-theme-text-secondary my-4; }
 .prose ul { @apply list-disc list-inside space-y-2 text-theme-text-secondary; }
 .prose li { @apply ml-4; }
