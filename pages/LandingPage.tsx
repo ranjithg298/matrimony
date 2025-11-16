@@ -210,7 +210,7 @@ const ContactSection: React.FC<{ onAddContactQuery: LandingPageProps['onAddConta
                     <h3 className="font-serif text-3xl font-bold text-theme-text-primary">Our Recent Articles & Posts</h3>
                      <div className="grid sm:grid-cols-2 gap-4 mt-8">
                         <div className="bg-theme-surface rounded-lg overflow-hidden border border-theme-border">
-                            <img src="https://plus.unsplash.com/premium_photo-1679865293444-c5a6104c35b8?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
+                            <img src="https://images.unsplash.com/photo-1592189352138-b7d111a43a29?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
                             <div className="p-4">
                                 <h4 className="font-bold text-theme-text-primary">Sharadiya Navratri</h4>
                                 <p className="text-sm text-theme-text-secondary mt-1">23 Sep</p>
@@ -218,7 +218,7 @@ const ContactSection: React.FC<{ onAddContactQuery: LandingPageProps['onAddConta
                             </div>
                         </div>
                          <div className="bg-theme-surface rounded-lg overflow-hidden border border-theme-border">
-                            <img src="https://images.unsplash.com/photo-1597157639199-8742464a93f5?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
+                            <img src="https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
                             <div className="p-4">
                                 <h4 className="font-bold text-theme-text-primary">Brahmin Matrimony UK</h4>
                                  <p className="text-sm text-theme-text-secondary mt-1">05 Sep</p>

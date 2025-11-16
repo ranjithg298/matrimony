@@ -118,7 +118,11 @@ export default function App() {
     setNotifications(prev => [newNotification, ...prev]);
   };
 
-  const handleLogin = (email: string) => {
+  const handleLogin = (email: string, password?: string) => {
+    if (email.toLowerCase() === 'admin' && password !== 'admin@123') {
+        setSnackbar({ message: 'Invalid password for admin user.' });
+        return;
+    }
     const user = allProfiles.find(p => p.email.toLowerCase() === email.toLowerCase());
     if (user) {
       setCurrentUser(user);
@@ -126,7 +130,9 @@ export default function App() {
       setCurrentUser(allProfiles[0]);
     }
     window.location.hash = '#/app/home';
-    setWhatsNewModalOpen(true);
+    if (!localStorage.getItem('whatsNewSeen_v1')) {
+        setWhatsNewModalOpen(true);
+    }
   };
   
   const handleRegister = (newUser: Omit<Profile, 'id' | 'status'>) => {
@@ -570,7 +576,10 @@ export default function App() {
               />
               <WhatsNewModal 
                 isOpen={isWhatsNewModalOpen}
-                onClose={() => setWhatsNewModalOpen(false)}
+                onClose={() => {
+                    setWhatsNewModalOpen(false);
+                    localStorage.setItem('whatsNewSeen_v1', 'true');
+                }}
               />
         </div>
     </div>

@@ -59,16 +59,16 @@ export const PROFILES: Profile[] = [
     approvalStatus: 'approved',
     isVerified: true,
     isPhotoVerified: true,
-    photo: "https://images.unsplash.com/photo-1599942033695-c71ed074b159?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+    photo: "https://i.ibb.co/k5Jg02v/priya-sharma.jpg", 
     bio: "Software Engineer passionate about travel, hiking, and exploring new cuisines. Looking for a meaningful connection with someone who is ambitious, kind, and has a good sense of humor. I value honesty and open communication in a relationship.",
     interests: ["Travel", "Hiking", "Foodie", "Technology"],
     isPremium: true,
     isOnline: true,
     bioDataUrl: '/assets/sample-biodata.pdf',
     gallery: [
-      { url: "https://images.unsplash.com/photo-1599942033695-c71ed074b159?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", status: 'approved'},
-      { url: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", status: 'approved'},
-      { url: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", status: 'pending'},
+      { url: "https://i.ibb.co/k5Jg02v/priya-sharma.jpg", status: 'approved'},
+      { url: "https://i.ibb.co/Yc5211q/priya-gallery-1.jpg", status: 'approved'},
+      { url: "https://i.ibb.co/7jB3p3N/priya-gallery-2.jpg", status: 'pending'},
     ],
     customFields: {
       height: "5' 5\"",
@@ -120,7 +120,7 @@ export const PROFILES: Profile[] = [
     status: "active",
     approvalStatus: 'approved',
     isPhotoVerified: false,
-    photo: "https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+    photo: "https://i.ibb.co/Pt3bQ28/rohit-verma.jpg", 
     bio: "Product Manager and a foodie at heart. I enjoy long drives, old movies, and a good book on a rainy day.",
     interests: ["Movies", "Reading", "Driving", "Cooking"],
     isPremium: false,
@@ -478,16 +478,51 @@ export const PRICING_PLANS: PricingPlan[] = [
 ];
 
 export const HAPPY_STORIES: HappyStory[] = [
-    { id: 'hs1', coupleNames: 'Rohan & Meera', weddingDate: '15th Dec 2023', imageUrl: 'https://images.unsplash.com/photo-1597157639199-8742464a93f5?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'We connected over our shared love for classic literature and long walks. The AI match was spot on! We knew from our first conversation that this was something special. Thank you matrimony.ai!' },
-    { id: 'hs2', coupleNames: 'Priya & Sameer', weddingDate: '28th Jan 2024', imageUrl: 'https://plus.unsplash.com/premium_photo-1679865293444-c5a6104c35b8?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'Finding someone who understands your past and looks forward to your future is a blessing. We found that in each other here. Our families couldn\'t be happier.', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+    { id: 'hs1', coupleNames: 'Rohan & Meera', weddingDate: '15th Dec 2023', imageUrl: 'https://i.ibb.co/9gP0m8p/happy-story-1.jpg', story: 'We connected over our shared love for classic literature and long walks. The AI match was spot on! We knew from our first conversation that this was something special. Thank you matrimony.ai!' },
+    { id: 'hs2', coupleNames: 'Priya & Sameer', weddingDate: '28th Jan 2024', imageUrl: 'https://i.ibb.co/d2r0jL7/happy-story-2.jpg', story: 'Finding someone who understands your past and looks forward to your future is a blessing. We found that in each other here. Our families couldn\'t be happier.', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
     { id: 'hs3', coupleNames: 'Anjali & Vikram', weddingDate: '09th Mar 2024', imageUrl: 'https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'We were both busy doctors with little time for socializing. The platform\'s filters helped us find each other, and the compatibility report was incredibly insightful. It felt like destiny.' },
     { id: 'hs4', coupleNames: 'Aisha & Karan', weddingDate: '20th May 2024', imageUrl: 'https://images.unsplash.com/photo-1592247353427-45b4c1af8635?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'Our first date was a video call set up through the platform\'s live event feature. We talked for hours, and the rest is history. We are so grateful for this amazing service!', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
 ];
 
 export const SERVICES: Service[] = [
-    { id: 's1', title: 'Doctors Matrimony', description: 'Exclusive matchmaking for medical professionals.', slug: 'doctors-matrimony', content: '<h2>Find Your Partner in the Medical Field</h2><p>Specialized search for doctors, surgeons, and other healthcare professionals.</p>' },
-    { id: 's2', title: 'Lawyers Matrimony', description: 'Connect with legal eagles and law professionals.', slug: 'lawyers-matrimony', content: '<h2>Legal Minds, United Hearts</h2><p>Find a partner who understands the demands and rewards of a legal career.</p>' },
-    { id: 's3', title: '90s Kids Matrimony', description: 'For those born and brought up in the vibrant 90s.', slug: '90s-kids-matrimony', content: '<h2>Relive the 90s, Together</h2><p>Connect with partners who share your nostalgia for the golden era of the 90s.</p>' },
+    { 
+        id: 's1', 
+        title: 'Doctors Matrimony', 
+        description: 'Exclusive matchmaking for medical professionals.', 
+        slug: 'doctors-matrimony', 
+        heroImageUrl: 'https://i.ibb.co/YyLg0gB/doctors-hero.jpg',
+        content: `<h2>Find Your Partner in the Medical Field</h2>
+                  <p class="lead">Our specialized service connects doctors, surgeons, and other healthcare professionals who understand the demands and rewards of a life in medicine. We provide a discreet and effective platform to find a like-minded partner who shares your passion and dedication.</p>
+                  <h3>Why Choose Doctors Matrimony?</h3>
+                  <ul>
+                    <li>Verified profiles of medical professionals.</li>
+                    <li>Advanced filters for specialization and lifestyle.</li>
+                    <li>Understanding of busy schedules and unique preferences.</li>
+                    <li>AI-powered matchmaking based on compatibility and values.</li>
+                  </ul>`
+    },
+    { 
+        id: 's2', 
+        title: 'Lawyers Matrimony', 
+        description: 'Connect with legal eagles and law professionals.', 
+        slug: 'lawyers-matrimony', 
+        content: '<h2>Legal Minds, United Hearts</h2><p>Find a partner who understands the demands and rewards of a legal career.</p>' 
+    },
+    { 
+        id: 's3', 
+        title: '90s Kids Matrimony', 
+        description: 'For those born and brought up in the vibrant 90s.', 
+        slug: '90s-kids-matrimony', 
+        heroImageUrl: 'https://i.ibb.co/wJg4c8B/90s-hero.jpg',
+        content: `<h2>Relive the 90s, Together</h2>
+                  <p class="lead">If you remember dial-up internet, cassette tapes, and evenings spent watching classic TV shows, you're in the right place. This service is for the generation that grew up in the 90s, connecting you with partners who share your nostalgia and cultural touchstones.</p>
+                  <h3>Find Someone Who Gets Your References:</h3>
+                  <ul>
+                    <li>Connect over shared memories of cartoons and music.</li>
+                    <li>Find partners who appreciate the blend of old-school values and modern outlooks.</li>
+                    <li>Special community events and icebreakers based on 90s themes.</li>
+                  </ul>`
+    },
     { id: 's4', title: 'Elite Matrimony', description: 'A premium, personalized service for the discerning.', slug: 'elite-matrimony', content: '<h2>White-Glove Service</h2><p>Our elite package includes a dedicated relationship manager and handpicked profiles.</p>' },
 ];
 

@@ -213,6 +213,7 @@ export interface Service {
     description: string;
     slug: string;
     content: string;
+    heroImageUrl?: string;
 }
 
 // Astrology Types

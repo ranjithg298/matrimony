@@ -1,10 +1,6 @@
 import React from 'react';
 import { Service, WebsiteSettings } from '../types';
 import Footer from '../components/Footer';
-import FacebookIcon from '../components/icons/FacebookIcon';
-import TwitterIcon from '../components/icons/TwitterIcon';
-import InstagramIcon from '../components/icons/InstagramIcon';
-import YoutubeIcon from '../components/icons/YoutubeIcon';
 import ArrowLeftIcon from '../components/icons/ArrowLeftIcon';
 
 interface ServicePageProps {
@@ -33,20 +29,27 @@ const ServicePage: React.FC<ServicePageProps> = ({ service, websiteSettings }) =
                 </div>
             </header>
             
-            <main className="container mx-auto px-6 py-12">
-                <button
-                    onClick={() => window.history.back()}
-                    className="flex items-center gap-2 text-sm font-semibold text-theme-text-secondary hover:text-theme-text-primary mb-4 max-w-4xl mx-auto"
-                >
-                    <ArrowLeftIcon className="w-4 h-4" />
-                    Back
-                </button>
-                <div className="bg-theme-surface p-8 rounded-lg border border-theme-border max-w-4xl mx-auto">
-                    <h1 className="text-4xl font-bold mb-6 font-serif">{service.title}</h1>
-                    <div 
-                        className="prose prose-lg max-w-none text-theme-text-secondary"
-                        dangerouslySetInnerHTML={{ __html: service.content }} 
-                    />
+            <main>
+                {service.heroImageUrl && (
+                    <div className="relative h-64 bg-cover bg-center" style={{ backgroundImage: `url(${service.heroImageUrl})` }}>
+                        <div className="absolute inset-0 bg-black/50" />
+                    </div>
+                )}
+                <div className="container mx-auto px-6 py-12">
+                    <button
+                        onClick={() => window.history.back()}
+                        className="flex items-center gap-2 text-sm font-semibold text-theme-text-secondary hover:text-theme-text-primary mb-4 max-w-4xl mx-auto"
+                    >
+                        <ArrowLeftIcon className="w-4 h-4" />
+                        Back
+                    </button>
+                    <div className={`bg-theme-surface p-8 rounded-lg border border-theme-border max-w-4xl mx-auto ${service.heroImageUrl ? '-mt-32 relative z-10' : ''}`}>
+                        <h1 className="text-4xl font-bold mb-6 font-serif">{service.title}</h1>
+                        <div 
+                            className="prose prose-lg max-w-none text-theme-text-secondary"
+                            dangerouslySetInnerHTML={{ __html: service.content }} 
+                        />
+                    </div>
                 </div>
             </main>
 

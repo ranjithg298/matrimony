@@ -128,3 +128,10 @@ body {
 .gradient-text {
     @apply text-transparent bg-clip-text bg-theme-gradient;
 }
+
+/* Prose styles for dynamic content */
+.prose h2 { @apply text-3xl font-bold mt-8 mb-4 font-serif text-theme-text-primary; }
+.prose h3 { @apply text-2xl font-bold mt-6 mb-3 font-serif text-theme-text-primary; }
+.prose p.lead { @apply text-lg text-theme-text-secondary my-4; }
+.prose ul { @apply list-disc list-inside space-y-2 text-theme-text-secondary; }
+.prose li { @apply ml-4; }
