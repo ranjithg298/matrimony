@@ -11,12 +11,16 @@ interface ErrorBoundaryState {
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  // FIX: Replaced the constructor with a class property for state initialization.
-  // This is a more modern syntax and resolves the "Property 'state' does not exist" error.
-  state: ErrorBoundaryState = {
-    hasError: false,
-    error: null,
-  };
+  // FIX: Reverted to a constructor-based implementation to ensure `this` context is correctly bound,
+  // resolving errors where `setState` and `props` were not found on the component instance.
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = {
+      hasError: false,
+      error: null,
+    };
+    this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
+  }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     // Update state so the next render will show the fallback UI.
@@ -28,9 +32,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.error("Uncaught error:", error, errorInfo);
   }
 
-  // FIX: Changed to an arrow function to automatically bind `this`, which is a modern alternative to binding in the constructor.
-  // This also resolves the "Property 'setState' does not exist" error.
-  resetErrorBoundary = () => {
+  resetErrorBoundary() {
     this.setState({ hasError: false, error: null });
     // It's often better to navigate to a safe route on reset
     window.location.hash = '#/';
@@ -38,8 +40,6 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   render() {
-    // FIX: The errors related to `this.state` and `this.props` are resolved by correcting the class structure above,
-    // allowing TypeScript to correctly identify this as a React Component.
     if (this.state.hasError && this.state.error) {
       // You can render any custom fallback UI
       return <this.props.FallbackComponent error={this.state.error} resetErrorBoundary={this.resetErrorBoundary} />;

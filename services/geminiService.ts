@@ -4,16 +4,7 @@ import { Profile, Attribute, AuspiciousDate, Message, AdminAssistantMessage, Qui
 // NOTE: Do not throw an error here for the API key.
 // The key is injected by the environment, and runtime errors (like an invalid key)
 // are handled gracefully where the function is called.
-let ai: GoogleGenAI | null = null;
-
-const getAi = (): GoogleGenAI => {
-    if (!ai) {
-        // This will throw if the key is not set, but only when first called.
-        ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    }
-    return ai;
-};
-
+// A new GoogleGenAI instance is created in each function to ensure the latest API key from process.env is used.
 
 const buildDynamicProfileString = (profile: Profile, attributes: Attribute[]): string => {
   let profileString = `
@@ -57,7 +48,7 @@ const buildPrompt = (profileA: Profile, profileB: Profile, attributes: Attribute
 
 export const getCompatibilityAnalysis = async (profileA: Profile, profileB: Profile, attributes: Attribute[]): Promise<string> => {
   try {
-    const aiInstance = getAi();
+    const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = buildPrompt(profileA, profileB, attributes);
 
     const response = await aiInstance.models.generateContent({
@@ -77,7 +68,7 @@ export const getCompatibilityAnalysis = async (profileA: Profile, profileB: Prof
 
 export const getAstrologicalCompatibility = async (profileA: Profile, profileB: Profile, attributes: Attribute[]): Promise<string> => {
   try {
-    const aiInstance = getAi();
+    const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const profileAString = buildDynamicProfileString(profileA, attributes);
     const profileBString = buildDynamicProfileString(profileB, attributes);
     
@@ -112,7 +103,7 @@ export const getAstrologicalCompatibility = async (profileA: Profile, profileB: 
 };
 
 export const getAuspiciousDates = async (month: number, year: number): Promise<AuspiciousDate[]> => {
-    const aiInstance = getAi();
+    const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const monthName = new Date(year, month - 1, 1).toLocaleString('default', { month: 'long' });
     const prompt = `
         List the most auspicious Hindu wedding dates (Shubh Vivah Muhurat) for ${monthName} ${year}.
@@ -153,7 +144,7 @@ export const getAuspiciousDates = async (month: number, year: number): Promise<A
 export const getMatchmakerSuggestion = async (currentUser: Profile, candidates: Profile[], attributes: Attribute[]): Promise<{bestMatchId: string, reason: string} | null> => {
     if (candidates.length === 0) return null;
 
-    const aiInstance = getAi();
+    const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const currentUserString = buildDynamicProfileString(currentUser, attributes);
     const candidatesString = candidates.map(c => buildDynamicProfileString(c, attributes)).join('\n\n');
 
@@ -202,7 +193,7 @@ export const getMatchmakerSuggestion = async (currentUser: Profile, candidates: 
 
 export const generateProfileImage = async (user: Profile): Promise<string | null> => {
   try {
-    const aiInstance = getAi();
+    const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const occupation = user.customFields?.occupation || 'professional';
     const prompt = `Generate an artistic, abstract, professional profile picture background. It should represent a person who is a '${occupation}' and is interested in ${user.interests.join(', ')}. Use vibrant, elegant, and modern colors. The style should be sophisticated and suitable for a high-end matrimonial profile. Do not include any text or recognizable faces.`;
     
@@ -230,7 +221,7 @@ export const generateProfileImage = async (user: Profile): Promise<string | null
 };
 
 export const generateWeddingVows = async (inputs: { partnerName: string; yearsTogether: string; feeling: string; }): Promise<string> => {
-  const aiInstance = getAi();
+  const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const prompt = `
     You are a romantic and eloquent speechwriter. Write a set of personalized, heartfelt wedding vows for someone to say to their partner, ${inputs.partnerName}. 
     They have been together for ${inputs.yearsTogether} and the feeling they want to convey is "${inputs.feeling}".
@@ -250,7 +241,7 @@ export const generateWeddingVows = async (inputs: { partnerName: string; yearsTo
 };
 
 export const getAIcebreaker = async (profileA: Profile, profileB: Profile): Promise<string> => {
-  const aiInstance = getAi();
+  const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const prompt = `
     You are a friendly and witty conversation starter for a matrimony app.
     Based on the profiles of ${profileA.name} and ${profileB.name}, generate one engaging, open-ended icebreaker question.
@@ -276,7 +267,7 @@ export const getAIcebreaker = async (profileA: Profile, profileB: Profile): Prom
 
 
 export const generateChatReply = async (conversationHistory: Message[], replyingUser: Profile): Promise<string> => {
-    const aiInstance = getAi();
+    const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const history = conversationHistory.slice(-5).map(msg => `${msg.senderId === replyingUser.id ? 'You' : 'They'} said: "${msg.text}"`).join('\n');
 
     const prompt = `
@@ -308,7 +299,7 @@ export const getAdminAssistantResponse = async (
     query: string,
     contextData: object
 ): Promise<string> => {
-    const aiInstance = getAi();
+    const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const contextString = JSON.stringify(contextData, (key, value) => {
         if (typeof value === 'string' && value.length > 200) {
             return value.substring(0, 200) + '...';
@@ -344,7 +335,7 @@ export const getAdminAssistantResponse = async (
 };
 
 export const generateBioSuggestion = async (profile: Profile): Promise<string> => {
-  const aiInstance = getAi();
+  const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const prompt = `
     You are a creative and witty profile writer for a high-end matrimony website.
     Based on the following user details, write an engaging and appealing bio of about 50-70 words.
@@ -372,7 +363,7 @@ export const generateBioSuggestion = async (profile: Profile): Promise<string> =
 };
 
 export const generateCompatibilityQuiz = async (profileA: Profile, profileB: Profile): Promise<QuizQuestion[]> => {
-  const aiInstance = getAi();
+  const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const prompt = `
     You are an AI that creates fun, insightful compatibility quizzes for a matrimony app.
     Generate a unique 5-question multiple-choice quiz for two people, ${profileA.name} and ${profileB.name}.
@@ -416,7 +407,7 @@ export const generateCompatibilityQuiz = async (profileA: Profile, profileB: Pro
 };
 
 export const getQuizSummary = async (questions: QuizQuestion[], answersA: string[], answersB: string[]): Promise<string> => {
-  const aiInstance = getAi();
+  const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
   let combinedAnswers = '';
   for (let i = 0; i < questions.length; i++) {
     combinedAnswers += `
@@ -448,7 +439,7 @@ export const getQuizSummary = async (questions: QuizQuestion[], answersA: string
 };
 
 export const generateAIWeddingPlan = async (inputs: { budget: number; guests: number; city: string; style: string; }, vendors: Profile[]): Promise<AIWeddingPlan> => {
-    const aiInstance = getAi();
+    const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const vendorString = vendors.map(v => `- ${v.name} (Category: ${v.serviceCategory}, City: ${v.city})`).join('\n');
     const prompt = `
         You are an AI Wedding Concierge. Your goal is to create a practical, starter wedding plan based on user inputs and a list of available vendors.
@@ -517,7 +508,7 @@ export const generateAIWeddingPlan = async (inputs: { budget: number; guests: nu
 }
 
 export const analyzeProfilePhoto = async (base64Image: string): Promise<string> => {
-  const aiInstance = getAi();
+  const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
   // The base64 string might have a data URL prefix. Gemini needs just the data.
   const imageData = base64Image.split(',')[1] || base64Image;
 
@@ -525,7 +516,7 @@ export const analyzeProfilePhoto = async (base64Image: string): Promise<string> 
 
   try {
     const response = await aiInstance.models.generateContent({
-      model: 'gemini-flash-latest',
+      model: 'gemini-2.5-flash',
       contents: {
         parts: [
           {
