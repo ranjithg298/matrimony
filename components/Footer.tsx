@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import HeartIcon from './icons/HeartIcon';
 import TwitterIcon from './icons/TwitterIcon';
@@ -50,7 +52,7 @@ const Footer: React.FC<{settings: WebsiteSettings}> = ({ settings }) => {
                     <div>
                         <h2 className="mb-4 text-sm font-semibold text-theme-text-primary uppercase">Company</h2>
                         <ul className="space-y-3">
-                            <FooterLink href="#">About Us</FooterLink>
+                            <FooterLink href="#/about-us">About Us</FooterLink>
                             <FooterLink href="#/happy-stories">Happy Stories</FooterLink>
                             <FooterLink href="#/astrology">Astrology</FooterLink>
                         </ul>
@@ -66,7 +68,7 @@ const Footer: React.FC<{settings: WebsiteSettings}> = ({ settings }) => {
                      <div>
                         <h2 className="mb-4 text-sm font-semibold text-theme-text-primary uppercase">Legal</h2>
                         <ul className="space-y-3">
-                            <FooterLink href="#">Privacy Policy</FooterLink>
+                            <FooterLink href="#/privacy-policy">Privacy Policy</FooterLink>
                             <FooterLink href="#">Terms of Service</FooterLink>
                             <FooterLink href="#">Cookie Policy</FooterLink>
                         </ul>

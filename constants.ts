@@ -1,4 +1,5 @@
 
+
 import { Profile, Conversation, PricingPlan, FaqItem, HappyStory, AstroPrediction, AuspiciousDate, WebsiteSettings, ContactQuery, ManualPaymentMethod, Page, Service, Attribute, AttributeType, Report, LiveEvent, VendorReview, ChecklistItem, OfflinePaymentRequest, Astrologer, Quiz, QuizQuestion } from './types';
 
 export const INITIAL_ATTRIBUTES: Attribute[] = [
@@ -357,6 +358,32 @@ export const PROFILES: Profile[] = [
         nakshatra: 'Mula'
     },
   },
+  {
+    id: "u10",
+    name: "Dr. Rohan Gupta",
+    age: 32,
+    city: "Delhi",
+    email: "rohan.gupta@example.com",
+    role: "user", status: "active", approvalStatus: "approved", isVerified: true,
+    photo: "https://images.unsplash.com/photo-1622253692010-333f2da60710?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    bio: "Cardiologist dedicated to saving lives. I unwind by playing the guitar and exploring nature trails. Looking for a partner who is genuine, has a zest for life, and appreciates a quiet evening at home as much as a spontaneous trip.",
+    interests: ["Guitar", "Trekking", "Cardiology", "Cooking"],
+    isPremium: true, isOnline: true, gallery: [],
+    customFields: { occupation: "Doctor", education: "MD, Cardiology", height: "5' 11\"", maritalStatus: "Never Married", religion: "Hindu", caste: "Gupta", annualIncome: "₹25L+", rasi: "Mesha (Aries)", nakshatra: "Bharani" },
+  },
+  {
+    id: "u11",
+    name: "Dr. Aisha Khan",
+    age: 29,
+    city: "Mumbai",
+    email: "aisha.khan@example.com",
+    role: "user", status: "active", approvalStatus: "approved", isVerified: true,
+    photo: "https://images.unsplash.com/photo-1580281657527-47f249e8f4df?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    bio: "A dentist with a passion for creating beautiful smiles. I enjoy painting, yoga, and trying out new cafes in the city. Seeking a partner who is understanding, supportive, and has a great sense of humor.",
+    interests: ["Painting", "Yoga", "Foodie", "Dentistry"],
+    isPremium: false, isOnline: false, gallery: [],
+    customFields: { occupation: "Doctor", education: "BDS", height: "5' 4\"", maritalStatus: "Never Married", religion: "Muslim", caste: "Khan", annualIncome: "₹12L - ₹18L", rasi: "Libra (Tula)", nakshatra: "Chitra" },
+  },
   { 
     id: "a1",
     name: "Admin User",
@@ -480,9 +507,9 @@ export const PRICING_PLANS: PricingPlan[] = [
 
 export const HAPPY_STORIES: HappyStory[] = [
     { id: 'hs1', coupleNames: 'Rohan & Meera', weddingDate: '15th Dec 2023', imageUrl: 'https://images.unsplash.com/photo-1597157639199-8742464a93f5?q=80&w=1887&auto=format&fit=crop', story: 'We connected over our shared love for classic literature and long walks. The AI match was spot on! We knew from our first conversation that this was something special. Thank you matrimony.ai!' },
-    { id: 'hs2', coupleNames: 'Priya & Sameer', weddingDate: '28th Jan 2024', imageUrl: 'https://images.unsplash.com/photo-1597398399124-63b754b6131c?q=80&w=1887&auto=format&fit=crop', story: 'Finding someone who understands your past and looks forward to your future is a blessing. We found that in each other here. Our families couldn\'t be happier.', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
-    { id: 'hs3', coupleNames: 'Anjali & Vikram', weddingDate: '09th Mar 2024', imageUrl: 'https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'We were both busy doctors with little time for socializing. The platform\'s filters helped us find each other, and the compatibility report was incredibly insightful. It felt like destiny.' },
-    { id: 'hs4', coupleNames: 'Aisha & Karan', weddingDate: '20th May 2024', imageUrl: 'https://images.unsplash.com/photo-1592247353427-45b4c1af8635?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'Our first date was a video call set up through the platform\'s live event feature. We talked for hours, and the rest is history. We are so grateful for this amazing service!', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+    { id: 'hs2', coupleNames: 'Priya & Sameer', weddingDate: '28th Jan 2024', imageUrl: 'https://images.unsplash.com/photo-1529622263201-d24e29c05e83?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'Finding someone who understands your past and looks forward to your future is a blessing. We found that in each other here. Our families couldn\'t be happier.', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+    { id: 'hs3', coupleNames: 'Anjali & Vikram', weddingDate: '09th Mar 2024', imageUrl: 'https://images.unsplash.com/photo-1523952578875-e6e17b8f42a2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'We were both busy doctors with little time for socializing. The platform\'s filters helped us find each other, and the compatibility report was incredibly insightful. It felt like destiny.' },
+    { id: 'hs4', coupleNames: 'Aisha & Karan', weddingDate: '20th May 2024', imageUrl: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', story: 'Our first date was a video call set up through the platform\'s live event feature. We talked for hours, and the rest is history. We are so grateful for this amazing service!', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
 ];
 
 export const SERVICES: Service[] = [
@@ -519,17 +546,18 @@ export const SERVICES: Service[] = [
     },
     { 
         id: 's3', 
-        title: '90s Kids Matrimony', 
-        description: 'For those born and brought up in the vibrant 90s.', 
+        title: '90s Kids Nostalgia Hub', 
+        description: 'For those who grew up in the vibrant 90s.', 
         slug: '90s-kids-matrimony', 
-        heroImageUrl: 'https://images.unsplash.com/photo-1563842247992-8ca1480f2d4e?q=80&w=1932&auto=format&fit=crop',
-        content: `<h2>Relive the 90s, Together</h2>
-                  <p class="lead">If you remember dial-up internet, cassette tapes, and evenings spent watching classic TV shows, you're in the right place. This service is for the generation that grew up in the 90s, connecting you with partners who share your nostalgia and cultural touchstones.</p>
-                  <h3>Find Someone Who Gets Your References:</h3>
+        heroImageUrl: 'https://images.unsplash.com/photo-1574868792033-0c3b4c13a34a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        content: `<h2>Find a Love as Classic as a 90s Movie</h2>
+                  <p class="lead">Remember the thrill of a new cassette, the sound of a dial-up modem, and the comfort of your favorite TV show's theme song? This is a space for the generation that experienced the best of both analog and digital worlds. Find someone who not only gets your pop culture references but also shares the values you grew up with.</p>
+                  <h3>Why You'll Connect Here:</h3>
                   <ul>
-                    <li>Connect over shared memories of cartoons and music.</li>
-                    <li>Find partners who appreciate the blend of old-school values and modern outlooks.</li>
-                    <li>Special community events and icebreakers based on 90s themes.</li>
+                    <li>Bond over shared memories of Mario, MTV, and iconic fashion trends.</li>
+                    <li>Find partners who appreciate a mix of old-school romance and modern ambitions.</li>
+                    <li>Our AI understands the unique cultural context of the 90s to find your perfect match.</li>
+                    <li>Special icebreakers like "What was your first email address?"</li>
                   </ul>`
     },
     { 
@@ -537,7 +565,7 @@ export const SERVICES: Service[] = [
         title: 'Elite Matrimony', 
         description: 'A premium, personalized service for the discerning.', 
         slug: 'elite-matrimony', 
-        heroImageUrl: 'https://images.unsplash.com/photo-1521405920953-a3d606152a2b?q=80&w=2070&auto=format&fit=crop',
+        heroImageUrl: 'https://images.unsplash.com/photo-1521405920953-a3d6061a2b?q=80&w=2070&auto=format&fit=crop',
         content: `<h2>A Bespoke Matchmaking Experience</h2>
                   <p class="lead">Our Elite service is designed for distinguished professionals and high-net-worth individuals who require the utmost discretion and personalization. We offer a white-glove experience tailored to your unique lifestyle and preferences.</p>
                   <h3>The Elite Advantage:</h3>
@@ -572,7 +600,7 @@ export const WEBSITE_SETTINGS: WebsiteSettings = {
     stickyHeader: true,
     headerLinks: [
         { id: 'h1', text: 'Home', url: '#/' },
-        { id: 'h2', text: 'Packages', url: '#/packages' },
+        { id: 'h2', text: 'Packages', url: '#/pricing' },
         { id: 'h3', text: 'FAQ', url: '#/faq' },
         { id: 'h4', text: 'Register Now', url: '#/register' },
     ],

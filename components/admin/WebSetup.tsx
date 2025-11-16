@@ -1,7 +1,10 @@
+
+
 import React, { useState, useRef } from 'react';
 import { WebsiteSettings, HeaderLink, SocialLink } from '../../types';
 import TrashIcon from '../icons/TrashIcon';
 import PlusIcon from '../icons/PlusIcon';
+import SparklesIcon from '../icons/SparklesIcon';
 
 interface WebSetupProps {
     settings: WebsiteSettings;
@@ -12,6 +15,8 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
     const [settings, setSettings] = useState(initialSettings);
     const [showSaved, setShowSaved] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const apiKeyStatus = process.env.API_KEY ? 'Detected' : 'Not Detected';
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -71,6 +76,32 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
 
     return (
         <div className="space-y-6">
+             {/* API Key Settings */}
+            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
+                <h3 className="text-lg font-semibold mb-2 text-theme-text-primary flex items-center gap-2">
+                    <SparklesIcon className="h-5 w-5 text-theme-accent-primary" /> AI Service (Gemini API)
+                </h3>
+                <div className={`p-3 rounded-md flex items-center gap-4 ${apiKeyStatus === 'Detected' ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
+                    <span className={`px-3 py-1 text-xs font-semibold rounded-full ${apiKeyStatus === 'Detected' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>
+                        {apiKeyStatus}
+                    </span>
+                    <p className="text-sm text-theme-text-secondary">
+                        {apiKeyStatus === 'Detected' 
+                            ? 'Your Gemini API key is configured. AI features should be functional.' 
+                            : 'No API key found. AI features like chat replies and compatibility analysis will not work.'
+                        }
+                    </p>
+                </div>
+                 <div className="mt-3 text-xs text-theme-text-secondary space-y-1">
+                    <p>
+                        To enable AI features, you must add your Google Gemini API key as an environment variable named <code className="font-mono bg-theme-border px-1 py-0.5 rounded">API_KEY</code> in your hosting provider's settings (e.g., Vercel, Netlify).
+                    </p>
+                    <p>
+                        This application is built to read the key securely from the environment and does not store it anywhere else.
+                    </p>
+                </div>
+            </div>
+
             {/* Header Settings */}
             <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
                 <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Header Settings</h3>

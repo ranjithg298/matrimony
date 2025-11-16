@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { AstroPrediction, AuspiciousDate, WebsiteSettings } from '../types';
 import Footer from '../components/Footer';
@@ -29,7 +31,11 @@ const AuspiciousCalendar: React.FC = () => {
             const result = await getAuspiciousDates(month, year);
             setDates(result);
         } catch (e) {
-            setError("Could not fetch dates. Please try again.");
+            if (e instanceof Error && e.message.includes("API key")) {
+                 setError("This AI feature requires a valid API key. Please ask the administrator to configure it in the Admin Dashboard under Web Setup.");
+            } else {
+                setError("Could not fetch dates. Please try again later.");
+            }
         } finally {
             setIsLoading(false);
         }
@@ -53,7 +59,7 @@ const AuspiciousCalendar: React.FC = () => {
                 </button>
             </div>
              {isLoading && <p className="text-center text-theme-text-secondary">Finding auspicious dates with AI...</p>}
-             {error && <p className="text-center text-red-500">{error}</p>}
+             {error && <p className="text-center text-red-500 p-4 bg-red-500/10 rounded-lg">{error}</p>}
              {!isLoading && dates.length > 0 && (
                 <div className="space-y-3">
                     {dates.map(d => (

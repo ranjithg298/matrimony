@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import HeartIcon from '../components/icons/HeartIcon';
 import Captcha from '../components/Captcha';
@@ -17,7 +19,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin }) => {
   const [error, setError] = useState('');
   
   const handleDemoLogin = (demoEmail: string) => {
-    onLogin(demoEmail, 'admin@123'); // Pass dummy password for demo, real check in App.tsx
+    onLogin(demoEmail);
   };
   
   const handleSubmit = (e: React.FormEvent) => {
@@ -114,13 +116,12 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin }) => {
                     <div className="flex justify-center gap-2 flex-wrap">
                         <button onClick={() => handleDemoLogin('priya@matrimony.ai')} className="text-xs bg-theme-border hover:bg-theme-border/80 text-theme-text-primary font-semibold py-1 px-3 rounded-full">User</button>
                         <button onClick={() => handleDemoLogin('vendor@matrimony.ai')} className="text-xs bg-theme-border hover:bg-theme-border/80 text-theme-text-primary font-semibold py-1 px-3 rounded-full">Vendor</button>
-                        <button onClick={() => handleDemoLogin('admin')} className="text-xs bg-theme-border hover:bg-theme-border/80 text-theme-text-primary font-semibold py-1 px-3 rounded-full">Admin</button>
                     </div>
                 </div>
             </div>
 
              {/* Image Side */}
-            <div className="hidden lg:block w-1/2 bg-cover bg-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"}}>
+            <div className="hidden lg:block w-1/2 bg-cover bg-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"}}>
                 <div className="w-full h-full bg-black/30"></div>
             </div>
         </div>

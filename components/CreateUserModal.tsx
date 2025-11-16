@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { Profile } from '../types';
 
@@ -14,7 +16,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ isOpen, onClose, onCr
         city: '',
         email: '',
         role: 'user' as 'user' | 'vendor',
-        photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&ixlib.rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Default photo
+        photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         bio: '',
     });
 
@@ -86,6 +88,10 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ isOpen, onClose, onCr
                         <div>
                             <label className="block text-sm font-medium text-theme-text-secondary">Email</label>
                             <input type="email" name="email" value={formState.email} onChange={handleChange} required className="w-full mt-1 bg-theme-bg p-2 rounded-md border border-theme-border" />
+                        </div>
+                         <div>
+                            <label className="block text-sm font-medium text-theme-text-secondary">Photo URL</label>
+                            <input type="text" name="photo" value={formState.photo} onChange={handleChange} required className="w-full mt-1 bg-theme-bg p-2 rounded-md border border-theme-border" />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-theme-text-secondary">Role</label>

@@ -218,7 +218,7 @@ const ContactSection: React.FC<{ onAddContactQuery: LandingPageProps['onAddConta
                             </div>
                         </div>
                          <div className="bg-theme-surface rounded-lg overflow-hidden border border-theme-border">
-                            <img src="https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
+                            <img src="https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
                             <div className="p-4">
                                 <h4 className="font-bold text-theme-text-primary">Brahmin Matrimony UK</h4>
                                  <p className="text-sm text-theme-text-secondary mt-1">05 Sep</p>
@@ -265,19 +265,19 @@ const LandingPageFooter: React.FC<{ settings: WebsiteSettings }> = ({ settings }
                 <div>
                     <h3 className="font-bold mb-4 border-b-2 border-theme-accent-primary pb-2 inline-block">Quick Link</h3>
                     <ul className="space-y-2 mt-4 text-sm">
-                        <li><a href="#/about" className="hover:underline">About Us</a></li>
-                        <li><a href="#/privacy" className="hover:underline">Privacy Policy</a></li>
-                        <li><a href="#/packages" className="hover:underline">Our Packages</a></li>
+                        <li><a href="#/about-us" className="hover:underline">About Us</a></li>
+                        <li><a href="#/privacy-policy" className="hover:underline">Privacy Policy</a></li>
+                        <li><a href="#/pricing" className="hover:underline">Our Packages</a></li>
                         <li><a href="#/register" className="hover:underline">Register Now</a></li>
                     </ul>
                 </div>
                 <div>
                      <h3 className="font-bold mb-4 border-b-2 border-theme-accent-primary pb-2 inline-block">Services</h3>
                      <ul className="space-y-2 mt-4 text-sm">
-                        <li><a href="#/services/usa-matrimony" className="hover:underline">USA Matrimony</a></li>
-                        <li><a href="#/services/doctors-matrimony" className="hover:underline">UK Matrimony</a></li>
-                        <li><a href="#/services/canada-matrimony" className="hover:underline">Canada Matrimony</a></li>
-                        <li><a href="#/services/lawyers-matrimony" className="hover:underline">Doctors Matrimony</a></li>
+                        <li><a href="#/services/doctors-matrimony" className="hover:underline">Doctors Matrimony</a></li>
+                        <li><a href="#/services/lawyers-matrimony" className="hover:underline">Lawyers Matrimony</a></li>
+                        <li><a href="#/services/90s-kids-matrimony" className="hover:underline">90s Kids Matrimony</a></li>
+                        <li><a href="#/services/elite-matrimony" className="hover:underline">Elite Matrimony</a></li>
                     </ul>
                 </div>
                  <div>

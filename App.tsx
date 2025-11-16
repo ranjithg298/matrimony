@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { Profile, Conversation, PricingPlan, WebsiteSettings, View, Page, Service, HappyStory, Attribute, Report, ContactQuery, Notification, LiveEvent, VendorReview, WeddingPlanner, OfflinePaymentRequest, Astrologer, Message, Quiz, AIWeddingPlan, Gift } from './types';
 import { PROFILES, CONVERSATIONS, PRICING_PLANS as initialPricingPlans, HAPPY_STORIES as initialHappyStories, ASTRO_PREDICTIONS, AUSPICIOUS_DATES, WEBSITE_SETTINGS as initialWebsiteSettings, PAGES as initialPages, SERVICES as initialServices, INITIAL_ATTRIBUTES, REPORTS as initialReports, CONTACT_QUERIES as initialContactQueries, LIVE_EVENTS as initialLiveEvents, VENDOR_REVIEWS as initialVendorReviews, OFFLINE_PAYMENT_REQUESTS as initialOfflinePaymentRequests, ASTROLOGERS as initialAstrologers, QUIZZES as initialQuizzes, AVAILABLE_GIFTS } from './constants';
@@ -136,14 +137,12 @@ export default function App() {
     
     if (userToLogin) {
         setCurrentUser(userToLogin);
+        window.location.hash = '#/app/home';
+        if (localStorage.getItem('whatsNewSeen_v1') !== 'true') {
+            setWhatsNewModalOpen(true);
+        }
     } else {
-        // Fallback for demo purposes if user doesn't exist.
-        setCurrentUser(allProfiles[0]);
-    }
-
-    window.location.hash = '#/app/home';
-    if (localStorage.getItem('whatsNewSeen_v1') !== 'true') {
-        setWhatsNewModalOpen(true);
+        setSnackbar({ message: 'Invalid credentials or user not found.' });
     }
   };
   
@@ -431,7 +430,7 @@ export default function App() {
     let content;
 
     switch(mainView) {
-        case 'home': content = <HomePage profiles={allProfiles} currentUser={currentUser!} onSelectProfile={handleSelectProfile} onShortlistProfile={handleShortlistProfile} attributes={attributes} onSendInterest={handleSendInterest} />; break;
+        case 'home': content = <HomePage profiles={allProfiles} services={services} currentUser={currentUser!} onSelectProfile={handleSelectProfile} onShortlistProfile={handleShortlistProfile} attributes={attributes} onSendInterest={handleSendInterest} />; break;
         case 'dashboard': content = currentUser?.role === 'user' ? <UserDashboard currentUser={currentUser} allProfiles={allProfiles} attributes={attributes} /> : <VendorDashboard vendor={currentUser} clients={[]} />; break;
         case 'profile': content = <ProfilePage user={currentUser} attributes={attributes} onUpdateProfile={handleUpdateProfile} onStartVerification={() => setVerificationModalOpen(true)} onUpgradePlanRequest={() => { setSelectedPlan(pricingPlans[0]); setPaymentModalOpen(true); }} />; break;
         case 'preferences': content = <PartnerPreferencesPage currentUser={currentUser} onUpdateProfile={handleUpdateProfile} />; break;
@@ -452,7 +451,7 @@ export default function App() {
         case 'wedding-planner': content = currentUser.weddingPlanner ? <WeddingPlannerPage plannerData={currentUser.weddingPlanner} onUpdate={handleUpdateWeddingPlanner} /> : <div>Planner not initialized!</div>; break;
         case 'admin': content = currentUser.role === 'admin' ? <AdminDashboard allProfiles={allProfiles} pricingPlans={pricingPlans} websiteSettings={websiteSettings} pages={pages} services={services} happyStories={happyStories} attributes={attributes} reports={reports} contactQueries={contactQueries} liveEvents={liveEvents} vendorReviews={vendorReviews} offlinePaymentRequests={offlinePaymentRequests} astrologers={astrologers} onUpdateUsers={setAllProfiles} onUpdatePricing={setPricingPlans} onUpdateWebsiteSettings={setWebsiteSettings} onUpdatePages={setPages} onUpdateServices={setServices} onUpdateHappyStories={setHappyStories} onUpdateAttributes={setAttributes} onUpdateReports={setReports} onUpdateContactQueries={setContactQueries} onUpdateLiveEvents={setLiveEvents} onUpdateVendorReviews={setVendorReviews} onProcessOfflinePayment={() => {}} onUpdateAstrologers={setAstrologers} onCreateNotification={createNotification} /> : <NotFoundPage />; break;
         case 'view-profile': content = <ProfileDetailPage profile={allProfiles.find(p => p.id === slug)!} currentUser={currentUser} onBlockUser={handleBlockUser} onReportUser={handleReportUser} onSendInterest={handleSendInterest} onShortlistProfile={handleShortlistProfile} onUpgradePlanRequest={() => { setSelectedPlan(pricingPlans[0]); setPaymentModalOpen(true); }} onFetchAnalysis={handleFetchAnalysis} onFetchAstroReport={handleFetchAstroReport} isLoadingAnalysis={isLoadingAnalysis} analysisCache={analysisCache} attributes={attributes} onProfileView={handleProfileView} onSendQuizInvite={handleSendQuizInvite} onSendGift={handleSendGift} quizzes={quizzes} />; break;
-        default: content = <HomePage profiles={allProfiles} currentUser={currentUser!} onSelectProfile={handleSelectProfile} onShortlistProfile={handleShortlistProfile} attributes={attributes} onSendInterest={handleSendInterest} />;
+        default: content = <HomePage profiles={allProfiles} services={services} currentUser={currentUser!} onSelectProfile={handleSelectProfile} onShortlistProfile={handleShortlistProfile} attributes={attributes} onSendInterest={handleSendInterest} />;
     }
     
     return (
