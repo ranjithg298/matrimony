@@ -48,6 +48,17 @@ const HappyStoriesManagement: React.FC<HappyStoriesManagementProps> = ({ stories
         }
     };
 
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0] && editingStory) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                handleEditorChange('imageUrl', reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
      if (editingStory) {
         return (
              <div>
@@ -57,7 +68,11 @@ const HappyStoriesManagement: React.FC<HappyStoriesManagementProps> = ({ stories
                         <input type="text" placeholder="Couple Names" value={editingStory.coupleNames} onChange={e => handleEditorChange('coupleNames', e.target.value)} className="bg-theme-border p-2 rounded-md" />
                         <input type="date" placeholder="Wedding Date" value={editingStory.weddingDate} onChange={e => handleEditorChange('weddingDate', e.target.value)} className="bg-theme-border p-2 rounded-md" />
                     </div>
-                    <input type="text" placeholder="Image URL" value={editingStory.imageUrl} onChange={e => handleEditorChange('imageUrl', e.target.value)} className="w-full bg-theme-border p-2 rounded-md" />
+                    <div>
+                        <label className="text-sm text-theme-text-secondary">Couple's Image</label>
+                        <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20 mt-1" />
+                        <img src={editingStory.imageUrl} alt="preview" className="w-24 h-24 object-cover rounded-md mt-2" />
+                    </div>
                     <textarea rows={5} placeholder="Their Story" value={editingStory.story} onChange={e => handleEditorChange('story', e.target.value)} className="w-full bg-theme-border p-2 rounded-md" />
                 </div>
                 <div className="flex justify-end gap-2 mt-4">

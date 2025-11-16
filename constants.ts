@@ -1,5 +1,3 @@
-
-
 import { Profile, Conversation, PricingPlan, FaqItem, HappyStory, AstroPrediction, AuspiciousDate, WebsiteSettings, ContactQuery, ManualPaymentMethod, Page, Service, Attribute, AttributeType, Report, LiveEvent, VendorReview, ChecklistItem, OfflinePaymentRequest, Astrologer, Quiz, QuizQuestion } from './types';
 
 export const INITIAL_ATTRIBUTES: Attribute[] = [
@@ -626,6 +624,11 @@ export const WEBSITE_SETTINGS: WebsiteSettings = {
     typography: 'classic',
     manualPaymentMethods: MANUAL_PAYMENT_METHODS,
     siteBackgroundImageUrl: 'https://www.transparenttextures.com/patterns/lined-paper.png',
+    homepageSettings: [
+        { id: 'matchmaker', title: 'AI Matchmaker Suggestion', enabled: true },
+        { id: 'featured-services', title: 'Featured Services', enabled: true },
+        { id: 'recommendations', title: 'Recommended for You', enabled: true },
+    ],
 };
 
 export const PAGES: Page[] = [

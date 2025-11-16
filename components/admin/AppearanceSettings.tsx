@@ -46,12 +46,12 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
         setSettings(prev => ({ ...prev, [name]: finalValue }));
     };
 
-    const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'logoUrl' | 'heroImageUrl' | 'siteBackgroundImageUrl') => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             const reader = new FileReader();
             reader.onloadend = () => {
-                setSettings({ ...settings, siteBackgroundImageUrl: reader.result as string });
+                setSettings(prev => ({ ...prev, [field]: reader.result as string }));
             };
             reader.readAsDataURL(file);
         }
@@ -81,13 +81,12 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
             <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
                 <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Homepage Hero</h3>
                 <div>
-                    <label className="text-sm text-theme-text-secondary">Background Image URL</label>
+                    <label className="text-sm text-theme-text-secondary">Background Image</label>
                     <input 
-                        type="text" 
-                        name="heroImageUrl" 
-                        value={settings.heroImageUrl} 
-                        onChange={handleInputChange}
-                        className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" 
+                        type="file" 
+                        accept="image/*"
+                        onChange={e => handleFileChange(e, 'heroImageUrl')}
+                        className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20 mt-1" 
                     />
                 </div>
                 <div className="mt-4">
@@ -118,7 +117,7 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
 
             <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
                 <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Site Background Image</h3>
-                <input type="file" onChange={handleBackgroundChange} accept="image/*" className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20" />
+                <input type="file" onChange={e => handleFileChange(e, 'siteBackgroundImageUrl')} accept="image/*" className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20" />
                 {settings.siteBackgroundImageUrl && (
                     <div className="mt-4">
                         <p className="text-sm text-theme-text-secondary mb-2">Current Background:</p>

@@ -1,6 +1,4 @@
-
-
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { WebsiteSettings, HeaderLink, SocialLink } from '../../types';
 import TrashIcon from '../icons/TrashIcon';
 import PlusIcon from '../icons/PlusIcon';
@@ -14,7 +12,6 @@ interface WebSetupProps {
 const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }) => {
     const [settings, setSettings] = useState(initialSettings);
     const [showSaved, setShowSaved] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const apiKeyStatus = process.env.API_KEY ? 'Detected' : 'Not Detected';
 
@@ -56,17 +53,6 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
         const links = type === 'header' ? 'headerLinks' : 'socialLinks';
         setSettings(prev => ({ ...prev, [links]: prev[links].filter(link => link.id !== id) }));
     };
-
-    const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setSettings({ ...settings, logoUrl: reader.result as string });
-            };
-            reader.readAsDataURL(file);
-        }
-    };
     
     const handleSave = () => {
         onSave(settings);
@@ -77,28 +63,32 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
     return (
         <div className="space-y-6">
              {/* API Key Settings */}
-            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
-                <h3 className="text-lg font-semibold mb-2 text-theme-text-primary flex items-center gap-2">
-                    <SparklesIcon className="h-5 w-5 text-theme-accent-primary" /> AI Service (Gemini API)
+            <div className="bg-theme-bg/50 p-6 rounded-lg border-2 border-dashed border-theme-border">
+                <h3 className="text-xl font-semibold mb-4 text-theme-text-primary flex items-center gap-2">
+                    <SparklesIcon className="h-6 w-6 text-theme-accent-primary" /> AI Service Setup (Gemini API)
                 </h3>
-                <div className={`p-3 rounded-md flex items-center gap-4 ${apiKeyStatus === 'Detected' ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
-                    <span className={`px-3 py-1 text-xs font-semibold rounded-full ${apiKeyStatus === 'Detected' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>
-                        {apiKeyStatus}
-                    </span>
-                    <p className="text-sm text-theme-text-secondary">
-                        {apiKeyStatus === 'Detected' 
-                            ? 'Your Gemini API key is configured. AI features should be functional.' 
-                            : 'No API key found. AI features like chat replies and compatibility analysis will not work.'
-                        }
-                    </p>
+                <div className={`p-4 rounded-lg flex items-center gap-4 ${apiKeyStatus === 'Detected' ? 'bg-green-500/10 border-l-4 border-green-500' : 'bg-red-500/10 border-l-4 border-red-500'}`}>
+                    <div>
+                        <p className="font-bold text-lg">Status: <span className={apiKeyStatus === 'Detected' ? 'text-green-500' : 'text-red-500'}>{apiKeyStatus}</span></p>
+                         <p className="text-sm text-theme-text-secondary mt-1">
+                            {apiKeyStatus === 'Detected' 
+                                ? 'Your Gemini API key is configured. AI features are enabled.' 
+                                : 'No API key found. AI features (chat, analysis, etc.) will not work.'
+                            }
+                        </p>
+                    </div>
                 </div>
-                 <div className="mt-3 text-xs text-theme-text-secondary space-y-1">
-                    <p>
-                        To enable AI features, you must add your Google Gemini API key as an environment variable named <code className="font-mono bg-theme-border px-1 py-0.5 rounded">API_KEY</code> in your hosting provider's settings (e.g., Vercel, Netlify).
-                    </p>
-                    <p>
-                        This application is built to read the key securely from the environment and does not store it anywhere else.
-                    </p>
+                 <div className="mt-4 text-sm text-theme-text-secondary space-y-2">
+                    <p className='font-semibold text-theme-text-primary'>How to Connect:</p>
+                    <ol className="list-decimal list-inside space-y-1">
+                        <li>
+                            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-theme-accent-primary underline">Get Your Free API Key from Google AI Studio.</a>
+                        </li>
+                        <li>Go to your website's hosting provider (e.g., Vercel, Netlify).</li>
+                        <li>In your project settings, find "Environment Variables".</li>
+                        <li>Add a new variable with the name <code className="font-mono bg-theme-border px-1 py-0.5 rounded">API_KEY</code>.</li>
+                        <li>Paste your API key as the value and save. The app will connect automatically.</li>
+                    </ol>
                 </div>
             </div>
 
@@ -114,14 +104,6 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
                         <label className="text-sm text-theme-text-secondary">Slogan / Tagline</label>
                         <input type="text" name="slogan" value={settings.slogan} onChange={handleChange} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" />
                     </div>
-                </div>
-                 <div className="flex items-center gap-4 mb-4">
-                    <label className="text-sm text-theme-text-secondary">Website Logo</label>
-                    <img src={settings.logoUrl} alt="logo" className="h-12 w-12 bg-white p-1 rounded-md object-contain" />
-                    <input type="file" ref={fileInputRef} onChange={handleLogoChange} accept="image/*" className="hidden"/>
-                    <button type="button" onClick={() => fileInputRef.current?.click()} className="bg-theme-border text-white px-3 py-1 text-sm rounded-lg font-semibold hover:bg-theme-border/80">
-                        Upload
-                    </button>
                 </div>
                 <div className="flex items-center gap-2">
                     <input type="checkbox" name="stickyHeader" id="stickyHeader" checked={settings.stickyHeader} onChange={handleChange} className="h-4 w-4 rounded border-gray-300 text-theme-accent-primary focus:ring-theme-accent-primary" />

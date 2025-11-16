@@ -7,6 +7,7 @@ import ShieldCheckIcon from '../components/icons/ShieldCheckIcon';
 import TrashIcon from '../components/icons/TrashIcon';
 import PhotoAnalysisModal from '../components/PhotoAnalysisModal';
 import UserCircleIcon from '../components/icons/UserCircleIcon';
+import CameraIcon from '../components/icons/CameraIcon';
 
 interface ProfilePageProps {
   user: Profile;
@@ -23,7 +24,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ user, attributes, onUpdatePro
   const [showSaved, setShowSaved] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
-  const photoInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
+  const mainPhotoInputRef = useRef<HTMLInputElement>(null);
   const bioDataInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingBio, setIsGeneratingBio] = useState(false);
   const [analysisState, setAnalysisState] = useState({ 
@@ -52,7 +54,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ user, attributes, onUpdatePro
     }
   };
   
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGalleryPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0]) {
           const files = Array.from(e.target.files);
           const photoPromises = files.map((file: File) => {
@@ -69,6 +71,17 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ user, attributes, onUpdatePro
               setEditableUser(prev => ({ ...prev, gallery: [...prev.gallery, ...newPhotos] }));
           });
       }
+  };
+
+  const handleMainPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setEditableUser(prev => ({...prev, photo: reader.result as string}));
+        };
+        reader.readAsDataURL(file);
+    }
   };
 
   const handleDeletePhoto = (url: string) => {
@@ -195,8 +208,20 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ user, attributes, onUpdatePro
         {/* Left Column - Photo & Core Info */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-theme-surface p-6 rounded-xl">
-             <div className="relative w-48 h-48 mx-auto">
-              <img src={editableUser.photo} alt={editableUser.name} className="w-48 h-48 rounded-full mx-auto object-cover border-4 border-theme-accent-secondary" />
+             <div className="relative w-48 h-48 mx-auto group">
+                <img src={editableUser.photo} alt={editableUser.name} className="w-48 h-48 rounded-full mx-auto object-cover border-4 border-theme-accent-secondary" />
+                {isEditing && (
+                    <>
+                        <input type="file" ref={mainPhotoInputRef} onChange={handleMainPhotoChange} accept="image/*" className="hidden" />
+                        <button 
+                            type="button" 
+                            onClick={() => mainPhotoInputRef.current?.click()}
+                            className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                            <CameraIcon className="w-8 h-8"/>
+                        </button>
+                    </>
+                )}
              </div>
             <div className="text-center mt-4">
               {isEditing ? ( <input type="text" name="name" value={editableUser.name} onChange={handleInputChange} className="w-full text-center bg-theme-border text-2xl font-bold rounded-md p-1" /> ) : ( <h2 className="text-2xl font-bold">{editableUser.name}</h2> )}
@@ -308,11 +333,11 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ user, attributes, onUpdatePro
                             </div>
                       </div>
                     ))}
-                    <button type="button" onClick={() => photoInputRef.current?.click()} className="aspect-square flex items-center justify-center bg-theme-border rounded-md hover:bg-theme-border/80">
+                    <button type="button" onClick={() => galleryInputRef.current?.click()} className="aspect-square flex items-center justify-center bg-theme-border rounded-md hover:bg-theme-border/80">
                       <span className="text-2xl text-theme-text-secondary">+</span>
                     </button>
                 </div>
-                <input type="file" ref={photoInputRef} onChange={handlePhotoChange} multiple accept="image/*" className="hidden" />
+                <input type="file" ref={galleryInputRef} onChange={handleGalleryPhotoChange} multiple accept="image/*" className="hidden" />
               </div>
             )}
 

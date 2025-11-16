@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { WebsiteSettings, HappyStory, PricingPlan, Service, ContactQuery } from '../types';
 import FacebookIcon from '../components/icons/FacebookIcon';
@@ -136,21 +134,22 @@ const ServicesSection: React.FC<{ services: Service[] }> = ({ services }) => (
 
 
 const PackagesSection: React.FC<{ plans: PricingPlan[] }> = ({ plans }) => {
-    const [activeTab, setActiveTab] = useState('standard');
-    
+    const [activeTab, setActiveTab] = useState<'standard' | 'elite' | 'late-marriage'>('standard');
+    const filteredPlans = plans.filter(p => p.planType === activeTab);
+
     return (
         <section className="py-16 bg-theme-accent-secondary text-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 className="font-serif text-3xl font-bold">Our Standard Packages</h2>
                 <div className="flex justify-center my-8">
-                     <div className="bg-white/20 rounded-lg p-1 flex gap-1">
-                        <button onClick={() => setActiveTab('standard')} className={`px-6 py-2 rounded-md font-semibold ${activeTab === 'standard' ? 'bg-white text-theme-accent-secondary' : ''}`}>Standard Packages</button>
-                        <button onClick={() => setActiveTab('elite')} className={`px-6 py-2 rounded-md font-semibold ${activeTab === 'elite' ? 'bg-white text-theme-accent-secondary' : ''}`}>Elite Packages</button>
-                        <button onClick={() => setActiveTab('late')} className={`px-6 py-2 rounded-md font-semibold ${activeTab === 'late' ? 'bg-white text-theme-accent-secondary' : ''}`}>Second/Late Marriage</button>
+                     <div className="bg-white/20 rounded-lg p-1 flex gap-1 flex-wrap justify-center">
+                        <button onClick={() => setActiveTab('standard')} className={`px-6 py-2 rounded-md font-semibold ${activeTab === 'standard' ? 'bg-white text-theme-accent-secondary' : ''}`}>Standard</button>
+                        <button onClick={() => setActiveTab('elite')} className={`px-6 py-2 rounded-md font-semibold ${activeTab === 'elite' ? 'bg-white text-theme-accent-secondary' : ''}`}>Elite</button>
+                        <button onClick={() => setActiveTab('late-marriage')} className={`px-6 py-2 rounded-md font-semibold ${activeTab === 'late-marriage' ? 'bg-white text-theme-accent-secondary' : ''}`}>Second Marriage</button>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {plans.filter(p => p.planType === 'standard').map(plan => (
+                    {filteredPlans.map(plan => (
                         <div key={plan.id} className="bg-theme-surface p-8 rounded-lg text-theme-text-primary border-4 border-theme-accent-primary">
                              <div className="w-16 h-16 bg-theme-accent-primary/20 rounded-full mx-auto mb-4 border-4 border-theme-accent-primary"></div>
                              <h3 className="font-serif text-xl font-bold uppercase">{plan.name}</h3>

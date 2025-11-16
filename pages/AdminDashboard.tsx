@@ -16,6 +16,7 @@ import CogIcon from '../components/icons/CogIcon';
 import PaintBrushIcon from '../components/icons/PaintBrushIcon';
 import EnvelopeIcon from '../components/icons/EnvelopeIcon';
 import WrenchScrewdriverIcon from '../components/icons/WrenchScrewdriverIcon';
+import HomeIcon from '../components/icons/HomeIcon';
 
 // Components
 import CreateUserModal from '../components/CreateUserModal';
@@ -39,6 +40,7 @@ import OfflinePaymentsManagement from '../components/admin/OfflinePaymentsManage
 import AstrologersManagement from '../components/admin/AstrologersManagement';
 import VerificationsManagement from '../components/admin/VerificationsManagement';
 import AIAdminAssistant from '../components/AIAdminAssistant';
+import HomepageManagement from '../components/admin/HomepageManagement';
 
 
 interface AdminDashboardProps {
@@ -76,7 +78,7 @@ type AdminView =
   | 'members' | 'approvals' | 'verifications' | 'photo-approvals' | 'reports' | 'offline-payments'
   | 'live' | 'vendors' | 'vendor-reviews' | 'astrologers' 
   | 'pages' | 'services' | 'happy-stories' | 'pricing' | 'attribute-builder' 
-  | 'web-setup' | 'appearance' | 'contact-queries' | 'utilities';
+  | 'web-setup' | 'appearance' | 'contact-queries' | 'utilities' | 'homepage';
 
 
 const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
@@ -115,6 +117,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
        'Configuration': [
           {id: 'web-setup', label: 'Web Setup', icon: <CogIcon className="h-5 w-5"/>},
           {id: 'appearance', label: 'Appearance', icon: <PaintBrushIcon className="h-5 w-5"/>},
+          {id: 'homepage', label: 'Homepage', icon: <HomeIcon className="h-5 w-5"/>},
           {id: 'attribute-builder', label: 'Attribute Builder', icon: <WrenchScrewdriverIcon className="h-5 w-5"/>},
           {id: 'utilities', label: 'Utilities', icon: <CogIcon className="h-5 w-5"/>},
       ]
@@ -143,6 +146,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
           case 'attribute-builder': return <AttributeBuilder attributes={props.attributes} onUpdateAttributes={props.onUpdateAttributes} />;
           case 'web-setup': return <WebSetup settings={props.websiteSettings} onSave={props.onUpdateWebsiteSettings} />;
           case 'appearance': return <AppearanceSettings settings={props.websiteSettings} onSave={props.onUpdateWebsiteSettings} />;
+          case 'homepage': return <HomepageManagement settings={props.websiteSettings} onSave={props.onUpdateWebsiteSettings} />;
           case 'contact-queries': return <ContactQueriesManagement queries={props.contactQueries} onUpdateQueries={props.onUpdateContactQueries} />;
           case 'offline-payments': return <OfflinePaymentsManagement requests={props.offlinePaymentRequests} onProcessRequest={props.onProcessOfflinePayment} />;
           case 'utilities': return <Utilities settings={props.websiteSettings} onSave={props.onUpdateWebsiteSettings} />;

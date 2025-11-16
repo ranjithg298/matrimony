@@ -266,6 +266,12 @@ export interface SocialLink {
   url: string;
 }
 
+export interface HomepageSection {
+  id: 'matchmaker' | 'featured-services' | 'recommendations';
+  title: string;
+  enabled: boolean;
+}
+
 export interface WebsiteSettings {
   siteName: string;
   logoUrl: string;
@@ -296,6 +302,7 @@ export interface WebsiteSettings {
   
   manualPaymentMethods: ManualPaymentMethod[];
   siteBackgroundImageUrl?: string;
+  homepageSettings: HomepageSection[];
 }
 
 export interface OfflinePaymentRequest {
