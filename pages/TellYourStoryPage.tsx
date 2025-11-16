@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { Profile, HappyStory } from '../types';
+import { Profile, HappyStory, WebsiteSettings } from '../types';
 
 interface TellYourStoryPageProps {
     currentUser: Profile;
     onSubmit: (submission: Omit<HappyStory, 'id'>) => void;
+    websiteSettings: WebsiteSettings;
 }
 
-const TellYourStoryPage: React.FC<TellYourStoryPageProps> = ({ currentUser, onSubmit }) => {
+const TellYourStoryPage: React.FC<TellYourStoryPageProps> = ({ currentUser, onSubmit, websiteSettings }) => {
     const [formState, setFormState] = useState({
         yourName: currentUser.name,
         partnerName: '',
@@ -77,10 +78,10 @@ const TellYourStoryPage: React.FC<TellYourStoryPageProps> = ({ currentUser, onSu
                     <p className="text-theme-text-secondary mt-2">Your story might inspire many others to find their life partners too!</p>
                 </div>
                  <div className="text-center border-y border-theme-border py-8 mb-8">
-                    <img src="https://i.ibb.co/6rC6P2Q/anupam-mittal.png" alt="Anupam Mittal" className="w-24 h-24 rounded-full mx-auto" />
-                    <p className="mt-4 text-lg italic text-theme-text-secondary max-w-2xl mx-auto">"The Shaadi Team would like to wish you and your better half, a life full of love, laughter and togetherness!"</p>
-                    <p className="font-bold mt-2 text-theme-text-primary">Best Wishes, Anupam Mittal</p>
-                    <p className="text-sm text-theme-text-secondary">Founder, matrimony.ai</p>
+                    <img src={websiteSettings.storySubmissionFounderImage} alt={websiteSettings.storySubmissionFounderName} className="w-24 h-24 rounded-full mx-auto object-cover" />
+                    <p className="mt-4 text-lg italic text-theme-text-secondary max-w-2xl mx-auto">"{websiteSettings.storySubmissionFounderMessage}"</p>
+                    <p className="font-bold mt-2 text-theme-text-primary">Best Wishes, {websiteSettings.storySubmissionFounderName}</p>
+                    <p className="text-sm text-theme-text-secondary">Founder, {websiteSettings.siteName}</p>
                 </div>
 
 
@@ -106,7 +107,7 @@ const TellYourStoryPage: React.FC<TellYourStoryPageProps> = ({ currentUser, onSu
                     </div>
                     
                     <div className="mb-6">
-                         <label className="block text-sm text-theme-text-secondary mb-1">Tell us how you met on {`matrimony.ai`}</label>
+                         <label className="block text-sm text-theme-text-secondary mb-1">Tell us how you met on {websiteSettings.siteName}</label>
                          <textarea name="story" value={formState.story} onChange={handleChange} rows={6} className="w-full bg-theme-bg p-3 rounded-md border border-theme-border" required></textarea>
                     </div>
 
@@ -130,7 +131,7 @@ const TellYourStoryPage: React.FC<TellYourStoryPageProps> = ({ currentUser, onSu
                         </label>
                         <label className="flex items-start gap-3">
                             <input type="checkbox" name="featureAds" checked={formState.featureAds} onChange={handleChange} className="mt-1 h-4 w-4" />
-                            <span className="text-sm text-theme-text-secondary">I would like my story to be featured in matrimony.ai's advertisements.</span>
+                            <span className="text-sm text-theme-text-secondary">I would like my story to be featured in {websiteSettings.siteName}'s advertisements.</span>
                         </label>
                     </div>
 

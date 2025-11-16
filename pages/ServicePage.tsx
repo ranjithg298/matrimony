@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Service, WebsiteSettings } from '../types';
+import { Service, WebsiteSettings, Profile } from '../types';
 import Footer from '../components/Footer';
 import ArrowLeftIcon from '../components/icons/ArrowLeftIcon';
 
 interface ServicePageProps {
     service: Service;
     websiteSettings: WebsiteSettings;
+    allProfiles: Profile[];
 }
 
 const ServicePage: React.FC<ServicePageProps> = ({ service, websiteSettings }) => {

@@ -17,8 +17,6 @@ interface MessagesPageProps {
 
 const MessagesPage: React.FC<MessagesPageProps> = ({ currentUser, conversations, allProfiles, onUpdateConversations, onInitiateCall, onSendMessage, typingStatus, onAcceptInterest, onDeclineInterest }) => {
   const [activeConversationId, setActiveConversationId] = useState<string | null>(conversations[0]?.id || null);
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest');
-  const [filterBy, setFilterBy] = useState<'all' | 'premium' | 'verified'>('all');
 
   const activeConversation = conversations.find(c => c.id === activeConversationId);
 
@@ -37,10 +35,6 @@ const MessagesPage: React.FC<MessagesPageProps> = ({ currentUser, conversations,
         currentUser={currentUser}
         activeConversationId={activeConversationId}
         onSelectConversation={setActiveConversationId}
-        sortBy={sortBy}
-        onSortByChange={setSortBy}
-        filterBy={filterBy}
-        onFilterByChange={setFilterBy}
         allProfiles={allProfiles}
         typingStatus={typingStatus}
       />

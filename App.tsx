@@ -331,9 +331,9 @@ export default function App() {
   const handleUpdateStorySubmissions = (submission: Omit<HappyStory, 'id'>) => {
     const newStory: HappyStory = { ...submission, id: `hs-sub-${Date.now()}` };
     setStorySubmissions(prev => [...prev, newStory]);
-    setHappyStories(prev => [...prev, newStory]);
+    // Optionally add to main happy stories list immediately or wait for admin approval
+    // setHappyStories(prev => [...prev, newStory]);
     setSnackbar({ message: 'Thank you for sharing your story! It will be reviewed by our team.' });
-    window.location.hash = '#/app/happy-stories';
   };
   
   const handleUpdateWeddingPlanner = (data: WeddingPlanner) => {
@@ -362,12 +362,14 @@ export default function App() {
     const otherUser = allProfiles.find(p => p.id === profileId);
     if (!otherUser) return;
 
+    // Update current user: remove from received, add to accepted (implicitly by creating conversation)
     const updatedCurrentUser = {
         ...currentUser,
         interestsReceived: (currentUser.interestsReceived || []).filter(id => id !== profileId)
     };
     handleUpdateProfile(updatedCurrentUser);
 
+    // Update other user: remove from sent
     const updatedOtherUser = {
         ...otherUser,
         interestsSent: (otherUser.interestsSent || []).filter(id => id !== currentUser.id)
@@ -379,6 +381,8 @@ export default function App() {
     const existingConversation = allConversations.find(c => 
         c.participantIds.includes(currentUser.id) && c.participantIds.includes(profileId)
     );
+
+    let conversationIdToOpen: string;
 
     if (!existingConversation) {
         const newConversation: Conversation = {
@@ -393,9 +397,15 @@ export default function App() {
             typing: {}
         };
         setAllConversations(prev => [newConversation, ...prev]);
+        conversationIdToOpen = newConversation.id;
+    } else {
+        conversationIdToOpen = existingConversation.id;
     }
     
-    setSnackbar({ message: `You have accepted ${otherUser.name}'s interest!` });
+    setSnackbar({ message: `You have accepted ${otherUser.name}'s interest! You can now chat.` });
+    
+    // Navigate directly to the chat with the person
+    window.location.hash = `#/app/messages/${conversationIdToOpen}`;
   };
 
   const handleDeclineInterest = (profileId: string) => {
@@ -446,7 +456,7 @@ export default function App() {
         case 'vow-generator': content = <AIVowGeneratorPage />; break;
         case 'ai-wedding-concierge': content = <AIWeddingConciergePage currentUser={currentUser} vendors={allProfiles.filter(p=>p.role === 'vendor')} onImportPlan={handleImportAIPlan} />; break;
         case 'happy-stories': content = <HappyStoriesPage stories={happyStories} websiteSettings={websiteSettings} />; break;
-        case 'tell-your-story': content = <TellYourStoryPage currentUser={currentUser} onSubmit={handleUpdateStorySubmissions} />; break;
+        case 'tell-your-story': content = <TellYourStoryPage currentUser={currentUser} onSubmit={handleUpdateStorySubmissions} websiteSettings={websiteSettings} />; break;
         case 'faq': content = <FaqPage websiteSettings={websiteSettings} />; break;
         case 'astrology': content = <AstrologyPage predictions={ASTRO_PREDICTIONS} auspiciousDates={AUSPICIOUS_DATES} websiteSettings={websiteSettings} />; break;
         case 'notifications': content = <NotificationsPage notifications={notifications.filter(n => n.userId === currentUser.id)} />; break;
@@ -480,7 +490,7 @@ export default function App() {
     
     if (mainPath === 'services' && slug) {
       const service = services.find(s => s.slug === slug);
-      return service ? <ServicePage service={service} websiteSettings={websiteSettings} /> : <NotFoundPage />;
+      return service ? <ServicePage service={service} websiteSettings={websiteSettings} allProfiles={allProfiles} /> : <NotFoundPage />;
     }
     if (mainPath === 'vendors' && slug) {
         const vendor = allProfiles.find(p => p.id === slug);
@@ -591,7 +601,6 @@ export default function App() {
                 isOpen={isWhatsNewModalOpen}
                 onClose={() => {
                     setWhatsNewModalOpen(false);
-                    localStorage.setItem('whatsNewSeen_v1', 'true');
                 }}
               />
         </div>

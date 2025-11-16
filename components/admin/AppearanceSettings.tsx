@@ -16,7 +16,7 @@ const ThemeSwatch: React.FC<{theme: Theme, name: string, activeTheme: Theme, onC
         'sunset-rose': ['#FFF5F7', '#D96D84', '#8C4054', '#5C232F'],
         'emerald-green': ['#F0FDF4', '#10B981', '#065F46', '#064E3B'],
         'midnight-blue': ['#111827', '#60A5FA', '#2563EB', '#F9FAFB'],
-        'vibrant-pink': ['#FEF6FA', '#E84393', '#C71585', '#333333'],
+        'vibrant-pink': ['#121212', '#E84393', '#8E44AD', '#FFFFFF'],
     };
     const colors = themeColors[theme];
 
@@ -42,13 +42,13 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
         setSettings(prev => ({...prev, [field]: value}));
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         const finalValue = type === 'range' ? Number(value) : value;
         setSettings(prev => ({ ...prev, [name]: finalValue }));
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'logoUrl' | 'heroImageUrl' | 'siteBackgroundImageUrl') => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'logoUrl' | 'heroImageUrl' | 'siteBackgroundImageUrl' | 'storySubmissionFounderImage') => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             const reader = new FileReader();
@@ -77,8 +77,20 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
                     <ThemeSwatch theme="sunset-rose" name="Sunset Rose" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'sunset-rose')} />
                     <ThemeSwatch theme="emerald-green" name="Emerald Green" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'emerald-green')} />
                     <ThemeSwatch theme="midnight-blue" name="Midnight Blue" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'midnight-blue')} />
-                    {/* FIX: Added the 'vibrant-pink' theme swatch to make it available in the admin panel. */}
                     <ThemeSwatch theme="vibrant-pink" name="Vibrant Pink" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'vibrant-pink')} />
+                </div>
+            </div>
+
+            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
+                 <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Branding</h3>
+                <div>
+                    <label className="text-sm text-theme-text-secondary">Website Logo</label>
+                    <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={e => handleFileChange(e, 'logoUrl')}
+                        className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20 mt-1" 
+                    />
                 </div>
             </div>
 
@@ -106,6 +118,24 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
                     />
                 </div>
             </div>
+            
+            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
+                <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">"Tell Your Story" Page Founder Section</h3>
+                <div className="space-y-4">
+                     <div>
+                        <label className="text-sm text-theme-text-secondary">Founder Name</label>
+                        <input type="text" name="storySubmissionFounderName" value={settings.storySubmissionFounderName} onChange={handleInputChange} className="w-full bg-theme-border p-2 rounded-md mt-1" />
+                    </div>
+                     <div>
+                        <label className="text-sm text-theme-text-secondary">Founder Message</label>
+                        <textarea name="storySubmissionFounderMessage" value={settings.storySubmissionFounderMessage} onChange={handleInputChange} rows={3} className="w-full bg-theme-border p-2 rounded-md mt-1" />
+                    </div>
+                    <div>
+                        <label className="text-sm text-theme-text-secondary">Founder Image</label>
+                        <input type="file" accept="image/*" onChange={e => handleFileChange(e, 'storySubmissionFounderImage')} className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20 mt-1" />
+                    </div>
+                </div>
+            </div>
 
             <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
                 <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Typography</h3>
@@ -117,17 +147,6 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
                     <option value="nunito">Nunito</option>
                     <option value="lora">Lora</option>
                 </select>
-            </div>
-
-            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
-                <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Site Background Image</h3>
-                <input type="file" onChange={e => handleFileChange(e, 'siteBackgroundImageUrl')} accept="image/*" className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20" />
-                {settings.siteBackgroundImageUrl && (
-                    <div className="mt-4">
-                        <p className="text-sm text-theme-text-secondary mb-2">Current Background:</p>
-                        <img src={settings.siteBackgroundImageUrl} alt="Background Preview" className="w-full h-32 object-cover rounded-md" />
-                    </div>
-                )}
             </div>
             
             <div className="flex justify-end items-center gap-4">

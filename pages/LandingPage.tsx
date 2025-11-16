@@ -44,9 +44,6 @@ const LandingPageHeader: React.FC<{ settings: WebsiteSettings }> = ({ settings }
             <div className="flex justify-between items-center py-4">
                 <a href="#/" className="flex items-center gap-2">
                     <img src={settings.logoUrl} alt={settings.siteName} className="h-12" />
-                    <div>
-                        <h1 className="font-serif text-2xl font-bold text-theme-text-primary">{settings.siteName}</h1>
-                    </div>
                 </a>
                 <nav className="hidden lg:flex items-center gap-6">
                     {settings.headerLinks.map(link => (
@@ -217,7 +214,7 @@ const ContactSection: React.FC<{ onAddContactQuery: LandingPageProps['onAddConta
                             </div>
                         </div>
                          <div className="bg-theme-surface rounded-lg overflow-hidden border border-theme-border">
-                            <img src="https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
+                            <img src="https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
                             <div className="p-4">
                                 <h4 className="font-bold text-theme-text-primary">Brahmin Matrimony UK</h4>
                                  <p className="text-sm text-theme-text-secondary mt-1">05 Sep</p>

@@ -8,66 +8,30 @@ interface ConversationListProps {
   currentUser: Profile;
   activeConversationId: string | null;
   onSelectConversation: (id: string) => void;
-  sortBy: 'newest' | 'oldest';
-  onSortByChange: (value: 'newest' | 'oldest') => void;
-  filterBy: 'all' | 'premium' | 'verified';
-  onFilterByChange: (value: 'all' | 'premium' | 'verified') => void;
   allProfiles: Profile[];
   typingStatus: {[conversationId: string]: string[]};
 }
 
 const ConversationList: React.FC<ConversationListProps> = (props) => {
   const { 
-    conversations, currentUser, activeConversationId, onSelectConversation,
-    sortBy, onSortByChange, filterBy, onFilterByChange, typingStatus
+    conversations, currentUser, activeConversationId, onSelectConversation, typingStatus
   } = props;
 
-  const sortedAndFilteredConversations = useMemo(() => {
-    let conversationsToShow = [...conversations];
-
-    // Filtering
-    if (filterBy !== 'all') {
-        conversationsToShow = conversationsToShow.filter(c => {
-            const otherId = c.participantIds.find(id => id !== currentUser.id);
-            if (!otherId) return false;
-            const otherParticipant = c.participants[otherId];
-            if (!otherParticipant) return false;
-
-            if (filterBy === 'premium') return otherParticipant.isPremium;
-            if (filterBy === 'verified') return otherParticipant.isVerified;
-            return false;
-        });
-    }
-
-    // Sorting
-    conversationsToShow.sort((a, b) => {
+  const sortedConversations = useMemo(() => {
+    return [...conversations].sort((a, b) => {
         const lastMsgA = a.messages[a.messages.length - 1]?.timestamp || 0;
         const lastMsgB = b.messages[b.messages.length - 1]?.timestamp || 0;
-        return sortBy === 'newest' ? lastMsgB - lastMsgA : lastMsgA - lastMsgB;
+        return lastMsgB - lastMsgA;
     });
-
-    return conversationsToShow;
-  }, [conversations, sortBy, filterBy, currentUser.id]);
+  }, [conversations]);
 
   return (
     <aside className="w-full md:w-1/3 lg:w-1/4 bg-theme-surface border-r border-theme-border flex flex-col">
       <div className="p-4 border-b border-theme-border">
-        <h2 className="text-xl font-bold text-theme-text-primary">Chats</h2>
-        <div className="flex items-center gap-2 mt-2 text-sm">
-            <label className="text-theme-text-secondary">Sort:</label>
-            <select value={sortBy} onChange={(e) => onSortByChange(e.target.value as any)} className="bg-theme-bg/50 border border-theme-border rounded-md p-1">
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-            </select>
-        </div>
-      </div>
-      <div className="p-2 border-b border-theme-border flex justify-around">
-          <button onClick={() => onFilterByChange('all')} className={`px-3 py-1 text-sm rounded-full ${filterBy === 'all' ? 'bg-theme-accent-primary text-white' : 'text-theme-text-secondary'}`}>All</button>
-          <button onClick={() => onFilterByChange('premium')} className={`px-3 py-1 text-sm rounded-full ${filterBy === 'premium' ? 'bg-theme-accent-primary text-white' : 'text-theme-text-secondary'}`}>Premium</button>
-          <button onClick={() => onFilterByChange('verified')} className={`px-3 py-1 text-sm rounded-full ${filterBy === 'verified' ? 'bg-theme-accent-primary text-white' : 'text-theme-text-secondary'}`}>Verified</button>
+        <h2 className="text-lg font-bold text-theme-text-primary">Accepted Matches</h2>
       </div>
       <div className="flex-grow overflow-y-auto">
-        {sortedAndFilteredConversations.map(conv => {
+        {sortedConversations.map(conv => {
           const otherParticipantId = conv.participantIds.find(id => id !== currentUser.id);
           if (!otherParticipantId) return null;
           

@@ -73,7 +73,6 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
                 <div className="flex items-center space-x-8">
                     <a href="#/app/home" className="flex items-center space-x-2 cursor-pointer">
                         <img src={settings.logoUrl} alt={settings.siteName} className="h-8 object-contain" />
-                        <span className="text-xl font-bold text-transparent bg-clip-text bg-theme-gradient">{settings.siteName}</span>
                     </a>
                     <nav className="hidden md:flex items-center space-x-1">
                         {mainNavLinks.map(link => (

@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import HeartIcon from './icons/HeartIcon';
 import TwitterIcon from './icons/TwitterIcon';
@@ -44,7 +42,6 @@ const Footer: React.FC<{settings: WebsiteSettings}> = ({ settings }) => {
                     <div className="col-span-2 lg:col-span-1">
                         <a href="#/" className="flex items-center space-x-2 mb-4">
                             <img src={settings.logoUrl} alt={settings.siteName} className="h-8 object-contain" />
-                            <span className="text-2xl font-bold text-transparent bg-clip-text bg-theme-gradient">{settings.siteName}</span>
                         </a>
                         <p className="text-theme-text-secondary text-sm">{settings.footerContent}</p>
                     </div>
@@ -53,24 +50,21 @@ const Footer: React.FC<{settings: WebsiteSettings}> = ({ settings }) => {
                         <h2 className="mb-4 text-sm font-semibold text-theme-text-primary uppercase">Company</h2>
                         <ul className="space-y-3">
                             <FooterLink href="#/about-us">About Us</FooterLink>
-                            <FooterLink href="#/happy-stories">Happy Stories</FooterLink>
-                            <FooterLink href="#/astrology">Astrology</FooterLink>
+                            <FooterLink href="#/app/happy-stories">Happy Stories</FooterLink>
+                            <FooterLink href="#/app/astrology">Astrology</FooterLink>
                         </ul>
                     </div>
                      <div>
                         <h2 className="mb-4 text-sm font-semibold text-theme-text-primary uppercase">Support</h2>
                         <ul className="space-y-3">
-                            <FooterLink href="#/faq">FAQ</FooterLink>
+                            <FooterLink href="#/app/faq">FAQ</FooterLink>
                             <FooterLink href={`mailto:${settings.contactEmail}`}>Contact Us</FooterLink>
-                            <FooterLink href="#">Help Center</FooterLink>
                         </ul>
                     </div>
                      <div>
                         <h2 className="mb-4 text-sm font-semibold text-theme-text-primary uppercase">Legal</h2>
                         <ul className="space-y-3">
                             <FooterLink href="#/privacy-policy">Privacy Policy</FooterLink>
-                            <FooterLink href="#">Terms of Service</FooterLink>
-                            <FooterLink href="#">Cookie Policy</FooterLink>
                         </ul>
                     </div>
                 </div>

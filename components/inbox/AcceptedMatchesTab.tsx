@@ -15,8 +15,6 @@ interface AcceptedMatchesTabProps {
 
 const AcceptedMatchesTab: React.FC<AcceptedMatchesTabProps> = ({ currentUser, conversations, allProfiles, onUpdateConversations, typingStatus, onSendMessage, onInitiateCall }) => {
   const [activeConversationId, setActiveConversationId] = useState<string | null>(conversations[0]?.id || null);
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest');
-  const [filterBy, setFilterBy] = useState<'all' | 'premium' | 'verified'>('all');
 
   const activeConversation = conversations.find(c => c.id === activeConversationId);
   const otherParticipantId = activeConversation?.participantIds.find(id => id !== currentUser.id);
@@ -29,10 +27,6 @@ const AcceptedMatchesTab: React.FC<AcceptedMatchesTabProps> = ({ currentUser, co
         currentUser={currentUser}
         activeConversationId={activeConversationId}
         onSelectConversation={setActiveConversationId}
-        sortBy={sortBy}
-        onSortByChange={setSortBy}
-        filterBy={filterBy}
-        onFilterByChange={setFilterBy}
         allProfiles={allProfiles}
         typingStatus={typingStatus}
       />

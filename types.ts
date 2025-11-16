@@ -267,7 +267,7 @@ export interface SocialLink {
 }
 
 export interface HomepageSection {
-  id: 'matchmaker' | 'featured-services' | 'recommendations';
+  id: 'matchmaker' | '90s-hub' | 'featured-services' | 'recommendations';
   title: string;
   enabled: boolean;
 }
@@ -303,6 +303,11 @@ export interface WebsiteSettings {
   manualPaymentMethods: ManualPaymentMethod[];
   siteBackgroundImageUrl?: string;
   homepageSettings: HomepageSection[];
+
+  // New fields for editable founder message
+  storySubmissionFounderName: string;
+  storySubmissionFounderMessage: string;
+  storySubmissionFounderImage: string;
 }
 
 export interface OfflinePaymentRequest {

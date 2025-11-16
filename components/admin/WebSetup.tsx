@@ -65,7 +65,7 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
              {/* API Key Settings */}
             <div className="bg-theme-bg/50 p-6 rounded-lg border-2 border-dashed border-theme-border">
                 <h3 className="text-xl font-semibold mb-4 text-theme-text-primary flex items-center gap-2">
-                    <SparklesIcon className="h-6 w-6 text-theme-accent-primary" /> AI Service Setup (Gemini API)
+                    <SparklesIcon className="h-6 w-6 text-theme-accent-primary" /> AI Service Status (Gemini API)
                 </h3>
                 <div className={`p-4 rounded-lg flex items-center gap-4 ${apiKeyStatus === 'Detected' ? 'bg-green-500/10 border-l-4 border-green-500' : 'bg-red-500/10 border-l-4 border-red-500'}`}>
                     <div>
@@ -82,94 +82,29 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
                     <p className='font-semibold text-theme-text-primary'>How to Connect:</p>
                     <ol className="list-decimal list-inside space-y-1">
                         <li>
-                            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-theme-accent-primary underline">Get Your Free API Key from Google AI Studio.</a>
+                            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-theme-accent-primary underline font-semibold">Click here to get your Free API Key from Google AI Studio.</a>
                         </li>
                         <li>Go to your website's hosting provider (e.g., Vercel, Netlify).</li>
                         <li>In your project settings, find "Environment Variables".</li>
                         <li>Add a new variable with the name <code className="font-mono bg-theme-border px-1 py-0.5 rounded">API_KEY</code>.</li>
-                        <li>Paste your API key as the value and save. The app will connect automatically.</li>
+                        <li>Paste your API key as the value and save. The app will connect automatically on the next deployment.</li>
                     </ol>
                 </div>
             </div>
 
-            {/* Header Settings */}
-            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
-                <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Header Settings</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label className="text-sm text-theme-text-secondary">Website Name</label>
-                        <input type="text" name="siteName" value={settings.siteName} onChange={handleChange} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" />
-                    </div>
-                     <div>
-                        <label className="text-sm text-theme-text-secondary">Slogan / Tagline</label>
-                        <input type="text" name="slogan" value={settings.slogan} onChange={handleChange} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" />
-                    </div>
-                </div>
-                <div className="flex items-center gap-2">
-                    <input type="checkbox" name="stickyHeader" id="stickyHeader" checked={settings.stickyHeader} onChange={handleChange} className="h-4 w-4 rounded border-gray-300 text-theme-accent-primary focus:ring-theme-accent-primary" />
-                    <label htmlFor="stickyHeader" className="text-sm text-theme-text-primary">Enable Sticky Header</label>
-                </div>
-                <div className="mt-4">
-                    <h4 className="text-md font-semibold text-theme-text-primary mb-2">Header Quick Links</h4>
-                    <div className="space-y-2">
-                        {settings.headerLinks.map(link => (
-                            <div key={link.id} className="flex items-center gap-2">
-                                <input type="text" placeholder="Link Text" value={link.text} onChange={e => handleLinkChange(link.id, 'text', e.target.value, 'header')} className="w-1/2 bg-theme-border p-2 rounded-md border border-theme-border/50 text-theme-text-primary text-sm" />
-                                <input type="text" placeholder="URL" value={link.url} onChange={e => handleLinkChange(link.id, 'url', e.target.value, 'header')} className="w-1/2 bg-theme-border p-2 rounded-md border border-theme-border/50 text-theme-text-primary text-sm" />
-                                <button onClick={() => removeLink(link.id, 'header')} className="text-red-500 hover:text-red-400 p-1"><TrashIcon className="h-4 w-4" /></button>
-                            </div>
-                        ))}
-                    </div>
-                    <button onClick={() => addLink('header')} className="text-sm flex items-center gap-1 mt-2 text-theme-accent-primary hover:underline">
-                        <PlusIcon className="h-4 w-4" /> Add Link
-                    </button>
-                </div>
-            </div>
-
-            {/* Contact & Footer Settings */}
-            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
-                <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Contact & Footer Settings</h3>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label className="text-sm text-theme-text-secondary">Primary Phone</label>
-                        <input type="text" name="contactPhonePrimary" value={settings.contactPhonePrimary} onChange={handleChange} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" />
-                    </div>
-                     <div className="md:col-span-2">
-                        <label className="text-sm text-theme-text-secondary">Contact Email</label>
-                        <input type="email" name="contactEmail" value={settings.contactEmail} onChange={handleChange} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" />
-                    </div>
-                     <div className="md:col-span-2">
-                        <label className="text-sm text-theme-text-secondary">Address</label>
-                        <textarea name="address" value={settings.address} onChange={handleChange} rows={3} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" />
-                    </div>
-                </div>
-                <div>
-                    <label className="text-sm text-theme-text-secondary">Footer Content</label>
-                    <textarea name="footerContent" value={settings.footerContent} onChange={handleChange} rows={3} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" />
-                </div>
-                 <div className="mt-2">
-                    <label className="text-sm text-theme-text-secondary">Copyright Text</label>
-                    <input type="text" name="copyrightText" value={settings.copyrightText} onChange={handleChange} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary" />
-                </div>
-                <div className="mt-4">
-                    <h4 className="text-md font-semibold text-theme-text-primary mb-2">Social Media Links</h4>
-                    <div className="space-y-2">
-                         {settings.socialLinks.map(link => (
-                            <div key={link.id} className="flex items-center gap-2">
-                                <select value={link.platform} onChange={e => handleSocialPlatformChange(link.id, e.target.value as SocialLink['platform'])} className="bg-theme-border p-2 rounded-md border border-theme-border/50 text-theme-text-primary text-sm">
-                                    <option>Facebook</option>
-                                    <option>Twitter</option>
-                                    <option>Instagram</option>
-                                    <option>LinkedIn</option>
-                                </select>
-                                <input type="text" placeholder="Full URL" value={link.url} onChange={e => handleLinkChange(link.id, 'url', e.target.value, 'social')} className="flex-grow bg-theme-border p-2 rounded-md border border-theme-border/50 text-theme-text-primary text-sm" />
-                                <button onClick={() => removeLink(link.id, 'social')} className="text-red-500 hover:text-red-400 p-1"><TrashIcon className="h-4 w-4" /></button>
-                            </div>
-                        ))}
-                    </div>
-                     <button onClick={() => addLink('social')} className="text-sm flex items-center gap-1 mt-2 text-theme-accent-primary hover:underline">
-                        <PlusIcon className="h-4 w-4" /> Add Social Link
-                    </button>
+            {/* Backend Integration Guide */}
+            <div className="bg-theme-bg/50 p-6 rounded-lg border-2 border-dashed border-theme-border">
+                <h3 className="text-xl font-semibold mb-4 text-theme-text-primary">Data & Image Backend Integration</h3>
+                <p className="text-sm text-theme-text-secondary mb-4">
+                    This application is currently in a "backend-ready" state. All user data, profiles, and messages are temporarily stored in your browser. The new image upload buttons convert images into a format ready for a backend. To make data permanent and enable real-time features, you will need to connect a backend service.
+                </p>
+                <div className="text-sm text-theme-text-secondary space-y-2">
+                    <p className='font-semibold text-theme-text-primary'>Instructions for your Backend Developer:</p>
+                    <ol className="list-decimal list-inside space-y-1">
+                        <li><strong>Data Storage:</strong> Create API endpoints to handle user registration, login, profile updates, and messaging. Replace the functions in `App.tsx` (e.g., `handleLogin`, `handleUpdateProfile`) with `fetch` calls to your new API.</li>
+                        <li><strong>Image Storage:</strong> Create an image upload endpoint. The file upload components (e.g., in `ProfilePage.tsx`) use `FileReader` to generate Base64 strings. This string should be sent to your backend, which will then decode it and save it to a cloud storage service like Amazon S3, Google Cloud Storage, or Cloudinary.</li>
+                        <li><strong>Real-time Chat:</strong> For a production-level chat, implement a WebSocket server or use a service like Socket.io or Firebase Realtime Database.</li>
+                    </ol>
                 </div>
             </div>
 

@@ -25,6 +25,24 @@ const FeaturedServiceCard: React.FC<{ service: Service }> = ({ service }) => (
     </a>
 );
 
+const NostalgiaHubCard: React.FC<{ service?: Service }> = ({ service }) => {
+    if (!service) return null;
+    return (
+        <a href={`#/90s-hub/home`} className="relative rounded-xl overflow-hidden group md:col-span-2 h-80 block">
+            <img src={service.heroImageUrl} alt={service.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
+                <h3 className="text-3xl font-bold">90s South Rewind</h3>
+                <p className="mt-2 max-w-md">Relive the magic of the 90s. Play classic games, listen to iconic music, and connect with fellow enthusiasts.</p>
+                <div className="mt-4 bg-white/90 text-black font-bold py-3 px-8 rounded-lg hover:bg-white transition">
+                    Enter the Hub
+                </div>
+            </div>
+        </a>
+    );
+}
+
+
 const HomePage: React.FC<HomePageProps> = (props) => {
     const { 
         profiles, services, currentUser, websiteSettings, 
@@ -33,22 +51,18 @@ const HomePage: React.FC<HomePageProps> = (props) => {
     
     // Don't show the current user in their own feed, only show approved users
     const displayProfiles = profiles.filter(p => p.id !== currentUser.id && p.role === 'user' && p.approvalStatus === 'approved');
-    const featuredServices = services.filter(s => ['doctors-matrimony', '90s-kids-matrimony'].includes(s.slug));
+    const featuredServices = services.filter(s => ['doctors-matrimony', 'lawyers-matrimony'].includes(s.slug));
+    const nostalgiaService = services.find(s => s.isSpecialCategory === '90s-hub');
 
-    const homepageSections = websiteSettings.homepageSettings || [
-        { id: 'matchmaker', title: 'AI Matchmaker Suggestion', enabled: true },
-        { id: 'featured-services', title: 'Featured Services', enabled: true },
-        { id: 'recommendations', title: 'Recommended for You', enabled: true },
-    ];
+    const homepageSections = websiteSettings.homepageSettings || [];
 
-    const renderSection = (id: string) => {
-        const section = homepageSections.find(s => s.id === id);
+    const renderSection = (section: typeof homepageSections[0]) => {
         if (!section || !section.enabled) return null;
 
-        switch (id) {
+        switch (section.id) {
             case 'matchmaker':
                 return (
-                    <div key={id}>
+                    <div key={section.id}>
                         <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
                         <MatchmakerPanel 
                             currentUser={currentUser}
@@ -58,10 +72,17 @@ const HomePage: React.FC<HomePageProps> = (props) => {
                         />
                     </div>
                 );
+            case '90s-hub':
+                return (
+                     <div key={section.id}>
+                        <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
+                        <NostalgiaHubCard service={nostalgiaService} />
+                    </div>
+                )
             case 'featured-services':
                 if (featuredServices.length === 0) return null;
                 return (
-                    <div key={id}>
+                    <div key={section.id}>
                         <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {featuredServices.map(service => (
@@ -72,7 +93,7 @@ const HomePage: React.FC<HomePageProps> = (props) => {
                 );
             case 'recommendations':
                 return (
-                    <div key={id}>
+                    <div key={section.id}>
                         <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
                         <MatchFeed 
                             profiles={displayProfiles}
@@ -89,7 +110,7 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 
     return (
         <div className="space-y-8">
-            {homepageSections.map(section => renderSection(section.id))}
+            {homepageSections.map(section => renderSection(section))}
         </div>
     );
 };
