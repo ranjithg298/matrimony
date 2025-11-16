@@ -1,6 +1,7 @@
 import React from 'react';
 import { Page, WebsiteSettings } from '../types';
 import Footer from '../components/Footer';
+import ArrowLeftIcon from '../components/icons/ArrowLeftIcon';
 
 interface ContentPageProps {
     page: Page;
@@ -26,6 +27,13 @@ const ContentPage: React.FC<ContentPageProps> = ({ page, websiteSettings }) => {
             </header>
             
             <main className="container mx-auto px-6 py-12">
+                <button
+                    onClick={() => window.history.back()}
+                    className="flex items-center gap-2 text-sm font-semibold text-theme-text-secondary hover:text-theme-text-primary mb-4 max-w-4xl mx-auto"
+                >
+                    <ArrowLeftIcon className="w-4 h-4" />
+                    Back
+                </button>
                 <div className="bg-theme-surface p-8 rounded-lg border border-theme-border max-w-4xl mx-auto">
                     <h1 className="text-4xl font-bold mb-6">{page.title}</h1>
                     <div 

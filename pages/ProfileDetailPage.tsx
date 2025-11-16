@@ -16,6 +16,7 @@ import PhotoViewerModal from '../components/PhotoViewerModal';
 import PuzzlePieceIcon from '../components/icons/PuzzlePieceIcon';
 import GiftIcon from '../components/icons/GiftIcon';
 import GiftModal from '../components/GiftModal';
+import ArrowLeftIcon from '../components/icons/ArrowLeftIcon';
 
 interface ProfileDetailPageProps {
   profile: Profile;
@@ -165,6 +166,13 @@ const ProfileDetailPage: React.FC<ProfileDetailPageProps> = (props) => {
   return (
     <>
       <div className="container mx-auto p-4 sm:p-6 lg:p-8">
+        <button
+            onClick={() => window.history.back()}
+            className="flex items-center gap-2 text-sm font-semibold text-theme-text-secondary hover:text-theme-text-primary mb-4"
+        >
+            <ArrowLeftIcon className="w-4 h-4" />
+            Back
+        </button>
         {/* Profile Header */}
         <div className="bg-theme-surface rounded-xl border border-theme-border p-6 md:flex gap-8">
             <img src={profile.photo} alt={profile.name} className="w-40 h-40 rounded-full object-cover mx-auto md:mx-0 flex-shrink-0 border-4 border-theme-accent-secondary" />

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Profile } from '../types';
 import HeartIcon from '../components/icons/HeartIcon';
+import ArrowLeftIcon from '../components/icons/ArrowLeftIcon';
 
 interface AstroReportPageProps {
     userA: Profile;
@@ -47,62 +48,71 @@ const AstroReportPage: React.FC<AstroReportPageProps> = ({ userA, userB }) => {
 
     return (
         <div className="bg-gray-100 min-h-screen p-4 sm:p-8 print:p-0 print:bg-white">
-            <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8 sm:p-12 print:shadow-none print:rounded-none">
-                
-                <header className="text-center mb-10 border-b-2 border-gray-200 pb-6">
-                    <div className="flex items-center justify-center space-x-2">
-                        <HeartIcon className="h-10 w-10 text-amber-600" />
-                        <h1 className="text-3xl font-serif font-bold text-gray-800">matrimony.ai</h1>
-                    </div>
-                    <h2 className="text-2xl font-serif text-gray-600 mt-2">Vedic Astrology Compatibility Report</h2>
-                </header>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                    {/* User A */}
-                    <div className="border border-gray-200 rounded-lg p-6">
-                        <div className="flex items-center gap-4 mb-4">
-                             <img src={userA.photo} alt={userA.name} className="w-16 h-16 rounded-full object-cover"/>
-                             <div>
-                                <h3 className="text-2xl font-bold text-gray-900">{userA.name}</h3>
-                                <p className="text-gray-500">{userA.age}, {userA.city}</p>
-                             </div>
+            <div className="max-w-4xl mx-auto">
+                <button
+                    onClick={() => window.history.back()}
+                    className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-900 mb-4 print:hidden"
+                >
+                    <ArrowLeftIcon className="w-4 h-4" />
+                    Back
+                </button>
+                <div className="bg-white rounded-lg shadow-lg p-8 sm:p-12 print:shadow-none print:rounded-none">
+                    
+                    <header className="text-center mb-10 border-b-2 border-gray-200 pb-6">
+                        <div className="flex items-center justify-center space-x-2">
+                            <HeartIcon className="h-10 w-10 text-amber-600" />
+                            <h1 className="text-3xl font-serif font-bold text-gray-800">matrimony.ai</h1>
                         </div>
-                        <DetailSection title="Astrological Details" details={getAstroDetails(userA)} />
-                        <DetailSection title="Personal Background" details={getPersonalDetails(userA)} />
-                    </div>
+                        <h2 className="text-2xl font-serif text-gray-600 mt-2">Vedic Astrology Compatibility Report</h2>
+                    </header>
 
-                     {/* User B */}
-                    <div className="border border-gray-200 rounded-lg p-6">
-                         <div className="flex items-center gap-4 mb-4">
-                             <img src={userB.photo} alt={userB.name} className="w-16 h-16 rounded-full object-cover"/>
-                             <div>
-                                <h3 className="text-2xl font-bold text-gray-900">{userB.name}</h3>
-                                <p className="text-gray-500">{userB.age}, {userB.city}</p>
-                             </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                        {/* User A */}
+                        <div className="border border-gray-200 rounded-lg p-6">
+                            <div className="flex items-center gap-4 mb-4">
+                                <img src={userA.photo} alt={userA.name} className="w-16 h-16 rounded-full object-cover"/>
+                                <div>
+                                    <h3 className="text-2xl font-bold text-gray-900">{userA.name}</h3>
+                                    <p className="text-gray-500">{userA.age}, {userA.city}</p>
+                                </div>
+                            </div>
+                            <DetailSection title="Astrological Details" details={getAstroDetails(userA)} />
+                            <DetailSection title="Personal Background" details={getPersonalDetails(userA)} />
                         </div>
-                        <DetailSection title="Astrological Details" details={getAstroDetails(userB)} />
-                        <DetailSection title="Personal Background" details={getPersonalDetails(userB)} />
+
+                        {/* User B */}
+                        <div className="border border-gray-200 rounded-lg p-6">
+                            <div className="flex items-center gap-4 mb-4">
+                                <img src={userB.photo} alt={userB.name} className="w-16 h-16 rounded-full object-cover"/>
+                                <div>
+                                    <h3 className="text-2xl font-bold text-gray-900">{userB.name}</h3>
+                                    <p className="text-gray-500">{userB.age}, {userB.city}</p>
+                                </div>
+                            </div>
+                            <DetailSection title="Astrological Details" details={getAstroDetails(userB)} />
+                            <DetailSection title="Personal Background" details={getPersonalDetails(userB)} />
+                        </div>
                     </div>
-                </div>
 
-                <div className="mt-8">
-                     <h2 className="text-2xl font-serif text-gray-700 text-center mb-6">Compatibility Summary</h2>
-                     <p className="text-gray-600 leading-relaxed text-center">
-                        This report provides a foundational look at the astrological profiles of {userA.name} and {userB.name}. For a complete, in-depth analysis of compatibility, including Guna Milan, consult with a professional astrologer or use our AI Compatibility Analysis feature.
-                     </p>
-                </div>
-                
-                 <div className="text-center mt-12 text-xs text-gray-400">
-                    <p>Report generated by matrimony.ai on {new Date().toLocaleDateString()}</p>
-                    <p>This is a computer-generated report and should be used for reference purposes only.</p>
-                </div>
+                    <div className="mt-8">
+                        <h2 className="text-2xl font-serif text-gray-700 text-center mb-6">Compatibility Summary</h2>
+                        <p className="text-gray-600 leading-relaxed text-center">
+                            This report provides a foundational look at the astrological profiles of {userA.name} and {userB.name}. For a complete, in-depth analysis of compatibility, including Guna Milan, consult with a professional astrologer or use our AI Compatibility Analysis feature.
+                        </p>
+                    </div>
+                    
+                    <div className="text-center mt-12 text-xs text-gray-400">
+                        <p>Report generated by matrimony.ai on {new Date().toLocaleDateString()}</p>
+                        <p>This is a computer-generated report and should be used for reference purposes only.</p>
+                    </div>
 
-                 <div className="mt-8 text-center print:hidden">
-                    <button onClick={() => window.print()} className="bg-amber-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-700 transition-colors">
-                        Print / Save as PDF
-                    </button>
-                </div>
+                    <div className="mt-8 text-center print:hidden">
+                        <button onClick={() => window.print()} className="bg-amber-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-700 transition-colors">
+                            Print / Save as PDF
+                        </button>
+                    </div>
 
+                </div>
             </div>
         </div>
     );

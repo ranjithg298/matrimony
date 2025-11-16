@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Profile, VendorReview, WebsiteSettings } from '../types';
 import Footer from '../components/Footer';
 import StarRating from '../components/StarRating';
+import ArrowLeftIcon from '../components/icons/ArrowLeftIcon';
 
 interface VendorDetailPageProps {
   vendor: Profile;
@@ -51,6 +52,13 @@ const VendorDetailPage: React.FC<VendorDetailPageProps> = ({ vendor, currentUser
         </header>
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <button
+            onClick={() => window.history.back()}
+            className="flex items-center gap-2 text-sm font-semibold text-theme-text-secondary hover:text-theme-text-primary mb-4"
+        >
+            <ArrowLeftIcon className="w-4 h-4" />
+            Back
+        </button>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column */}
           <div className="lg:col-span-2">
