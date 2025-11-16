@@ -14,6 +14,7 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
     const [showSaved, setShowSaved] = useState(false);
 
     const apiKeyStatus = process.env.API_KEY ? 'Detected' : 'Not Detected';
+    const backendStatus = settings.backendStatus;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -23,35 +24,6 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
         } else {
             setSettings({ ...settings, [name]: value });
         }
-    };
-
-    const handleLinkChange = (id: string, field: 'text' | 'url', value: string, type: 'header' | 'social') => {
-        const links = type === 'header' ? 'headerLinks' : 'socialLinks';
-        setSettings(prev => ({
-            ...prev,
-            [links]: prev[links].map(link => link.id === id ? { ...link, [field]: value } : link)
-        }));
-    };
-    
-    const handleSocialPlatformChange = (id: string, value: SocialLink['platform']) => {
-         setSettings(prev => ({
-            ...prev,
-            socialLinks: prev.socialLinks.map(link => link.id === id ? { ...link, platform: value } : link)
-        }));
-    };
-
-    const addLink = (type: 'header' | 'social') => {
-        const links = type === 'header' ? 'headerLinks' : 'socialLinks';
-        const newLink = type === 'header' 
-            ? { id: `l${Date.now()}`, text: 'New Link', url: '#' }
-            : { id: `s${Date.now()}`, platform: 'Facebook', url: '' };
-        
-        setSettings(prev => ({ ...prev, [links]: [...prev[links], newLink] }));
-    };
-
-    const removeLink = (id: string, type: 'header' | 'social') => {
-        const links = type === 'header' ? 'headerLinks' : 'socialLinks';
-        setSettings(prev => ({ ...prev, [links]: prev[links].filter(link => link.id !== id) }));
     };
     
     const handleSave = () => {
@@ -94,16 +66,29 @@ const WebSetup: React.FC<WebSetupProps> = ({ settings: initialSettings, onSave }
 
             {/* Backend Integration Guide */}
             <div className="bg-theme-bg/50 p-6 rounded-lg border-2 border-dashed border-theme-border">
-                <h3 className="text-xl font-semibold mb-4 text-theme-text-primary">Data & Image Backend Integration</h3>
-                <p className="text-sm text-theme-text-secondary mb-4">
-                    This application is currently in a "backend-ready" state. All user data, profiles, and messages are temporarily stored in your browser. The new image upload buttons convert images into a format ready for a backend. To make data permanent and enable real-time features, you will need to connect a backend service.
+                <h3 className="text-xl font-semibold mb-4 text-theme-text-primary">Data & Image Backend Status</h3>
+                 <div className={`p-4 rounded-lg flex items-center gap-4 ${backendStatus === 'live' ? 'bg-green-500/10 border-l-4 border-green-500' : 'bg-yellow-500/10 border-l-4 border-yellow-500'}`}>
+                    <div>
+                        <p className="font-bold text-lg">Status: <span className={backendStatus === 'live' ? 'text-green-500' : 'text-yellow-500'}>
+                            {backendStatus === 'live' ? 'Live Mode' : 'Simulated Mode'}
+                        </span></p>
+                         <p className="text-sm text-theme-text-secondary mt-1">
+                            {backendStatus === 'simulated'
+                                ? 'The app is using temporary browser storage. All data will be lost on refresh.'
+                                : 'Your application is connected to a live backend.'
+                            }
+                        </p>
+                    </div>
+                </div>
+                <p className="text-sm text-theme-text-secondary my-4">
+                    This application is currently "backend-ready". To make data permanent (users, images, messages), you must connect a backend service.
                 </p>
                 <div className="text-sm text-theme-text-secondary space-y-2">
                     <p className='font-semibold text-theme-text-primary'>Instructions for your Backend Developer:</p>
                     <ol className="list-decimal list-inside space-y-1">
-                        <li><strong>Data Storage:</strong> Create API endpoints to handle user registration, login, profile updates, and messaging. Replace the functions in `App.tsx` (e.g., `handleLogin`, `handleUpdateProfile`) with `fetch` calls to your new API.</li>
-                        <li><strong>Image Storage:</strong> Create an image upload endpoint. The file upload components (e.g., in `ProfilePage.tsx`) use `FileReader` to generate Base64 strings. This string should be sent to your backend, which will then decode it and save it to a cloud storage service like Amazon S3, Google Cloud Storage, or Cloudinary.</li>
-                        <li><strong>Real-time Chat:</strong> For a production-level chat, implement a WebSocket server or use a service like Socket.io or Firebase Realtime Database.</li>
+                        <li><strong>Data Storage:</strong> Create API endpoints for user registration, login, profile updates, and messaging. Replace the functions in `App.tsx` (e.g., `handleLogin`, `handleUpdateProfile`) with `fetch` calls to your new API.</li>
+                        <li><strong>Image Storage:</strong> Create an image upload endpoint. The file upload components (e.g., in `ProfilePage.tsx`) use `FileReader` to generate Base64 strings. This string should be sent to your backend to be decoded and saved to cloud storage (e.g., Amazon S3, Cloudinary).</li>
+                        <li><strong>Real-time Chat:</strong> For production-level chat, implement a WebSocket server or use a service like Socket.io or Firebase.</li>
                     </ol>
                 </div>
             </div>

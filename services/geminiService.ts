@@ -54,6 +54,33 @@ const handleGeminiError = (error: unknown): string => {
     return "Error: Could not complete the AI request. Please try again later.";
 }
 
+export const getAdminConfigHelp = async (query: string): Promise<string> => {
+    try {
+        const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const prompt = `
+            You are an expert frontend developer and CSS specialist assisting a non-technical website administrator. 
+            The admin is using a system with predefined CSS variables for theming.
+            Your task is to provide clear, simple, copy-pasteable CSS code snippets to help them with their customization query.
+            Explain what the code does in one simple sentence.
+            The app uses Tailwind CSS and has theme variables like '--color-bg', '--color-surface', '--color-text-primary', '--color-accent-primary', etc.
+
+            Admin's Query: "${query}"
+
+            Your Response Format:
+            1.  A one-sentence explanation of what the code will do.
+            2.  A CSS code block that the admin can copy and paste.
+        `;
+        const response = await aiInstance.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+        });
+        return response.text;
+    } catch (error) {
+        return handleGeminiError(error);
+    }
+};
+
+
 export const getCompatibilityAnalysis = async (profileA: Profile, profileB: Profile, attributes: Attribute[]): Promise<string> => {
   try {
     const aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });

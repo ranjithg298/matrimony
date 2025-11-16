@@ -59,16 +59,16 @@ export const PROFILES: Profile[] = [
     approvalStatus: 'approved',
     isVerified: true,
     isPhotoVerified: true,
-    photo: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", 
+    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop", 
     bio: "Software Engineer passionate about travel, hiking, and exploring new cuisines. Looking for a meaningful connection with someone who is ambitious, kind, and has a good sense of humor. I value honesty and open communication in a relationship.",
     interests: ["Travel", "Hiking", "Foodie", "Technology"],
     isPremium: true,
     isOnline: true,
     bioDataUrl: '/assets/sample-biodata.pdf',
     gallery: [
-      { url: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", status: 'approved'},
-      { url: "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", status: 'approved'},
-      { url: "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", status: 'pending'},
+      { url: "https://images.unsplash.com/photo-1594744803329-e58b3147368a?q=80&w=1887&auto=format&fit=crop", status: 'approved'},
+      { url: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop", status: 'approved'},
+      { url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1887&auto=format&fit=crop", status: 'pending'},
     ],
     customFields: {
       height: "5' 5\"",
@@ -120,12 +120,12 @@ export const PROFILES: Profile[] = [
     status: "active",
     approvalStatus: 'approved',
     isPhotoVerified: false,
-    photo: "https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", 
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop", 
     bio: "Product Manager and a foodie at heart. I enjoy long drives, old movies, and a good book on a rainy day.",
     interests: ["Movies", "Reading", "Driving", "Cooking"],
     isPremium: false,
     isOnline: false,
-    documentForVerification: { url: 'https://i.imgur.com/example-doc.png', type: 'Aadhaar'},
+    documentForVerification: { url: 'https://i.ibb.co/example-doc.png', type: 'Aadhaar'},
     gallery: [],
     customFields: {
         height: "5' 11\"",
@@ -160,7 +160,7 @@ export const PROFILES: Profile[] = [
     approvalStatus: "approved",
     isVerified: true,
     isPhotoVerified: true,
-    photo: "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    photo: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?q=80&w=1887&auto=format&fit=crop",
     bio: "A compassionate doctor specializing in pediatrics. In my free time, I love classical dance and volunteering at local shelters. Looking for a partner who is kind, ambitious, and values family.",
     interests: ["Classical Dance", "Volunteering", "Reading", "Medicine"],
     isPremium: true,
@@ -189,7 +189,7 @@ export const PROFILES: Profile[] = [
     status: "active",
     approvalStatus: "approved",
     isPhotoVerified: false,
-    photo: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    photo: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=1770&auto=format&fit=crop",
     bio: "Corporate lawyer with a passion for fitness and adventure sports. I believe in living life to the fullest. Seeking a partner who is independent, intelligent, and has a great sense of humor.",
     interests: ["Fitness", "Trekking", "Scuba Diving", "Law"],
     isPremium: false,
@@ -217,7 +217,7 @@ export const PROFILES: Profile[] = [
     status: "active",
     approvalStatus: "approved",
     isPhotoVerified: false,
-    photo: "https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    photo: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=1771&auto=format&fit=crop",
     bio: "IT project manager, divorcee with an 8-year-old daughter. I'm a stable, grounded person who loves spending weekends with my child. Looking for a mature and understanding partner for a fresh start.",
     interests: ["Parenting", "Jazz Music", "Gardening"],
     isPremium: true,
@@ -245,7 +245,7 @@ export const PROFILES: Profile[] = [
     status: "active",
     approvalStatus: "pending",
     isPhotoVerified: false,
-    photo: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop",
     bio: "Fashion designer with my own small boutique. I am creative, ambitious, and love exploring art galleries. Looking for a supportive partner who appreciates the arts.",
     interests: ["Fashion", "Art", "Sketching", "Entrepreneurship"],
     isPremium: false,
@@ -273,12 +273,12 @@ export const PROFILES: Profile[] = [
     status: "active",
     approvalStatus: 'approved',
     isPhotoVerified: true,
-    photo: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", 
+    photo: "https://images.unsplash.com/photo-1599577182250-138d61a4cc83?q=80&w=1887&auto=format&fit=crop", 
     bio: "Banker and part-time baker. I find joy in numbers and dough. Looking for someone genuine, witty, and who enjoys the simple things in life.",
     interests: ["Baking", "Finance", "Stand-up Comedy", "Yoga"],
     isPremium: true,
     isOnline: true,
-    documentForVerification: { url: 'https://i.imgur.com/example-passport.png', type: 'Passport'},
+    documentForVerification: { url: 'https://i.ibb.co/example-passport.png', type: 'Passport'},
     gallery: [],
     customFields: {
         height: "5' 3\"",
@@ -308,7 +308,7 @@ export const PROFILES: Profile[] = [
     approvalStatus: 'approved',
     isVerified: true,
     isPhotoVerified: false,
-    photo: 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    photo: 'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop',
     bio: 'Architect with a love for sustainable design and photography. Weekends are for long bike rides and discovering hidden gems in the city.',
     interests: ['Architecture', 'Photography', 'Cycling', 'Sustainability'],
     isPremium: true,
@@ -337,7 +337,7 @@ export const PROFILES: Profile[] = [
     status: 'active',
     approvalStatus: 'approved',
     isPhotoVerified: false,
-    photo: 'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop',
     bio: 'Professor of History and a single mother to a wonderful teenage son. I am passionate about my work, classical music, and literature. Seeking a companion who is intellectually curious and emotionally mature.',
     interests: ['History', 'Classical Music', 'Literature', 'Parenting'],
     isPremium: false,
@@ -363,7 +363,7 @@ export const PROFILES: Profile[] = [
     city: "Delhi",
     email: "rohan.gupta@example.com",
     role: "user", status: "active", approvalStatus: "approved", isVerified: true,
-    photo: "https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    photo: "https://images.unsplash.com/photo-1622253692010-333f2da60710?q=80&w=1964&auto=format&fit=crop",
     bio: "Cardiologist dedicated to saving lives. I unwind by playing the guitar and exploring nature trails. Looking for a partner who is genuine, has a zest for life, and appreciates a quiet evening at home as much as a spontaneous trip.",
     interests: ["Guitar", "Trekking", "Cardiology", "Cooking"],
     isPremium: true, isOnline: true, gallery: [],
@@ -376,11 +376,24 @@ export const PROFILES: Profile[] = [
     city: "Mumbai",
     email: "aisha.khan@example.com",
     role: "user", status: "active", approvalStatus: "approved", isVerified: true,
-    photo: "https://images.pexels.com/photos/5378700/pexels-photo-5378700.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    photo: "https://images.unsplash.com/photo-1618498082410-b4aa22193b38?q=80&w=1770&auto=format&fit=crop",
     bio: "A dentist with a passion for creating beautiful smiles. I enjoy painting, yoga, and trying out new cafes in the city. Seeking a partner who is understanding, supportive, and has a great sense of humor.",
     interests: ["Painting", "Yoga", "Foodie", "Dentistry"],
     isPremium: false, isOnline: false, gallery: [],
     customFields: { occupation: "Doctor", education: "BDS", height: "5' 4\"", maritalStatus: "Never Married", religion: "Muslim", caste: "Khan", annualIncome: "₹12L - ₹18L", rasi: "Libra (Tula)", nakshatra: "Chitra" },
+  },
+   {
+    id: "u12",
+    name: "Siddharth Menon",
+    age: 30,
+    city: "Kochi",
+    email: "sid.menon@example.com",
+    role: "user", status: "active", approvalStatus: "approved",
+    photo: "https://images.unsplash.com/photo-1542327897-4141c2522011?q=80&w=1887&auto=format&fit=crop",
+    bio: "Filmmaker and storyteller. I see the world through a camera lens. Love discussing cinema, philosophy, and embarking on spontaneous road trips.",
+    interests: ["Filmmaking", "Photography", "Road Trips", "Philosophy"],
+    isPremium: true, isOnline: true, gallery: [],
+    customFields: { occupation: "Filmmaker", education: "M.A. in Film Studies", height: "5' 10\"", maritalStatus: "Never Married", religion: "Hindu", caste: "Nair", annualIncome: "₹8L - ₹12L", rasi: "Kumbha (Aquarius)", nakshatra: "Shatabhisha" },
   },
   { 
     id: "a1",
@@ -392,7 +405,7 @@ export const PROFILES: Profile[] = [
     status: "active",
     approvalStatus: 'approved',
     isPhotoVerified: true,
-    photo: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1887&auto=format&fit=crop",
     bio: "System Administrator for matrimony.ai. Ensuring a safe and effective platform for all users.",
     interests: ["System Ops", "User Safety", "Analytics"],
     isOnline: true,
@@ -409,14 +422,14 @@ export const PROFILES: Profile[] = [
     status: "active",
     approvalStatus: 'approved',
     isPhotoVerified: true,
-    photo: "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    photo: "https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=1887&auto=format&fit=crop",
     bio: "A premium, white-glove matchmaking service now using the matrimony.ai platform to connect our clients.",
     interests: ["Matchmaking", "Client Management", "Events"],
     isOnline: false,
     gallery: [],
     customFields: { rasi: "Kumbha (Aquarius)", nakshatra: "Dhanishta" },
     serviceCategory: 'Photography',
-    portfolioUrl: 'https://pexels.com',
+    portfolioUrl: 'https://unsplash.com',
     vendorBio: 'Capturing timeless moments with artistry and passion. We specialize in candid wedding photography, telling your love story through breathtaking images. With over a decade of experience, our team is dedicated to making your special day unforgettable.',
     reviews: []
   },
@@ -504,10 +517,10 @@ export const PRICING_PLANS: PricingPlan[] = [
 ];
 
 export const HAPPY_STORIES: HappyStory[] = [
-    { id: 'hs1', coupleNames: 'Rohan & Meera', weddingDate: '15th Dec 2023', imageUrl: 'https://images.pexels.com/photos/3916058/pexels-photo-3916058.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', story: 'We connected over our shared love for classic literature and long walks. The AI match was spot on! We knew from our first conversation that this was something special. Thank you matrimony.ai!' },
-    { id: 'hs2', coupleNames: 'Priya & Sameer', weddingDate: '28th Jan 2024', imageUrl: 'https://images.pexels.com/photos/1024989/pexels-photo-1024989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', story: 'Finding someone who understands your past and looks forward to your future is a blessing. We found that in each other here. Our families couldn\'t be happier.', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
-    { id: 'hs3', coupleNames: 'Anjali & Vikram', weddingDate: '09th Mar 2024', imageUrl: 'https://images.pexels.com/photos/1689282/pexels-photo-1689282.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', story: 'We were both busy doctors with little time for socializing. The platform\'s filters helped us find each other, and the compatibility report was incredibly insightful. It felt like destiny.' },
-    { id: 'hs4', coupleNames: 'Aisha & Karan', weddingDate: '20th May 2024', imageUrl: 'https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', story: 'Our first date was a video call set up through the platform\'s live event feature. We talked for hours, and the rest is history. We are so grateful for this amazing service!', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+    { id: 'hs1', coupleNames: 'Rohan & Meera', weddingDate: '15th Dec 2023', imageUrl: 'https://images.unsplash.com/photo-1597343449836-9d68c171e367?q=80&w=1887&auto=format&fit=crop', story: 'We connected over our shared love for classic literature and long walks. The AI match was spot on! We knew from our first conversation that this was something special. Thank you matrimony.ai!' },
+    { id: 'hs2', coupleNames: 'Priya & Sameer', weddingDate: '28th Jan 2024', imageUrl: 'https://images.unsplash.com/photo-1551847683-6d14b6c31899?q=80&w=1887&auto=format&fit=crop', story: 'Finding someone who understands your past and looks forward to your future is a blessing. We found that in each other here. Our families couldn\'t be happier.', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+    { id: 'hs3', coupleNames: 'Anjali & Vikram', weddingDate: '09th Mar 2024', imageUrl: 'https://images.unsplash.com/photo-1599335607392-49593215a31a?q=80&w=1887&auto=format&fit=crop', story: 'We were both busy doctors with little time for socializing. The platform\'s filters helped us find each other, and the compatibility report was incredibly insightful. It felt like destiny.' },
+    { id: 'hs4', coupleNames: 'Aisha & Karan', weddingDate: '20th May 2024', imageUrl: 'https://images.unsplash.com/photo-1610642372651-fe4e7bc20914?q=80&w=1887&auto=format&fit=crop', story: 'Our first date was a video call set up through the platform\'s live event feature. We talked for hours, and the rest is history. We are so grateful for this amazing service!', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
 ];
 
 export const SERVICES: Service[] = [
@@ -587,6 +600,7 @@ export const MANUAL_PAYMENT_METHODS: ManualPaymentMethod[] = [
 
 export const WEBSITE_SETTINGS: WebsiteSettings = {
     siteName: 'matrimony.ai',
+    siteNamePosition: 'right',
     logoUrl: 'https://i.ibb.co/7zJ4Q0Y/logo.png',
     slogan: 'Find Your Perfect Match',
     stickyHeader: true,
@@ -598,7 +612,7 @@ export const WEBSITE_SETTINGS: WebsiteSettings = {
     ],
     heroTitle: 'An Elite Marriage Matrimony',
     heroSubtitle: 'Best Marriage Bureau In India',
-    heroImageUrl: 'https://images.pexels.com/photos/1024960/pexels-photo-1024960.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    heroImageUrl: 'https://images.unsplash.com/photo-1597686252444-3644b1c85347?q=80&w=1887&auto=format&fit=crop',
     heroImageZoom: 100,
     footerContent: 'A sleek, modern, AI-powered matrimony platform.',
     copyrightText: '© 2025 matrimony.ai. All Rights Reserved.',
@@ -624,6 +638,7 @@ export const WEBSITE_SETTINGS: WebsiteSettings = {
         { id: 'featured-services', title: 'Featured Services', enabled: true },
         { id: 'recommendations', title: 'Recommended for You', enabled: true },
     ],
+    backendStatus: 'simulated',
     storySubmissionFounderName: 'Anupam Mittal',
     storySubmissionFounderMessage: 'The Shaadi Team would like to wish you and your better half, a life full of love, laughter and togetherness!',
     storySubmissionFounderImage: 'https://i.ibb.co/6rC6P2Q/anupam-mittal.png',
@@ -663,10 +678,17 @@ export const ASTROLOGERS: Astrologer[] = [
     }
 ];
 
+export const NOSTALGIA_PUZZLE_IMAGES = {
+    'power-rangers': 'https://i.ibb.co/9v0Gk0c/power-rangers.jpg',
+    'shinchan': 'https://i.ibb.co/k3V9tPh/shinchan.jpg',
+    'mr-bean': 'https://i.ibb.co/W2zT9dG/mr-bean.jpg',
+};
+
+
 export const NOSTALGIA_GAMES = [
-    { name: 'Ludo', image: 'https://i.ibb.co/hK8C7v7/ludo.jpg' },
-    { name: 'Snakes & Ladders', image: 'https://i.ibb.co/6y45k1v/snakes-ladders.jpg' },
-    { name: 'Thirudan Police', image: 'https://i.ibb.co/Jqj84FT/thirudan-police.jpg' },
+    { name: 'Ludo', image: 'https://i.ibb.co/hK8C7v7/ludo.jpg', link: '#/90s-hub/games' },
+    { name: 'Snakes & Ladders', image: 'https://i.ibb.co/6y45k1v/snakes-ladders.jpg', link: '#/90s-hub/games' },
+    { name: 'Thirudan Police', image: 'https://i.ibb.co/Jqj84FT/thirudan-police.jpg', link: '#/90s-hub/games' },
 ];
 
 export const NOSTALGIA_STICKERS = [
@@ -686,6 +708,10 @@ export const NOSTALGIA_MEMORIES = [
 
 
 // ... other constants
-export const FAQS: FaqItem[] = [];
+export const FAQS: FaqItem[] = [
+    { question: 'How does the AI matchmaking work?', answer: 'Our AI analyzes your profile, preferences, and activity to suggest highly compatible matches based on hundreds of data points.'},
+    { question: 'Is my data secure?', answer: 'Yes, we use industry-standard encryption and privacy protocols to ensure your data is always safe.'},
+    { question: 'How do I get a verified badge?', answer: 'You can submit a government-issued ID in your profile settings. Our team will review it and add a verified badge to your profile upon successful verification.'}
+];
 export const ASTRO_PREDICTIONS: AstroPrediction[] = [];
 export const AUSPICIOUS_DATES: AuspiciousDate[] = [];

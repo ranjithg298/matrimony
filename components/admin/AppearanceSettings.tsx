@@ -38,7 +38,7 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
     const [settings, setSettings] = useState(initialSettings);
     const [showSaved, setShowSaved] = useState(false);
     
-    const handleSettingChange = (field: keyof WebsiteSettings, value: Theme | Typography) => {
+    const handleSettingChange = (field: keyof WebsiteSettings, value: any) => {
         setSettings(prev => ({...prev, [field]: value}));
     }
 
@@ -83,14 +83,27 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
 
             <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
                  <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Branding</h3>
-                <div>
-                    <label className="text-sm text-theme-text-secondary">Website Logo</label>
-                    <input 
-                        type="file" 
-                        accept="image/*"
-                        onChange={e => handleFileChange(e, 'logoUrl')}
-                        className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20 mt-1" 
-                    />
+                <div className="space-y-4">
+                    <div>
+                        <label className="text-sm text-theme-text-secondary">Website Name</label>
+                        <input type="text" name="siteName" value={settings.siteName} onChange={handleInputChange} className="w-full bg-theme-border p-2 rounded-md mt-1" />
+                    </div>
+                     <div>
+                        <label className="text-sm text-theme-text-secondary">Name Position</label>
+                        <select name="siteNamePosition" value={settings.siteNamePosition} onChange={(e) => handleSettingChange('siteNamePosition', e.target.value)} className="w-full bg-theme-border p-2 rounded-md mt-1">
+                            <option value="left">Left of Logo</option>
+                            <option value="right">Right of Logo</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="text-sm text-theme-text-secondary">Website Logo</label>
+                        <input 
+                            type="file" 
+                            accept="image/*"
+                            onChange={e => handleFileChange(e, 'logoUrl')}
+                            className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-theme-accent-primary/10 file:text-theme-accent-primary hover:file:bg-theme-accent-primary/20 mt-1" 
+                        />
+                    </div>
                 </div>
             </div>
 

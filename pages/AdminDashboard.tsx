@@ -17,6 +17,7 @@ import PaintBrushIcon from '../components/icons/PaintBrushIcon';
 import EnvelopeIcon from '../components/icons/EnvelopeIcon';
 import WrenchScrewdriverIcon from '../components/icons/WrenchScrewdriverIcon';
 import HomeIcon from '../components/icons/HomeIcon';
+import MagicWandIcon from '../components/icons/MagicWandIcon';
 
 // Components
 import CreateUserModal from '../components/CreateUserModal';
@@ -41,6 +42,7 @@ import AstrologersManagement from '../components/admin/AstrologersManagement';
 import VerificationsManagement from '../components/admin/VerificationsManagement';
 import AIAdminAssistant from '../components/AIAdminAssistant';
 import HomepageManagement from '../components/admin/HomepageManagement';
+import AIConfigHelper from '../components/admin/AIConfigHelper';
 
 
 interface AdminDashboardProps {
@@ -74,7 +76,7 @@ interface AdminDashboardProps {
 }
 
 type AdminView = 
-  | 'ai-assistant'
+  | 'ai-assistant' | 'ai-config-helper'
   | 'members' | 'approvals' | 'verifications' | 'photo-approvals' | 'reports' | 'offline-payments'
   | 'live' | 'vendors' | 'vendor-reviews' | 'astrologers' 
   | 'pages' | 'services' | 'happy-stories' | 'pricing' | 'attribute-builder' 
@@ -91,7 +93,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
 
   const SIDEBAR_ITEMS = {
       'Tools': [
-          {id: 'ai-assistant', label: 'AI Assistant', icon: <SparklesIcon className="h-5 w-5"/>, notificationCount: 0},
+          {id: 'ai-assistant', label: 'AI Admin Assistant', icon: <SparklesIcon className="h-5 w-5"/>, notificationCount: 0},
+          {id: 'ai-config-helper', label: 'AI Config Helper', icon: <MagicWandIcon className="h-5 w-5"/>, notificationCount: 0},
       ],
       'User Management': [
           {id: 'members', label: 'Members', icon: <UserIcon className="h-5 w-5"/>, notificationCount: 0},
@@ -130,6 +133,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
                 reports={props.reports} 
                 contactQueries={props.contactQueries} 
             />;
+          case 'ai-config-helper': return <AIConfigHelper />;
           case 'members': return <MembersManagement allProfiles={props.allProfiles} onUpdateProfiles={props.onUpdateUsers} />;
           case 'approvals': return <ApprovalsManagement allProfiles={props.allProfiles} onUpdateProfiles={props.onUpdateUsers} onCreateNotification={props.onCreateNotification} />;
           case 'verifications': return <VerificationsManagement allProfiles={props.allProfiles} onUpdateProfiles={props.onUpdateUsers} onCreateNotification={props.onCreateNotification} />;

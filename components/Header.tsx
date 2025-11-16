@@ -64,6 +64,8 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
   ];
 
   const allThemes: Theme[] = ['imperial-gold', 'royal-purple', 'classic-blue', 'elegant-teal', 'sunset-rose', 'emerald-green', 'midnight-blue', 'vibrant-pink'];
+  
+  const siteNameElement = <span className="text-2xl font-bold text-transparent bg-clip-text bg-theme-gradient">{settings.siteName}</span>;
 
   return (
     <header className={`bg-theme-surface/80 border-b border-theme-border z-30 backdrop-blur-sm ${settings.stickyHeader ? 'sticky top-0' : ''}`}>
@@ -72,7 +74,9 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
                 {/* Logo and Main Nav */}
                 <div className="flex items-center space-x-8">
                     <a href="#/app/home" className="flex items-center space-x-2 cursor-pointer">
+                        {settings.siteNamePosition === 'left' && siteNameElement}
                         <img src={settings.logoUrl} alt={settings.siteName} className="h-8 object-contain" />
+                        {settings.siteNamePosition === 'right' && siteNameElement}
                     </a>
                     <nav className="hidden md:flex items-center space-x-1">
                         {mainNavLinks.map(link => (

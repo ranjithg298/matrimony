@@ -19,7 +19,9 @@ interface LandingPageProps {
 
 // Sub-components for better organization
 
-const LandingPageHeader: React.FC<{ settings: WebsiteSettings }> = ({ settings }) => (
+const LandingPageHeader: React.FC<{ settings: WebsiteSettings }> = ({ settings }) => {
+  const siteNameElement = <h1 className="font-serif text-2xl font-bold text-theme-text-primary">{settings.siteName}</h1>;
+  return (
     <header className="bg-theme-surface/80 backdrop-blur-sm sticky top-0 z-50 border-b border-theme-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-2 text-sm">
@@ -43,7 +45,9 @@ const LandingPageHeader: React.FC<{ settings: WebsiteSettings }> = ({ settings }
             <hr className="border-theme-border" />
             <div className="flex justify-between items-center py-4">
                 <a href="#/" className="flex items-center gap-2">
+                    {settings.siteNamePosition === 'left' && siteNameElement}
                     <img src={settings.logoUrl} alt={settings.siteName} className="h-12" />
+                    {settings.siteNamePosition === 'right' && siteNameElement}
                 </a>
                 <nav className="hidden lg:flex items-center gap-6">
                     {settings.headerLinks.map(link => (
@@ -53,7 +57,9 @@ const LandingPageHeader: React.FC<{ settings: WebsiteSettings }> = ({ settings }
             </div>
         </div>
     </header>
-);
+  );
+}
+
 
 const HeroSection: React.FC<{ settings: WebsiteSettings }> = ({ settings }) => (
     <section className="relative h-[60vh] overflow-hidden">
@@ -179,6 +185,7 @@ const ContactSection: React.FC<{ onAddContactQuery: LandingPageProps['onAddConta
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [bioDataFile, setBioDataFile] = useState<File | null>(null);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -186,16 +193,23 @@ const ContactSection: React.FC<{ onAddContactQuery: LandingPageProps['onAddConta
             alert('Name and Email are required.');
             return;
         }
+        
+        let message = `Enquiry from landing page. Phone: ${phone || 'Not provided'}.`;
+        if(bioDataFile){
+            message += ` Bio-data file attached: ${bioDataFile.name}`;
+        }
+
         onAddContactQuery({
             name,
             email,
-            message: `Enquiry from landing page. Phone: ${phone || 'Not provided'}.`,
+            message,
             subject: 'Landing Page Enquiry',
         });
         // Clear form
         setName('');
         setEmail('');
         setPhone('');
+        setBioDataFile(null);
     };
     
     return (
@@ -206,18 +220,18 @@ const ContactSection: React.FC<{ onAddContactQuery: LandingPageProps['onAddConta
                     <h3 className="font-serif text-3xl font-bold text-theme-text-primary">Our Recent Articles & Posts</h3>
                      <div className="grid sm:grid-cols-2 gap-4 mt-8">
                         <div className="bg-theme-surface rounded-lg overflow-hidden border border-theme-border">
-                            <img src="https://images.unsplash.com/photo-1592189352138-b7d111a43a29?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
+                            <img src="https://images.unsplash.com/photo-1597528359554-263a99265147?q=80&w=2070&auto=format&fit=crop" alt="Sharadiya Navratri" className="h-40 w-full object-cover"/>
                             <div className="p-4">
-                                <h4 className="font-bold text-theme-text-primary">Sharadiya Navratri</h4>
-                                <p className="text-sm text-theme-text-secondary mt-1">23 Sep</p>
+                                <h4 className="font-bold text-theme-text-primary">Navigating Relationships During Festivals</h4>
+                                <p className="text-sm text-theme-text-secondary mt-1">October 23, 2024</p>
                                 <a href="#" className="text-sm text-theme-accent-primary font-semibold mt-4 inline-block">Read more</a>
                             </div>
                         </div>
                          <div className="bg-theme-surface rounded-lg overflow-hidden border border-theme-border">
-                            <img src="https://images.unsplash.com/photo-1588031212454-de853de3b4d4?q=80&w=1887&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="article" className="h-40 w-full object-cover"/>
+                            <img src="https://images.unsplash.com/photo-1505942548446-2312b0b9686a?q=80&w=2070&auto=format&fit=crop" alt="Brahmin Matrimony UK" className="h-40 w-full object-cover"/>
                             <div className="p-4">
-                                <h4 className="font-bold text-theme-text-primary">Brahmin Matrimony UK</h4>
-                                 <p className="text-sm text-theme-text-secondary mt-1">05 Sep</p>
+                                <h4 className="font-bold text-theme-text-primary">Finding Your Partner Across Borders</h4>
+                                 <p className="text-sm text-theme-text-secondary mt-1">September 05, 2024</p>
                                 <a href="#" className="text-sm text-theme-accent-primary font-semibold mt-4 inline-block">Read more</a>
                             </div>
                         </div>
@@ -230,6 +244,10 @@ const ContactSection: React.FC<{ onAddContactQuery: LandingPageProps['onAddConta
                         <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required className="w-full bg-white/20 p-3 rounded-md placeholder-white/70" />
                         <input type="email" placeholder="E-mail Id" value={email} onChange={e => setEmail(e.target.value)} required className="w-full bg-white/20 p-3 rounded-md placeholder-white/70" />
                         <input type="text" placeholder="Your Phone No." value={phone} onChange={e => setPhone(e.target.value)} className="w-full bg-white/20 p-3 rounded-md placeholder-white/70" />
+                        <label className="block text-sm">
+                            Upload Bio-data (optional)
+                            <input type="file" onChange={e => setBioDataFile(e.target.files ? e.target.files[0] : null)} className="w-full text-xs mt-1 file:mr-2 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-white file:text-theme-accent-primary"/>
+                        </label>
                         <button type="submit" className="bg-white text-theme-accent-primary font-bold px-8 py-3 rounded-md hover:bg-gray-200">Send</button>
                     </form>
                 </div>
@@ -243,21 +261,6 @@ const LandingPageFooter: React.FC<{ settings: WebsiteSettings }> = ({ settings }
     <footer className="bg-theme-accent-secondary text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 className="font-bold mb-4 border-b-2 border-theme-accent-primary pb-2 inline-block">Social Link</h3>
-                    <div className="flex gap-4 mt-4">
-                         {settings.socialLinks.map(link => (
-                            <a key={link.id} href={link.url} className="hover:opacity-80">{
-                                {'Facebook': <FacebookIcon />, 'Twitter': <TwitterIcon />, 'Instagram': <InstagramIcon />, 'Youtube': <YoutubeIcon />, 'LinkedIn': <span>LI</span>}[link.platform]
-                            }</a>
-                        ))}
-                    </div>
-                     <div className="mt-6 space-y-2 text-sm">
-                        <p className="flex gap-2"><PhoneIcon className="w-4 h-4 mt-1"/> {settings.address}</p>
-                        <p className="flex gap-2"><PhoneIcon className="w-4 h-4 mt-1"/> {settings.contactPhonePrimary}</p>
-                        <p className="flex gap-2"><EnvelopeIcon className="w-4 h-4 mt-1"/> {settings.contactEmail}</p>
-                    </div>
-                </div>
                 <div>
                     <h3 className="font-bold mb-4 border-b-2 border-theme-accent-primary pb-2 inline-block">Quick Link</h3>
                     <ul className="space-y-2 mt-4 text-sm">
@@ -276,6 +279,21 @@ const LandingPageFooter: React.FC<{ settings: WebsiteSettings }> = ({ settings }
                         <li><a href="#/services/elite-matrimony" className="hover:underline">Elite Matrimony</a></li>
                     </ul>
                 </div>
+                <div>
+                    <h3 className="font-bold mb-4 border-b-2 border-theme-accent-primary pb-2 inline-block">Social Link</h3>
+                    <div className="flex gap-4 mt-4">
+                         {settings.socialLinks.map(link => (
+                            <a key={link.id} href={link.url} className="hover:opacity-80">{
+                                {'Facebook': <FacebookIcon />, 'Twitter': <TwitterIcon />, 'Instagram': <InstagramIcon />, 'Youtube': <YoutubeIcon />, 'LinkedIn': <span>LI</span>}[link.platform]
+                            }</a>
+                        ))}
+                    </div>
+                     <div className="mt-6 space-y-2 text-sm">
+                        <p className="flex gap-2"><PhoneIcon className="w-4 h-4 mt-1"/> {settings.address}</p>
+                        <p className="flex gap-2"><PhoneIcon className="w-4 h-4 mt-1"/> {settings.contactPhonePrimary}</p>
+                        <p className="flex gap-2"><EnvelopeIcon className="w-4 h-4 mt-1"/> {settings.contactEmail}</p>
+                    </div>
+                </div>
                  <div>
                     {/* FB Widget Placeholder */}
                      <div className="bg-white/10 p-2 rounded-lg h-full">
@@ -290,12 +308,12 @@ const LandingPageFooter: React.FC<{ settings: WebsiteSettings }> = ({ settings }
     </footer>
 );
 
-const FloatingCtaBar: React.FC = () => (
+const FloatingCtaBar: React.FC<{ settings: WebsiteSettings }> = ({ settings }) => (
     <div className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-1">
-        <a href="#" className="bg-blue-600 text-white p-3 rounded-l-md hover:bg-blue-700"><PhoneIcon className="w-6 h-6"/></a>
-        <a href="#" className="bg-red-600 text-white p-3 hover:bg-red-700"><YoutubeIcon className="w-6 h-6"/></a>
-        <a href="#" className="bg-pink-500 text-white p-3 hover:bg-pink-600"><InstagramIcon className="w-6 h-6"/></a>
-        <a href="#" className="bg-green-500 text-white p-3 rounded-l-md hover:bg-green-600"><WhatsappIcon className="w-6 h-6"/></a>
+        <a href={`tel:${settings.contactPhonePrimary}`} className="bg-blue-600 text-white p-3 rounded-l-md hover:bg-blue-700"><PhoneIcon className="w-6 h-6"/></a>
+        <a href={settings.socialLinks.find(s=>s.platform==='Youtube')?.url} target="_blank" rel="noopener noreferrer" className="bg-red-600 text-white p-3 hover:bg-red-700"><YoutubeIcon className="w-6 h-6"/></a>
+        <a href={settings.socialLinks.find(s=>s.platform==='Instagram')?.url} target="_blank" rel="noopener noreferrer" className="bg-pink-500 text-white p-3 hover:bg-pink-600"><InstagramIcon className="w-6 h-6"/></a>
+        <a href={`https://wa.me/${settings.contactPhonePrimary.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="bg-green-500 text-white p-3 rounded-l-md hover:bg-green-600"><WhatsappIcon className="w-6 h-6"/></a>
     </div>
 );
 
@@ -313,7 +331,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ websiteSettings, pricingPlans
           <ContactSection onAddContactQuery={onAddContactQuery} />
       </main>
       <LandingPageFooter settings={websiteSettings} />
-      <FloatingCtaBar />
+      <FloatingCtaBar settings={websiteSettings} />
     </div>
   );
 };

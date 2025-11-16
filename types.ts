@@ -274,6 +274,7 @@ export interface HomepageSection {
 
 export interface WebsiteSettings {
   siteName: string;
+  siteNamePosition: 'left' | 'right';
   logoUrl: string;
   slogan: string;
   stickyHeader: boolean;
@@ -303,6 +304,7 @@ export interface WebsiteSettings {
   manualPaymentMethods: ManualPaymentMethod[];
   siteBackgroundImageUrl?: string;
   homepageSettings: HomepageSection[];
+  backendStatus: 'simulated' | 'live';
 
   // New fields for editable founder message
   storySubmissionFounderName: string;
@@ -345,6 +347,7 @@ export interface ContactQuery {
     message: string;
     date: string;
     status: 'new' | 'read' | 'handled';
+    bioDataUrl?: string;
 }
 
 export interface Page {
