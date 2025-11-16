@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Service, WebsiteSettings } from '../types';
 import Footer from '../components/Footer';
 import ArrowLeftIcon from '../components/icons/ArrowLeftIcon';
@@ -10,6 +9,18 @@ interface ServicePageProps {
 }
 
 const ServicePage: React.FC<ServicePageProps> = ({ service, websiteSettings }) => {
+
+    useEffect(() => {
+        if (service.isSpecialCategory === '90s-hub') {
+            window.location.hash = '#/90s-hub/home';
+        }
+    }, [service]);
+
+    if (service.isSpecialCategory) {
+        // Render a loading state or null while redirecting
+        return <div className="min-h-screen flex items-center justify-center">Redirecting...</div>;
+    }
+
     return (
          <div className="bg-theme-bg min-h-screen text-theme-text-primary">
             <header className="bg-theme-surface/80 backdrop-blur-sm sticky top-0 z-50 border-b border-theme-border">
@@ -43,7 +54,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ service, websiteSettings }) =
                             className="flex items-center gap-2 text-sm font-semibold text-theme-text-secondary hover:text-theme-text-primary mb-4"
                         >
                             <ArrowLeftIcon className="w-4 h-4" />
-                            Back to Services
+                            Back
                         </button>
                         <h1 className="text-4xl font-bold mb-6 font-serif">{service.title}</h1>
                         <div 

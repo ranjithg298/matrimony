@@ -7,6 +7,7 @@ interface AppearanceSettingsProps {
 }
 
 const ThemeSwatch: React.FC<{theme: Theme, name: string, activeTheme: Theme, onClick: () => void}> = ({ theme, name, activeTheme, onClick }) => {
+    // FIX: Added 'vibrant-pink' to the themeColors record to satisfy the Record<Theme, string[]> type.
     const themeColors: Record<Theme, string[]> = {
         'imperial-gold': ['#FFFBF5', '#D4A056', '#8B2525', '#4F4A45'],
         'royal-purple': ['#1A1A2E', '#E94560', '#533483', '#E0E1DD'],
@@ -15,6 +16,7 @@ const ThemeSwatch: React.FC<{theme: Theme, name: string, activeTheme: Theme, onC
         'sunset-rose': ['#FFF5F7', '#D96D84', '#8C4054', '#5C232F'],
         'emerald-green': ['#F0FDF4', '#10B981', '#065F46', '#064E3B'],
         'midnight-blue': ['#111827', '#60A5FA', '#2563EB', '#F9FAFB'],
+        'vibrant-pink': ['#FEF6FA', '#E84393', '#C71585', '#333333'],
     };
     const colors = themeColors[theme];
 
@@ -75,6 +77,8 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
                     <ThemeSwatch theme="sunset-rose" name="Sunset Rose" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'sunset-rose')} />
                     <ThemeSwatch theme="emerald-green" name="Emerald Green" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'emerald-green')} />
                     <ThemeSwatch theme="midnight-blue" name="Midnight Blue" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'midnight-blue')} />
+                    {/* FIX: Added the 'vibrant-pink' theme swatch to make it available in the admin panel. */}
+                    <ThemeSwatch theme="vibrant-pink" name="Vibrant Pink" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'vibrant-pink')} />
                 </div>
             </div>
 

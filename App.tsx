@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import { Profile, Conversation, PricingPlan, WebsiteSettings, View, Page, Service, HappyStory, Attribute, Report, ContactQuery, Notification, LiveEvent, VendorReview, WeddingPlanner, OfflinePaymentRequest, Astrologer, Message, Quiz, AIWeddingPlan, Gift } from './types';
 import { PROFILES, CONVERSATIONS, PRICING_PLANS as initialPricingPlans, HAPPY_STORIES as initialHappyStories, ASTRO_PREDICTIONS, AUSPICIOUS_DATES, WEBSITE_SETTINGS as initialWebsiteSettings, PAGES as initialPages, SERVICES as initialServices, INITIAL_ATTRIBUTES, REPORTS as initialReports, CONTACT_QUERIES as initialContactQueries, LIVE_EVENTS as initialLiveEvents, VENDOR_REVIEWS as initialVendorReviews, OFFLINE_PAYMENT_REQUESTS as initialOfflinePaymentRequests, ASTROLOGERS as initialAstrologers, QUIZZES as initialQuizzes, AVAILABLE_GIFTS } from './constants';
@@ -36,6 +33,7 @@ import AIWeddingConciergePage from './pages/AIWeddingConciergePage';
 import TellYourStoryPage from './pages/TellYourStoryPage';
 import NotificationsPage from './pages/NotificationsPage';
 import WeddingPlannerPage from './pages/WeddingPlannerPage';
+import NostalgiaHubPage from './pages/NostalgiaHubPage'; // Import the new hub page
 
 // Admin & Vendor Pages
 import AdminDashboard from './pages/AdminDashboard';
@@ -70,7 +68,7 @@ export default function App() {
   const [allProfiles, setAllProfiles] = useState<Profile[]>(PROFILES);
   const [allConversations, setAllConversations] = useState(CONVERSATIONS);
   const [pricingPlans, setPricingPlans] = useState<PricingPlan[]>(initialPricingPlans);
-  const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettings>({...initialWebsiteSettings, theme: 'imperial-gold'});
+  const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettings>({...initialWebsiteSettings, theme: 'vibrant-pink'});
   const [pages, setPages] = useState<Page[]>(initialPages);
   const [services, setServices] = useState<Service[]>(initialServices);
   const [happyStories, setHappyStories] = useState<HappyStory[]>(initialHappyStories);
@@ -139,9 +137,6 @@ export default function App() {
     if (userToLogin) {
         setCurrentUser(userToLogin);
         window.location.hash = '#/app/home';
-        if (localStorage.getItem('whatsNewSeen_v1') !== 'true') {
-            setWhatsNewModalOpen(true);
-        }
     } else {
         setSnackbar({ message: 'Invalid credentials or user not found.' });
     }
@@ -425,13 +420,18 @@ export default function App() {
     }
 
     const routeParts = route.split('/');
+    const mainRoute = routeParts[1];
     const mainView = routeParts[2] as View;
     const slug = routeParts[3];
+
+    // Handle special routes like the 90s Hub
+    if (mainRoute === '90s-hub') {
+        return <NostalgiaHubPage currentUser={currentUser} allProfiles={allProfiles} />;
+    }
     
     let content;
 
     switch(mainView) {
-        // FIX: Pass websiteSettings prop to HomePage
         case 'home': content = <HomePage profiles={allProfiles} services={services} currentUser={currentUser!} onSelectProfile={handleSelectProfile} onShortlistProfile={handleShortlistProfile} attributes={attributes} onSendInterest={handleSendInterest} websiteSettings={websiteSettings} />; break;
         case 'dashboard': content = currentUser?.role === 'user' ? <UserDashboard currentUser={currentUser} allProfiles={allProfiles} attributes={attributes} /> : <VendorDashboard vendor={currentUser} clients={[]} />; break;
         case 'profile': content = <ProfilePage user={currentUser} attributes={attributes} onUpdateProfile={handleUpdateProfile} onStartVerification={() => setVerificationModalOpen(true)} onUpgradePlanRequest={() => { setSelectedPlan(pricingPlans[0]); setPaymentModalOpen(true); }} />; break;
@@ -453,7 +453,6 @@ export default function App() {
         case 'wedding-planner': content = currentUser.weddingPlanner ? <WeddingPlannerPage plannerData={currentUser.weddingPlanner} onUpdate={handleUpdateWeddingPlanner} /> : <div>Planner not initialized!</div>; break;
         case 'admin': content = currentUser.role === 'admin' ? <AdminDashboard allProfiles={allProfiles} pricingPlans={pricingPlans} websiteSettings={websiteSettings} pages={pages} services={services} happyStories={happyStories} attributes={attributes} reports={reports} contactQueries={contactQueries} liveEvents={liveEvents} vendorReviews={vendorReviews} offlinePaymentRequests={offlinePaymentRequests} astrologers={astrologers} onUpdateUsers={setAllProfiles} onUpdatePricing={setPricingPlans} onUpdateWebsiteSettings={setWebsiteSettings} onUpdatePages={setPages} onUpdateServices={setServices} onUpdateHappyStories={setHappyStories} onUpdateAttributes={setAttributes} onUpdateReports={setReports} onUpdateContactQueries={setContactQueries} onUpdateLiveEvents={setLiveEvents} onUpdateVendorReviews={setVendorReviews} onProcessOfflinePayment={() => {}} onUpdateAstrologers={setAstrologers} onCreateNotification={createNotification} /> : <NotFoundPage />; break;
         case 'view-profile': content = <ProfileDetailPage profile={allProfiles.find(p => p.id === slug)!} currentUser={currentUser} onBlockUser={handleBlockUser} onReportUser={handleReportUser} onSendInterest={handleSendInterest} onShortlistProfile={handleShortlistProfile} onUpgradePlanRequest={() => { setSelectedPlan(pricingPlans[0]); setPaymentModalOpen(true); }} onFetchAnalysis={handleFetchAnalysis} onFetchAstroReport={handleFetchAstroReport} isLoadingAnalysis={isLoadingAnalysis} analysisCache={analysisCache} attributes={attributes} onProfileView={handleProfileView} onSendQuizInvite={handleSendQuizInvite} onSendGift={handleSendGift} quizzes={quizzes} />; break;
-        // FIX: Pass websiteSettings prop to HomePage
         default: content = <HomePage profiles={allProfiles} services={services} currentUser={currentUser!} onSelectProfile={handleSelectProfile} onShortlistProfile={handleShortlistProfile} attributes={attributes} onSendInterest={handleSendInterest} websiteSettings={websiteSettings} />;
     }
     
@@ -509,7 +508,7 @@ export default function App() {
       case '#/vendors': return <PublicVendorsPage vendors={allProfiles.filter(p => p.role === 'vendor' && p.approvalStatus === 'approved')} isPublic={true} websiteSettings={websiteSettings} />;
       case '#/astrologers': return <PublicAstrologersPage astrologers={astrologers} isPublic={true} websiteSettings={websiteSettings} />;
       default:
-        if (route.startsWith('#/app')) {
+        if (route.startsWith('#/app') || route.startsWith('#/90s-hub')) {
              window.location.hash = '#/login';
              return null;
         }

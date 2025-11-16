@@ -28,6 +28,7 @@ const ThemeSwatch: React.FC<{theme: Theme, activeTheme: Theme, onClick: () => vo
         'sunset-rose': 'bg-[#D96D84]',
         'emerald-green': 'bg-[#10B981]',
         'midnight-blue': 'bg-[#60A5FA]',
+        'vibrant-pink': 'bg-[#E84393]',
     };
 
     return (
@@ -57,15 +58,12 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
 
   const mainNavLinks = [
       { label: 'Home', href: '#/app/home', view: 'home' },
-      { label: 'Dashboard', href: '#/app/dashboard', view: 'dashboard' },
+      { label: '90s Hub', href: '#/90s-hub/home', view: 'home' }, // Special view
       { label: 'Search', href: '#/app/search', view: 'search' },
       { label: 'Inbox', href: '#/app/messages', view: 'messages' },
-      { label: 'Live Events', href: '#/app/live', view: 'live' },
-      { label: 'Vendors', href: '#/app/vendors', view: 'vendors' },
-      { label: 'Astrologers', href: '#/app/astrologers', view: 'astrologers' },
   ];
 
-  const allThemes: Theme[] = ['imperial-gold', 'royal-purple', 'classic-blue', 'elegant-teal', 'sunset-rose', 'emerald-green', 'midnight-blue'];
+  const allThemes: Theme[] = ['imperial-gold', 'royal-purple', 'classic-blue', 'elegant-teal', 'sunset-rose', 'emerald-green', 'midnight-blue', 'vibrant-pink'];
 
   return (
     <header className={`bg-theme-surface/80 border-b border-theme-border z-30 backdrop-blur-sm ${settings.stickyHeader ? 'sticky top-0' : ''}`}>
@@ -79,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
                     </a>
                     <nav className="hidden md:flex items-center space-x-1">
                         {mainNavLinks.map(link => (
-                             <NavItem key={link.view} label={link.label} href={link.href} active={currentView === link.view} />
+                             <NavItem key={link.label} label={link.label} href={link.href} active={currentView === link.view} />
                         ))}
                         {visiblePages.map(page => (
                             <NavItem key={page.id} label={page.title} href={`#/${page.slug}`} />

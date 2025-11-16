@@ -77,7 +77,7 @@ export type View =
   | 'ai-wedding-concierge'
   | 'approvals' | 'photo-approvals' // Admin specific views
 
-export type Theme = 'imperial-gold' | 'royal-purple' | 'classic-blue' | 'elegant-teal' | 'sunset-rose' | 'emerald-green' | 'midnight-blue';
+export type Theme = 'imperial-gold' | 'royal-purple' | 'classic-blue' | 'elegant-teal' | 'sunset-rose' | 'emerald-green' | 'midnight-blue' | 'vibrant-pink';
 export type Typography = 'classic' | 'modern' | 'roboto' | 'merriweather' | 'nunito' | 'lora';
 
 // Admin Attribute Builder Types
@@ -214,6 +214,7 @@ export interface Service {
     slug: string;
     content: string;
     heroImageUrl?: string;
+    isSpecialCategory?: '90s-hub';
 }
 
 // Astrology Types
@@ -246,7 +247,6 @@ export interface AdminAssistantMessage {
   content: string;
 }
 
-// FIX: Add WindowState interface for desktop layout feature.
 export interface WindowState {
   id: string;
   title: string;

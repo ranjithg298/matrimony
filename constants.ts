@@ -544,19 +544,13 @@ export const SERVICES: Service[] = [
     },
     { 
         id: 's3', 
-        title: '90s Kids Nostalgia Hub', 
+        title: '90s Nostalgia Hub', 
         description: 'For those who grew up in the vibrant 90s.', 
         slug: '90s-kids-matrimony', 
-        heroImageUrl: 'https://images.unsplash.com/photo-1574868792033-0c3b4c13a34a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        isSpecialCategory: '90s-hub',
+        heroImageUrl: 'https://i.ibb.co/6g2Sk7B/90s-collage.jpg',
         content: `<h2>Find a Love as Classic as a 90s Movie</h2>
-                  <p class="lead">Remember the thrill of a new cassette, the sound of a dial-up modem, and the comfort of your favorite TV show's theme song? This is a space for the generation that experienced the best of both analog and digital worlds. Find someone who not only gets your pop culture references but also shares the values you grew up with.</p>
-                  <h3>Why You'll Connect Here:</h3>
-                  <ul>
-                    <li>Bond over shared memories of Mario, MTV, and iconic fashion trends.</li>
-                    <li>Find partners who appreciate a mix of old-school romance and modern ambitions.</li>
-                    <li>Our AI understands the unique cultural context of the 90s to find your perfect match.</li>
-                    <li>Special icebreakers like "What was your first email address?"</li>
-                  </ul>`
+                  <p class="lead">Remember the thrill of a new cassette, the sound of a dial-up modem, and the comfort of your favorite TV show's theme song? This is a space for the generation that experienced the best of both analog and digital worlds. Find someone who not only gets your pop culture references but also shares the values you grew up with.</p>`
     },
     { 
         id: 's4', 
@@ -664,6 +658,28 @@ export const ASTROLOGERS: Astrologer[] = [
         meetLink: 'https://meet.google.com'
     }
 ];
+
+export const NOSTALGIA_GAMES = [
+    { name: 'Ludo', image: 'https://i.ibb.co/hK8C7v7/ludo.jpg' },
+    { name: 'Snakes & Ladders', image: 'https://i.ibb.co/6y45k1v/snakes-ladders.jpg' },
+    { name: 'Thirudan Police', image: 'https://i.ibb.co/Jqj84FT/thirudan-police.jpg' },
+];
+
+export const NOSTALGIA_STICKERS = [
+    'https://i.ibb.co/Bq5L6yV/sticker1.png',
+    'https://i.ibb.co/Q8Qf7Mh/sticker2.png',
+    'https://i.ibb.co/gDFsC2q/sticker3.png',
+    'https://i.ibb.co/Y05rL3N/sticker4.png',
+    'https://i.ibb.co/Wc63d6h/sticker5.png',
+    'https://i.ibb.co/gVrG9x7/sticker6.png'
+];
+
+export const NOSTALGIA_MEMORIES = [
+    { title: 'First day of school', image: 'https://i.ibb.co/56wBD0b/memory1.png' },
+    { title: 'Family vacation', image: 'https://i.ibb.co/VMyX72N/memory2.png' },
+    { title: 'Favorite movie', image: 'https://i.ibb.co/k5J0Y94/memory3.png' }
+];
+
 
 // ... other constants
 export const FAQS: FaqItem[] = [];
