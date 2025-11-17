@@ -81,6 +81,14 @@ export type View =
 export type Theme = 'imperial-gold' | 'royal-purple' | 'classic-blue' | 'elegant-teal' | 'sunset-rose' | 'emerald-green' | 'midnight-blue' | 'vibrant-pink';
 export type Typography = 'classic' | 'modern' | 'roboto' | 'merriweather' | 'nunito' | 'lora';
 
+// FIX: Exported the 'WindowState' interface to define the shape of window objects used in the 90s hub desktop layout, resolving import errors.
+export interface WindowState {
+  id: string;
+  title: string;
+  component: React.ReactNode;
+  zIndex: number;
+}
+
 // Admin Attribute Builder Types
 export enum AttributeType {
   TEXT = 'text',
@@ -248,13 +256,6 @@ export interface AdminAssistantMessage {
   content: string;
 }
 
-export interface WindowState {
-  id: string;
-  title: string;
-  component: React.ReactNode;
-  zIndex: number;
-}
-
 export interface HeaderLink {
   id: string;
   text: string;
@@ -301,6 +302,7 @@ export interface WebsiteSettings {
   
   theme: Theme;
   typography: Typography;
+  textColor?: string;
   
   manualPaymentMethods: ManualPaymentMethod[];
   siteBackgroundImageUrl?: string;

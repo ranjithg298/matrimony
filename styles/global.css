@@ -18,7 +18,7 @@ body {
 .imperial-gold {
     --color-bg: #FFFBF5;
     --color-surface: #FFFFFF;
-    --color-text-primary: #4F4A45;
+    --color-text-primary: var(--custom-text-color, #4F4A45);
     --color-text-secondary: #6C635B;
     --color-border: #EAE3D9;
     --color-accent-primary: #D4A056; /* Gold */
@@ -31,7 +31,7 @@ body {
 .royal-purple {
     --color-bg: #1A1A2E;
     --color-surface: #16213E;
-    --color-text-primary: #E0E1DD;
+    --color-text-primary: var(--custom-text-color, #E0E1DD);
     --color-text-secondary: #9FA8DA;
     --color-border: #0F3460;
     --color-accent-primary: #E94560; /* Coral Red */
@@ -44,7 +44,7 @@ body {
 .classic-blue {
     --color-bg: #F0F2F5;
     --color-surface: #FFFFFF;
-    --color-text-primary: #1C1E21; /* Dark Gray */
+    --color-text-primary: var(--custom-text-color, #1C1E21); /* Dark Gray */
     --color-text-secondary: #606770; /* Medium Gray */
     --color-border: #DADDE1;
     --color-accent-primary: #1877F2; /* Facebook Blue */
@@ -57,7 +57,7 @@ body {
 .elegant-teal {
     --color-bg: #F0F7F6;
     --color-surface: #FFFFFF;
-    --color-text-primary: #033649;
+    --color-text-primary: var(--custom-text-color, #033649);
     --color-text-secondary: #5F737A;
     --color-border: #DDE5E8;
     --color-accent-primary: #008080; /* Teal */
@@ -70,7 +70,7 @@ body {
 .sunset-rose {
     --color-bg: #FFF5F7;
     --color-surface: #FFFFFF;
-    --color-text-primary: #5C232F;
+    --color-text-primary: var(--custom-text-color, #5C232F);
     --color-text-secondary: #8C6A72;
     --color-border: #F5E8EB;
     --color-accent-primary: #D96D84; /* Rose */
@@ -83,7 +83,7 @@ body {
 .emerald-green {
     --color-bg: #F0FDF4;
     --color-surface: #FFFFFF;
-    --color-text-primary: #064E3B;
+    --color-text-primary: var(--custom-text-color, #064E3B);
     --color-text-secondary: #047857;
     --color-border: #D1FAE5;
     --color-accent-primary: #10B981; /* Emerald */
@@ -96,7 +96,7 @@ body {
 .midnight-blue {
     --color-bg: #111827; /* Gray 900 */
     --color-surface: #1F2937; /* Gray 800 */
-    --color-text-primary: #F9FAFB; /* Gray 50 */
+    --color-text-primary: var(--custom-text-color, #F9FAFB); /* Gray 50 */
     --color-text-secondary: #9CA3AF; /* Gray 400 */
     --color-border: #374151; /* Gray 700 */
     --color-accent-primary: #60A5FA; /* Blue 400 */
@@ -109,7 +109,7 @@ body {
 .vibrant-pink {
     --color-bg: #101010;
     --color-surface: #1E1E1E;
-    --color-text-primary: #FFFFFF;
+    --color-text-primary: var(--custom-text-color, #FFFFFF);
     --color-text-secondary: #A0A0A0;
     --color-border: #2D2D2D;
     --color-accent-primary: #E84393; /* Vibrant Pink */

@@ -4,12 +4,14 @@ import ConversationList from '../components/ConversationList';
 import ChatWindow from '../components/ChatWindow';
 import InterestsReceivedTab from '../components/inbox/InterestsReceivedTab';
 import HeartIcon from '../components/icons/HeartIcon';
+import * as firebaseService from '../services/firebaseService';
 
 interface MessagesPageProps {
   currentUser: Profile;
   conversations: Conversation[];
   allProfiles: Profile[];
-  onUpdateConversations: (conversations: Conversation[]) => void;
+  // FIX: Updated type to allow functional updates, matching React's `useState` setter.
+  onUpdateConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
   onAcceptInterest: (profileId: string) => void;
   onDeclineInterest: (profileId: string) => void;
   typingStatus: {[conversationId: string]: string[]};
@@ -18,10 +20,14 @@ interface MessagesPageProps {
 }
 
 const MessagesPage: React.FC<MessagesPageProps> = (props) => {
-  const { currentUser, conversations, allProfiles, onAcceptInterest, onDeclineInterest, typingStatus, onSendMessage, onInitiateCall } = props;
+  const { currentUser, conversations, allProfiles, onAcceptInterest, onDeclineInterest, onSendMessage, onInitiateCall, onUpdateConversations } = props;
   
   const [activeTab, setActiveTab] = useState<'chats' | 'interests'>('chats');
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+
+  // Simulate Gemini-powered typing status for the other user
+  const [typingStatus, setTypingStatus] = useState<{[key: string]: string[]}>({});
+
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -34,11 +40,33 @@ const MessagesPage: React.FC<MessagesPageProps> = (props) => {
     } else if (conversations.length > 0) {
       setActiveConversationId(conversations[0].id);
     }
-    // FIX: The 'route' variable was not defined in this component's scope.
-    // The effect's logic depends on the URL hash to determine the active conversation,
-    // so `window.location.hash` is used as a dependency to ensure the component
-    // updates correctly when navigating between conversations via the URL.
   }, [conversations, window.location.hash]);
+
+  // Set up real-time listener for the active conversation
+  useEffect(() => {
+    if (!activeConversationId) return;
+
+    const unsubscribe = firebaseService.listenForMessages(activeConversationId, (updatedConversation) => {
+      onUpdateConversations(
+        prev => prev.map(c => c.id === updatedConversation.id ? updatedConversation : c)
+      );
+      
+      // Simulate typing from AI reply
+      const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
+      const otherUserId = updatedConversation.participantIds.find(id => id !== currentUser.id);
+
+      if (lastMessage.senderId === currentUser.id && otherUserId) {
+        setTypingStatus(prev => ({ ...prev, [updatedConversation.id]: [otherUserId]}));
+        setTimeout(() => {
+           setTypingStatus(prev => ({ ...prev, [updatedConversation.id]: []}));
+        }, 2000 + Math.random() * 2000);
+      }
+    });
+
+    // Cleanup listener on component unmount or when conversation changes
+    return () => unsubscribe();
+
+  }, [activeConversationId, onUpdateConversations, currentUser.id]);
 
   const interestsReceived = (currentUser.interestsReceived || [])
     .map(id => allProfiles.find(p => p.id === id))

@@ -41,6 +41,9 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
       { label: 'Home', href: '#/app/home', view: 'home' },
       { label: 'Search', href: '#/app/search', view: 'search' },
       { label: 'Inbox', href: '#/app/messages', view: 'messages' },
+      { label: 'Shortlisted', href: '#/app/shortlisted', view: 'shortlisted' },
+      { label: 'Profile Viewers', href: '#/app/profile-viewers', view: 'profile-viewers' },
+      { label: 'AI Concierge', href: '#/app/ai-wedding-concierge', view: 'ai-wedding-concierge' },
   ];
   
   const siteNameElement = <span className="text-2xl font-bold text-transparent bg-clip-text bg-theme-gradient">{settings.siteName}</span>;
@@ -82,8 +85,6 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
                             <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg py-1 bg-theme-surface ring-1 ring-theme-border focus:outline-none">
                                 <a href="#/app/profile" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">My Profile</a>
                                 <a href="#/app/preferences" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Partner Preferences</a>
-                                <a href="#/app/shortlisted" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">My Shortlist</a>
-                                <a href="#/app/profile-viewers" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Profile Viewers</a>
                                 <a href="#/app/quizzes" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Compatibility Quizzes</a>
                                 <div className="border-t border-theme-border my-1"></div>
                                 <a href="#/app/wedding-planner" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">My Wedding Planner</a>

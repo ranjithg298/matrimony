@@ -3,16 +3,13 @@
 import React, { useState } from 'react';
 import { Profile } from '../types';
 import HeartIcon from '../components/icons/HeartIcon';
-import GoogleIcon from '../components/icons/GoogleIcon';
-import FacebookIcon from '../components/icons/FacebookIcon';
-import TwitterIcon from '../components/icons/TwitterIcon';
 
 interface RegisterPageProps {
-  onRegister: (newUser: Omit<Profile, 'id' | 'status'>) => void;
+  onRegister: (newUser: Omit<Profile, 'id' | 'status'>) => Promise<void>;
 }
 
 const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
-  const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -34,6 +31,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     const newUser: Omit<Profile, 'id' | 'status'> = {
       name: formData.name,
       email: formData.email,
@@ -50,7 +48,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
       },
       gallery: [],
     };
-    onRegister(newUser);
+    onRegister(newUser).finally(() => setIsLoading(false));
   };
 
   return (
@@ -74,8 +72,8 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
                            <input type="text" name="city" placeholder="City" onChange={handleChange} required className="w-full px-4 py-3 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
                          </div>
                     </div>
-                     <button type="submit" className="w-full bg-theme-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 mt-6">
-                        Register
+                     <button type="submit" disabled={isLoading} className="w-full bg-theme-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 mt-6 disabled:opacity-50">
+                        {isLoading ? 'Creating Account...' : 'Register'}
                     </button>
                 </form>
                 

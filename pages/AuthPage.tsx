@@ -8,7 +8,7 @@ import FacebookIcon from '../components/icons/FacebookIcon';
 import TwitterIcon from '../components/icons/TwitterIcon';
 
 interface AuthPageProps {
-  onLogin: (email: string, password?: string) => void;
+  onLogin: (email: string, password?: string) => Promise<void>;
 }
 
 const AuthPage: React.FC<AuthPageProps> = ({ onLogin }) => {
@@ -17,21 +17,28 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin }) => {
   const [captchaInput, setCaptchaInput] = useState('');
   const [captchaText, setCaptchaText] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   
   const handleDemoLogin = (demoEmail: string) => {
-    onLogin(demoEmail);
+    setIsLoading(true);
+    onLogin(demoEmail).finally(() => setIsLoading(false));
   };
   
   const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      if (captchaInput.toLowerCase() !== captchaText.toLowerCase()) {
-          setError('Invalid CAPTCHA. Please try again.');
-          // Also need to refresh captcha here, which the Captcha component does via key prop
-          setCaptchaInput('');
-          return;
-      }
+      // Captcha logic can be re-enabled if needed
+      // if (captchaInput.toLowerCase() !== captchaText.toLowerCase()) {
+      //     setError('Invalid CAPTCHA. Please try again.');
+      //     setCaptchaInput('');
+      //     return;
+      // }
       setError('');
-      onLogin(email, password);
+      setIsLoading(true);
+      onLogin(email, password).catch(() => {
+        // Error is handled by snackbar in App.tsx
+      }).finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -73,23 +80,10 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin }) => {
                         />
                     </div>
                     
-                    <div className="mb-4 hidden">
-                        <label className="block text-theme-text-secondary text-sm font-bold mb-2" htmlFor="captcha">Validate Security</label>
-                        <Captcha onGenerated={setCaptchaText} />
-                        <input
-                            type="text"
-                            id="captcha"
-                            value={captchaInput}
-                            onChange={(e) => setCaptchaInput(e.target.value)}
-                            placeholder="Type the captcha above"
-                            className="w-full mt-2 px-4 py-2 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary"
-                        />
-                    </div>
-
                     {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
                     
-                    <button type="submit" className="w-full bg-theme-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 mt-4">
-                    Sign In
+                    <button type="submit" disabled={isLoading} className="w-full bg-theme-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 mt-4 disabled:opacity-50">
+                    {isLoading ? 'Signing In...' : 'Sign In'}
                     </button>
                 </form>
 
@@ -100,8 +94,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin }) => {
                 <div className="mt-6 p-4 bg-theme-bg/50 rounded-lg text-center">
                     <p className="text-sm text-theme-text-secondary mb-3">For demo purposes, log in as:</p>
                     <div className="flex justify-center gap-2 flex-wrap">
-                        <button onClick={() => handleDemoLogin('priya@matrimony.ai')} className="text-xs bg-theme-border hover:bg-theme-border/80 text-theme-text-primary font-semibold py-1 px-3 rounded-full">User</button>
-                        <button onClick={() => handleDemoLogin('admin')} className="text-xs bg-theme-border hover:bg-theme-border/80 text-theme-text-primary font-semibold py-1 px-3 rounded-full">Admin</button>
+                        <button onClick={() => handleDemoLogin('priya@matrimony.ai')} disabled={isLoading} className="text-xs bg-theme-border hover:bg-theme-border/80 text-theme-text-primary font-semibold py-1 px-3 rounded-full disabled:opacity-50">User</button>
+                        <button onClick={() => handleDemoLogin('admin')} disabled={isLoading} className="text-xs bg-theme-border hover:bg-theme-border/80 text-theme-text-primary font-semibold py-1 px-3 rounded-full disabled:opacity-50">Admin</button>
                     </div>
                 </div>
             </div>

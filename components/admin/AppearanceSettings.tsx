@@ -70,6 +70,7 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
             <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
                 <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Color Theme</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <ThemeSwatch theme="vibrant-pink" name="Vibrant Pink" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'vibrant-pink')} />
                     <ThemeSwatch theme="imperial-gold" name="Imperial Gold" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'imperial-gold')} />
                     <ThemeSwatch theme="royal-purple" name="Royal Purple" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'royal-purple')} />
                     <ThemeSwatch theme="classic-blue" name="Classic Blue" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'classic-blue')} />
@@ -77,7 +78,30 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
                     <ThemeSwatch theme="sunset-rose" name="Sunset Rose" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'sunset-rose')} />
                     <ThemeSwatch theme="emerald-green" name="Emerald Green" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'emerald-green')} />
                     <ThemeSwatch theme="midnight-blue" name="Midnight Blue" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'midnight-blue')} />
-                    <ThemeSwatch theme="vibrant-pink" name="Vibrant Pink" activeTheme={settings.theme} onClick={() => handleSettingChange('theme', 'vibrant-pink')} />
+                </div>
+            </div>
+            
+            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
+                <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Typography & Colors</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="text-sm text-theme-text-secondary">Font Style</label>
+                        <select value={settings.typography} onChange={e => handleSettingChange('typography', e.target.value as Typography)} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary">
+                            <option value="classic">Classic (Serif)</option>
+                            <option value="modern">Modern (Sans)</option>
+                            <option value="roboto">Roboto</option>
+                            <option value="merriweather">Merriweather</option>
+                            <option value="nunito">Nunito</option>
+                            <option value="lora">Lora</option>
+                        </select>
+                    </div>
+                     <div>
+                        <label className="text-sm text-theme-text-secondary">Primary Text Color</label>
+                        <div className="relative mt-1">
+                            <input type="text" value={settings.textColor || ''} onChange={e => handleSettingChange('textColor', e.target.value)} className="w-full bg-theme-border p-2 rounded-md pl-10" />
+                            <input type="color" value={settings.textColor || '#000000'} onChange={e => handleSettingChange('textColor', e.target.value)} className="absolute left-2 top-1/2 -translate-y-1/2 h-6 w-6" />
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -150,17 +174,6 @@ const AppearanceSettings: React.FC<AppearanceSettingsProps> = ({ settings: initi
                 </div>
             </div>
 
-            <div className="bg-theme-bg/50 p-4 rounded-lg border border-theme-border">
-                <h3 className="text-lg font-semibold mb-4 text-theme-text-primary">Typography</h3>
-                <select value={settings.typography} onChange={e => handleSettingChange('typography', e.target.value as Typography)} className="w-full bg-theme-border p-2 rounded-md mt-1 border-theme-border/50 text-theme-text-primary">
-                    <option value="classic">Classic (Serif)</option>
-                    <option value="modern">Modern (Sans)</option>
-                    <option value="roboto">Roboto</option>
-                    <option value="merriweather">Merriweather</option>
-                    <option value="nunito">Nunito</option>
-                    <option value="lora">Lora</option>
-                </select>
-            </div>
             
             <div className="flex justify-end items-center gap-4">
               {showSaved && <span className="text-green-400">Saved!</span>}

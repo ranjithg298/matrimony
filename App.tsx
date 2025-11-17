@@ -4,6 +4,7 @@ import { PROFILES, CONVERSATIONS, PRICING_PLANS as initialPricingPlans, HAPPY_ST
 
 // Services
 import { getCompatibilityAnalysis, getAstrologicalCompatibility, generateChatReply, generateCompatibilityQuiz, getQuizSummary } from './services/geminiService';
+import * as firebaseService from './services/firebaseService';
 
 // Layouts
 import MainLayout from './layouts/MainLayout';
@@ -59,13 +60,14 @@ import VerificationModal from './components/VerificationModal';
 import AstroCompatibilityModal from './components/AstroCompatibilityModal';
 import CallModal from './components/CallModal';
 import WhatsNewModal from './components/WhatsNewModal';
+import LoadingScreen from './components/LoadingScreen';
 
 
 export default function App() {
   const [route, setRoute] = useState(window.location.hash || '#/');
   const [currentUser, setCurrentUser] = useState<Profile | null>(null);
-  const [allProfiles, setAllProfiles] = useState<Profile[]>(PROFILES);
-  const [allConversations, setAllConversations] = useState(CONVERSATIONS);
+  const [allProfiles, setAllProfiles] = useState<Profile[]>([]);
+  const [allConversations, setAllConversations] = useState<Conversation[]>([]);
   const [pricingPlans, setPricingPlans] = useState<PricingPlan[]>(initialPricingPlans);
   const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettings>({...initialWebsiteSettings, theme: 'vibrant-pink'});
   const [pages, setPages] = useState<Page[]>(initialPages);
@@ -84,6 +86,7 @@ export default function App() {
   const [typingStatus, setTypingStatus] = useState<{[key: string]: string[]}>({});
 
   // UI State
+  const [isAppLoading, setAppLoading] = useState(true);
   const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
   const [snackbar, setSnackbar] = useState<{message: string, onUndo?: () => void} | null>(null);
@@ -97,6 +100,20 @@ export default function App() {
   const [isWhatsNewModalOpen, setWhatsNewModalOpen] = useState(false);
   const [profileForAstroModal, setProfileForAstroModal] = useState<Profile | null>(null);
 
+  useEffect(() => {
+    // Simulate fetching initial app data from Firebase
+    const loadInitialData = async () => {
+      setAppLoading(true);
+      const [profiles, conversations] = await Promise.all([
+        firebaseService.getProfiles(),
+        firebaseService.getConversations(),
+      ]);
+      setAllProfiles(profiles);
+      setAllConversations(conversations);
+      setAppLoading(false);
+    };
+    loadInitialData();
+  }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -119,38 +136,25 @@ export default function App() {
     setNotifications(prev => [newNotification, ...prev]);
   };
 
-  const handleLogin = (email: string, password?: string) => {
-    let userToLogin: Profile | undefined;
-    const lowerEmail = email.toLowerCase();
-
-    if (lowerEmail === 'admin') {
-        if (password !== 'admin@123') {
-            setSnackbar({ message: 'Invalid password for admin user.' });
-            return;
-        }
-        userToLogin = allProfiles.find(p => p.role === 'admin');
-    } else {
-        userToLogin = allProfiles.find(p => p.email.toLowerCase() === lowerEmail);
-    }
-    
-    if (userToLogin) {
+  const handleLogin = async (email: string, password?: string) => {
+    try {
+        const userToLogin = await firebaseService.signIn(email, password);
         setCurrentUser(userToLogin);
         window.location.hash = '#/app/home';
-    } else {
-        setSnackbar({ message: 'Invalid credentials or user not found.' });
+    } catch (error) {
+        setSnackbar({ message: (error as Error).message });
     }
   };
   
-  const handleRegister = (newUser: Omit<Profile, 'id' | 'status'>) => {
-      const finalUser: Profile = {
-        ...newUser,
-        id: `u${Date.now()}`,
-        approvalStatus: 'pending',
-        status: 'active',
-      };
-      setAllProfiles(prev => [...prev, finalUser]);
-      setCurrentUser(finalUser);
-      window.location.hash = '#/app/home';
+  const handleRegister = async (newUser: Omit<Profile, 'id' | 'status'>) => {
+      try {
+        const finalUser = await firebaseService.register(newUser);
+        setAllProfiles(prev => [...prev, finalUser]);
+        setCurrentUser(finalUser);
+        window.location.hash = '#/app/home';
+      } catch (error) {
+        setSnackbar({ message: (error as Error).message });
+      }
   };
 
   const handleLogout = () => {
@@ -158,9 +162,10 @@ export default function App() {
     window.location.hash = '#/';
   };
   
-  const handleUpdateProfile = (updatedProfile: Profile) => {
-    setCurrentUser(updatedProfile);
-    setAllProfiles(prev => prev.map(p => p.id === updatedProfile.id ? updatedProfile : p));
+  const handleUpdateProfile = async (updatedProfile: Profile) => {
+    const returnedProfile = await firebaseService.updateProfile(updatedProfile);
+    setCurrentUser(returnedProfile);
+    setAllProfiles(prev => prev.map(p => p.id === returnedProfile.id ? returnedProfile : p));
   };
   
   const handleAddContactQuery = (query: Omit<ContactQuery, 'id' | 'date' | 'status'>) => {
@@ -202,27 +207,15 @@ export default function App() {
       setIsLoadingAstro(false);
   }
 
-  const handleSendMessage = (conversationId: string, text: string) => {
-      const updatedConversations = allConversations.map(c => {
-          if (c.id === conversationId) {
-              const newMessage: Message = { id: `m${Date.now()}`, senderId: currentUser!.id, text, timestamp: Date.now(), isRead: false };
-              return { ...c, messages: [...c.messages, newMessage] };
-          }
-          return c;
-      });
-      setAllConversations(updatedConversations);
-      // Simulate reply
-      const currentConvo = updatedConversations.find(c => c.id === conversationId);
-      if(currentConvo) {
-          const otherUserId = currentConvo.participantIds.find(id => id !== currentUser!.id)!;
-          setTypingStatus(prev => ({ ...prev, [conversationId]: [otherUserId]}));
-          setTimeout(async () => {
-              const reply = await generateChatReply(currentConvo.messages, allProfiles.find(p => p.id === otherUserId)!);
-              const replyMessage: Message = { id: `m${Date.now() + 1}`, senderId: otherUserId, text: reply, timestamp: Date.now(), isRead: false };
-              setAllConversations(prev => prev.map(c => c.id === conversationId ? { ...c, messages: [...c.messages, replyMessage]} : c));
-              setTypingStatus(prev => ({ ...prev, [conversationId]: []}));
-          }, 2000 + Math.random() * 2000);
-      }
+  const handleSendMessage = async (conversationId: string, text: string) => {
+    if (!currentUser) return;
+    
+    await firebaseService.sendMessage(conversationId, {
+      senderId: currentUser.id,
+      text,
+    });
+    
+    // The listener in MessagesPage will handle the UI update
   };
   
   const handleBlockUser = (userIdToBlock: string) => {
@@ -353,56 +346,23 @@ export default function App() {
       window.location.hash = '#/app/wedding-planner';
   };
 
-  const handleAcceptInterest = (profileId: string) => {
+  const handleAcceptInterest = async (profileId: string) => {
     if (!currentUser) return;
+
+    const { updatedCurrentUser, updatedOtherUser, conversationId } = await firebaseService.acceptInterest(currentUser, profileId);
     
-    const otherUser = allProfiles.find(p => p.id === profileId);
-    if (!otherUser) return;
-
-    // Update current user: remove from received, add to accepted (implicitly by creating conversation)
-    const updatedCurrentUser = {
-        ...currentUser,
-        interestsReceived: (currentUser.interestsReceived || []).filter(id => id !== profileId)
-    };
-    handleUpdateProfile(updatedCurrentUser);
-
-    // Update other user: remove from sent
-    const updatedOtherUser = {
-        ...otherUser,
-        interestsSent: (otherUser.interestsSent || []).filter(id => id !== currentUser.id)
-    };
+    handleUpdateProfile(updatedCurrentUser); // Update current user in state
     setAllProfiles(prev => prev.map(p => p.id === updatedOtherUser.id ? updatedOtherUser : p));
+    
+    // The service now handles conversation creation, we just need to update the local state if needed and navigate.
+    const updatedConversations = await firebaseService.getConversations();
+    setAllConversations(updatedConversations);
 
     createNotification(profileId, `${currentUser.name} has accepted your interest!`);
-
-    const existingConversation = allConversations.find(c => 
-        c.participantIds.includes(currentUser.id) && c.participantIds.includes(profileId)
-    );
-
-    let conversationIdToOpen: string;
-
-    if (!existingConversation) {
-        const newConversation: Conversation = {
-            id: `c${Date.now()}`,
-            participantIds: [currentUser.id, profileId],
-            participants: {
-                [currentUser.id]: { name: currentUser.name, photo: currentUser.photo, isOnline: currentUser.isOnline, isPremium: currentUser.isPremium, isVerified: currentUser.isVerified },
-                [profileId]: { name: otherUser.name, photo: otherUser.photo, isOnline: otherUser.isOnline, isPremium: otherUser.isPremium, isVerified: otherUser.isVerified },
-            },
-            messages: [],
-            lastReadTimestamp: { [currentUser.id]: Date.now(), [profileId]: 0 },
-            typing: {}
-        };
-        setAllConversations(prev => [newConversation, ...prev]);
-        conversationIdToOpen = newConversation.id;
-    } else {
-        conversationIdToOpen = existingConversation.id;
-    }
-    
-    setSnackbar({ message: `You have accepted ${otherUser.name}'s interest! You can now chat.` });
+    setSnackbar({ message: `You have accepted ${updatedOtherUser.name}'s interest! You can now chat.` });
     
     // Navigate directly to the chat with the person
-    window.location.hash = `#/app/messages/${conversationIdToOpen}`;
+    window.location.hash = `#/app/messages/${conversationId}`;
   };
 
   const handleDeclineInterest = (profileId: string) => {
@@ -524,6 +484,10 @@ export default function App() {
   }
 
   const renderContent = () => {
+    if (isAppLoading) {
+      return <LoadingScreen />;
+    }
+
     if (websiteSettings.maintenanceMode.enabled && (!currentUser || currentUser.role !== 'admin')) {
       return <MaintenancePage message={websiteSettings.maintenanceMode.message} />;
     }
@@ -531,8 +495,12 @@ export default function App() {
     return currentUser ? renderAuthenticatedRoutes() : renderPublicRoutes();
   };
   
+  const customStyles: React.CSSProperties = {
+    '--custom-text-color': websiteSettings.textColor,
+  } as React.CSSProperties;
+
   return (
-    <div className={websiteSettings.theme}>
+    <div className={websiteSettings.theme} style={customStyles}>
         <div className="bg-theme-bg min-h-screen">
             {renderContent()}
              {snackbar && (
