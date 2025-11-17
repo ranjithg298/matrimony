@@ -26,11 +26,7 @@ const ConversationList: React.FC<ConversationListProps> = (props) => {
   }, [conversations]);
 
   return (
-    <aside className="w-full md:w-1/3 lg:w-1/4 bg-theme-surface border-r border-theme-border flex flex-col">
-      <div className="p-4 border-b border-theme-border">
-        <h2 className="text-lg font-bold text-theme-text-primary">Accepted Matches</h2>
-      </div>
-      <div className="flex-grow overflow-y-auto">
+    <div className="flex-grow overflow-y-auto">
         {sortedConversations.map(conv => {
           const otherParticipantId = conv.participantIds.find(id => id !== currentUser.id);
           if (!otherParticipantId) return null;
@@ -53,10 +49,9 @@ const ConversationList: React.FC<ConversationListProps> = (props) => {
                    {otherParticipant.isOnline && <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-400 ring-2 ring-theme-surface"></span>}
               </div>
               <div className="flex-grow overflow-hidden ml-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between">
                     <h3 className="font-semibold truncate text-theme-text-primary">{otherParticipant.name}</h3>
-                    {otherParticipant.isVerified && <VerifiedIcon className="h-4 w-4 text-blue-400 flex-shrink-0" />}
-                    {otherParticipant.isPremium && <PremiumIcon className="h-4 w-4 text-yellow-400 flex-shrink-0" />}
+                     {lastMessage && <span className="text-xs text-theme-text-secondary flex-shrink-0">{new Date(lastMessage.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>}
                 </div>
                 <p className={`text-sm truncate ${isActive ? 'text-theme-text-primary' : 'text-theme-text-secondary'}`}>
                     {isTyping 
@@ -69,7 +64,6 @@ const ConversationList: React.FC<ConversationListProps> = (props) => {
           );
         })}
       </div>
-    </aside>
   );
 };
 

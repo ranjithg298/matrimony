@@ -24,38 +24,36 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, onSelectProfile, cur
   return (
     <div
       onClick={() => onSelectProfile(profile)}
-      className="block bg-theme-surface rounded-xl overflow-hidden cursor-pointer group transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-theme-accent-secondary/10"
+      className="block bg-theme-surface rounded-xl overflow-hidden cursor-pointer group transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/20"
     >
-      <div className="relative h-80">
+      <div className="relative h-96">
         <img className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" src={profile.photo} alt={profile.name} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
         
-        <button 
-          onClick={handleShortlistClick} 
-          className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/60 transition-colors"
-          title={isShortlisted ? "Remove from shortlist" : "Add to shortlist"}
-        >
-          {isShortlisted ? <StarSolidIcon className="h-5 w-5 text-yellow-300" /> : <StarIcon className="h-5 w-5" />}
-        </button>
-
-        <div className="absolute top-3 right-3 flex items-center gap-2">
-            {profile.isPremium && (
-                <div className="bg-black/40 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
-                    <PremiumIcon className="h-4 w-4 text-yellow-300" />
-                </div>
-            )}
+        <div className="absolute top-4 left-4 flex items-center gap-2">
+           {profile.distance && (
+             <span className="text-white text-xs font-semibold bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full">📍 {profile.distance} km away</span>
+           )}
+        </div>
+        
+        <div className="absolute top-4 right-4 flex items-center gap-2">
              {profile.compatibilityScore && (
-                 <span className="font-bold text-lg text-white bg-theme-accent-primary/80 backdrop-blur-sm px-3 py-1 rounded-full">{profile.compatibilityScore}%</span>
+                 <span className="font-bold text-white bg-green-500/80 backdrop-blur-sm px-3 py-1 rounded-full text-sm">{profile.compatibilityScore}%</span>
              )}
         </div>
         
-        <div className="absolute bottom-0 left-0 p-4">
-           <h3 className="text-xl font-bold text-white flex items-center gap-2">
-               {profile.name}, {profile.age}
-               {profile.isVerified && <VerifiedIcon className="w-5 h-5 text-blue-400" title="Document Verified" />}
-               {profile.isPhotoVerified && <ShieldCheckIcon className="w-5 h-5 text-green-400" title="Photo Verified" />}
-            </h3>
-           <p className="text-gray-300">{profile.city}</p>
+        <div className="absolute bottom-0 left-0 p-4 w-full">
+           <div className="flex justify-between items-end">
+                <div>
+                    <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                        {profile.name}, {profile.age}
+                    </h3>
+                    <p className="text-gray-300">{profile.customFields.occupation || profile.city}</p>
+                </div>
+                {profile.customFields.maritalStatus === 'Never Married' && (
+                     <span className="text-xs font-semibold px-3 py-1 rounded-full bg-white/20 text-white flex-shrink-0">Single</span>
+                )}
+           </div>
         </div>
       </div>
     </div>

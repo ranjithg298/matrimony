@@ -8,6 +8,7 @@ import PhoneIcon from '../components/icons/PhoneIcon';
 import WhatsappIcon from '../components/icons/WhatsappIcon';
 import EnvelopeIcon from '../components/icons/EnvelopeIcon';
 import HeartIcon from '../components/icons/HeartIcon';
+import GooeyNav from '../components/GooeyNav';
 
 interface LandingPageProps {
     websiteSettings: WebsiteSettings;
@@ -21,6 +22,12 @@ interface LandingPageProps {
 
 const LandingPageHeader: React.FC<{ settings: WebsiteSettings }> = ({ settings }) => {
   const siteNameElement = <h1 className="font-serif text-2xl font-bold text-theme-text-primary">{settings.siteName}</h1>;
+
+  const navItems = settings.headerLinks.map(link => ({
+      label: link.text,
+      href: link.url
+  }));
+
   return (
     <header className="bg-theme-surface/80 backdrop-blur-sm sticky top-0 z-50 border-b border-theme-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,11 +56,12 @@ const LandingPageHeader: React.FC<{ settings: WebsiteSettings }> = ({ settings }
                     <img src={settings.logoUrl} alt={settings.siteName} className="h-12" />
                     {settings.siteNamePosition === 'right' && siteNameElement}
                 </a>
-                <nav className="hidden lg:flex items-center gap-6">
-                    {settings.headerLinks.map(link => (
-                        <a key={link.id} href={link.url} className="font-semibold text-theme-text-primary hover:text-theme-accent-primary transition-colors">{link.text}</a>
-                    ))}
-                </nav>
+                <div className="hidden lg:flex items-center">
+                    <GooeyNav 
+                        items={navItems}
+                        colors={[1, 2, 3, 4]} 
+                    />
+                </div>
             </div>
         </div>
     </header>

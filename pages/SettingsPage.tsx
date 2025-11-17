@@ -1,27 +1,35 @@
 import React, { useState } from 'react';
 import Modal from '../components/Modal';
 import ChangePasswordModal from '../components/ChangePasswordModal';
+import ChevronRightIcon from '../components/icons/ChevronRightIcon';
 
-const SettingsSection: React.FC<{title: string, children: React.ReactNode}> = ({title, children}) => (
-    <div className="bg-theme-surface p-6 rounded-xl border border-theme-border mb-8">
-        <h2 className="text-xl font-semibold mb-4 text-theme-text-primary border-b border-theme-border pb-3">{title}</h2>
-        <div className="space-y-4">
-            {children}
+interface SettingsItemProps {
+    title: string;
+    description?: string;
+    onClick?: () => void;
+    children?: React.ReactNode;
+}
+
+const SettingsItem: React.FC<SettingsItemProps> = ({ title, description, onClick, children }) => (
+    <button 
+        onClick={onClick}
+        className="w-full flex justify-between items-center p-4 text-left hover:bg-theme-border/50 transition-colors"
+        disabled={!onClick}
+    >
+        <div>
+            <h3 className="font-semibold text-theme-text-primary">{title}</h3>
+            {description && <p className="text-sm text-theme-text-secondary">{description}</p>}
         </div>
-    </div>
+        {children ? children : (onClick && <ChevronRightIcon className="h-5 w-5 text-theme-text-secondary" />)}
+    </button>
 );
 
-const SettingsToggle: React.FC<{label: string, description: string, enabled: boolean, onToggle: (enabled: boolean) => void}> = ({label, description, enabled, onToggle}) => (
-    <div className="flex items-center justify-between">
-        <div>
-            <h3 className="text-md font-medium text-theme-text-primary">{label}</h3>
-            <p className="text-sm text-theme-text-secondary">{description}</p>
-        </div>
-        <label className="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" checked={enabled} onChange={(e) => onToggle(e.target.checked)} className="sr-only peer" />
-            <div className={`w-11 h-6 bg-theme-border rounded-full peer peer-focus:ring-4 peer-focus:ring-orange-300/50 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-theme-accent-primary`}></div>
-        </label>
-    </div>
+
+const SettingsToggle: React.FC<{enabled: boolean, onToggle: (enabled: boolean) => void}> = ({ enabled, onToggle }) => (
+    <label className="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" checked={enabled} onChange={(e) => onToggle(e.target.checked)} className="sr-only peer" />
+        <div className={`w-11 h-6 bg-theme-border rounded-full peer peer-focus:ring-4 peer-focus:ring-theme-accent-primary/50 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-theme-accent-primary`}></div>
+    </label>
 );
 
 const SettingsPage: React.FC = () => {
@@ -47,45 +55,36 @@ const SettingsPage: React.FC = () => {
 
   return (
     <>
-    <div className="p-4 sm:p-6 lg:p-8 text-theme-text-primary max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Settings</h1>
+    <div className="p-4 sm:p-6 lg:p-8 text-theme-text-primary max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-center">Settings</h1>
       
-      <SettingsSection title="Account">
-        <div className="flex justify-between items-center">
-            <div>
-                <h3 className="text-md font-medium text-theme-text-primary">Email Address</h3>
-                <p className="text-sm text-theme-text-secondary">admin@matrimony.ai</p>
-            </div>
-        </div>
-        <div className="flex justify-between items-center">
-            <div>
-                <h3 className="text-md font-medium text-theme-text-primary">Password</h3>
-                <p className="text-sm text-theme-text-secondary">••••••••••••</p>
-            </div>
-            <button onClick={() => setChangePasswordModalOpen(true)} className="text-sm bg-theme-bg hover:bg-theme-border text-theme-text-primary font-semibold py-1 px-3 rounded-md border border-theme-border">Change</button>
-        </div>
-      </SettingsSection>
+      <div className="bg-theme-surface rounded-xl border border-theme-border divide-y divide-theme-border mb-8">
+        <SettingsItem title="Email Address" description="admin@matrimony.ai" />
+        <SettingsItem title="Change Password" onClick={() => setChangePasswordModalOpen(true)} />
+      </div>
+
+       <div className="bg-theme-surface rounded-xl border border-theme-border divide-y divide-theme-border mb-8">
+        <SettingsItem title="New Message Notifications">
+            <SettingsToggle enabled={settings.newMessage} onToggle={handleToggle('newMessage')} />
+        </SettingsItem>
+        <SettingsItem title="New Interest Notifications">
+            <SettingsToggle enabled={settings.newInterest} onToggle={handleToggle('newInterest')} />
+        </SettingsItem>
+         <SettingsItem title="New Match Notifications">
+            <SettingsToggle enabled={settings.newMatch} onToggle={handleToggle('newMatch')} />
+        </SettingsItem>
+      </div>
+
+       <div className="bg-theme-surface rounded-xl border border-theme-border divide-y divide-theme-border mb-8">
+        <SettingsItem title="Help & Support" />
+        <SettingsItem title="Contact Us" />
+        <SettingsItem title="Privacy Policy" />
+        <SettingsItem title="Terms of Service" />
+      </div>
       
-      <SettingsSection title="Notifications">
-          <SettingsToggle label="New Message" description="Notify me when I receive a new message" enabled={settings.newMessage} onToggle={handleToggle('newMessage')} />
-          <SettingsToggle label="New Interest" description="Notify me when someone sends me an interest" enabled={settings.newInterest} onToggle={handleToggle('newInterest')} />
-          <SettingsToggle label="New Match" description="Notify me about new AI-recommended matches" enabled={settings.newMatch} onToggle={handleToggle('newMatch')} />
-      </SettingsSection>
-      
-       <SettingsSection title="Privacy">
-          <SettingsToggle label="Show Profile to Free Members" description="Allow non-premium members to see your full profile" enabled={settings.showToFree} onToggle={handleToggle('showToFree')} />
-          <SettingsToggle label="Share Astrological Details" description="Allow others to see your Rasi and Nakshatra" enabled={settings.shareAstro} onToggle={handleToggle('shareAstro')} />
-      </SettingsSection>
-      
-      <SettingsSection title="Data & Privacy">
-        <div className="flex justify-between items-center">
-            <div>
-                <h3 className="text-md font-medium text-theme-text-primary">Deactivate Account</h3>
-                <p className="text-sm text-theme-text-secondary">This will permanently delete your account and data.</p>
-            </div>
-            <button onClick={() => setDeactivateModalOpen(true)} className="text-sm bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded-md">Deactivate</button>
-        </div>
-      </SettingsSection>
+      <div className="text-center">
+        <button onClick={() => setDeactivateModalOpen(true)} className="text-sm font-semibold text-red-500 hover:underline">Deactivate Account</button>
+      </div>
       
       <Modal 
         isOpen={isDeactivateModalOpen}

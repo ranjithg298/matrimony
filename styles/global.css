@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700&family=Roboto:wght@400;700&family=Merriweather:wght@400;700&family=Nunito:wght@400;700&family=Lora:wght@400;700&display=swap');
+@import url('./GooeyNav.css');
 
 @tailwind base;
 @tailwind components;
@@ -106,7 +107,7 @@ body {
 
 /* Vibrant Pink Theme (NEW, based on mockups) */
 .vibrant-pink {
-    --color-bg: #121212;
+    --color-bg: #101010;
     --color-surface: #1E1E1E;
     --color-text-primary: #FFFFFF;
     --color-text-secondary: #A0A0A0;
@@ -114,7 +115,7 @@ body {
     --color-accent-primary: #E84393; /* Vibrant Pink */
     --color-accent-secondary: #8E44AD; /* Violet */
     --color-accent-light: #F062A8;
-    --gradient-accent: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-secondary));
+    --gradient-accent: linear-gradient(to right, #e84393, #8e44ad);
 }
 
 

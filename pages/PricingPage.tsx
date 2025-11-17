@@ -16,8 +16,8 @@ const PlanFeature: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 const PricingCard: React.FC<{plan: PricingPlan, onSelect: () => void}> = ({plan, onSelect}) => (
-    <div className={`relative flex flex-col p-8 text-center text-theme-text-primary bg-theme-surface rounded-2xl shadow-2xl shadow-theme-accent-secondary/5 ${plan.popular ? 'border-2 border-theme-accent-primary' : 'border border-theme-border'}`}>
-        {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 bg-theme-accent-primary text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</span>}
+    <div className={`relative flex flex-col p-8 text-center text-theme-text-primary bg-theme-surface rounded-2xl shadow-2xl shadow-black/20 ${plan.popular ? 'border-2 border-theme-accent-primary' : 'border border-theme-border'}`}>
+        {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 bg-theme-gradient text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</span>}
         <h3 className="mb-4 text-2xl font-semibold">{plan.name}</h3>
         <p className="font-light text-theme-text-secondary sm:text-lg h-12">{plan.description}</p>
         <div className="flex justify-center items-baseline my-8">

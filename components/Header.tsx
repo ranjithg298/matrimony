@@ -19,22 +19,6 @@ const NavItem: React.FC<{ label: string; active?: boolean; href: string; }> = ({
     </a>
 );
 
-const ThemeSwatch: React.FC<{theme: Theme, activeTheme: Theme, onClick: () => void}> = ({ theme, activeTheme, onClick }) => {
-    const colors: Record<Theme, string> = {
-        'imperial-gold': 'bg-[#D4A056]',
-        'royal-purple': 'bg-[#533483]',
-        'classic-blue': 'bg-[#1877F2]',
-        'elegant-teal': 'bg-[#008080]',
-        'sunset-rose': 'bg-[#D96D84]',
-        'emerald-green': 'bg-[#10B981]',
-        'midnight-blue': 'bg-[#60A5FA]',
-        'vibrant-pink': 'bg-[#E84393]',
-    };
-
-    return (
-        <button onClick={onClick} title={theme} className={`w-6 h-6 rounded-full ${colors[theme]} ${activeTheme === theme ? 'ring-2 ring-offset-2 ring-offset-theme-surface ring-theme-accent-primary' : ''}`}></button>
-    )
-}
 
 const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, settings, pages, notifications, onUpdateWebsiteSettings }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -50,20 +34,14 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownRef]);
 
-  const handleThemeChange = (theme: Theme) => {
-      onUpdateWebsiteSettings({ ...settings, theme });
-  }
 
   const visiblePages = pages.filter(p => p.status === 'published' && p.isVisibleInMenu);
 
   const mainNavLinks = [
       { label: 'Home', href: '#/app/home', view: 'home' },
-      { label: '90s Hub', href: '#/90s-hub/home', view: 'home' }, // Special view
       { label: 'Search', href: '#/app/search', view: 'search' },
       { label: 'Inbox', href: '#/app/messages', view: 'messages' },
   ];
-
-  const allThemes: Theme[] = ['imperial-gold', 'royal-purple', 'classic-blue', 'elegant-teal', 'sunset-rose', 'emerald-green', 'midnight-blue', 'vibrant-pink'];
   
   const siteNameElement = <span className="text-2xl font-bold text-transparent bg-clip-text bg-theme-gradient">{settings.siteName}</span>;
 
@@ -103,25 +81,15 @@ const Header: React.FC<HeaderProps> = ({ currentUser, currentView, onLogout, set
                         {dropdownOpen && (
                             <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg py-1 bg-theme-surface ring-1 ring-theme-border focus:outline-none">
                                 <a href="#/app/profile" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">My Profile</a>
-                                <a href="#/app/wedding-planner" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">My Wedding Planner</a>
                                 <a href="#/app/preferences" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Partner Preferences</a>
+                                <a href="#/app/shortlisted" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">My Shortlist</a>
+                                <a href="#/app/profile-viewers" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Profile Viewers</a>
+                                <a href="#/app/quizzes" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Compatibility Quizzes</a>
+                                <div className="border-t border-theme-border my-1"></div>
+                                <a href="#/app/wedding-planner" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">My Wedding Planner</a>
                                 <a href="#/app/settings" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Settings</a>
                                 <a href="#/app/pricing" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Upgrade Plan</a>
-                                <div className="border-t border-theme-border my-1"></div>
-                                <a href="#/app/happy-stories" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Happy Stories</a>
-                                <a href="#/app/tell-your-story" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Tell Your Story</a>
-                                <a href="#/app/astrology" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">Astrology</a>
-                                <a href="#/app/faq" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-border">FAQ</a>
                                 {currentUser.role === 'admin' && <a href="#/app/admin" onClick={() => setDropdownOpen(false)} className="block px-4 py-2 text-sm text-theme-accent-primary hover:bg-theme-border">Admin Dashboard</a>}
-                                <div className="border-t border-theme-border my-1"></div>
-                                <div className="px-4 pt-2 pb-1">
-                                    <label className="text-xs text-theme-text-secondary">Theme</label>
-                                    <div className="flex items-center flex-wrap gap-3 mt-2 mb-1">
-                                        {allThemes.map(theme => (
-                                            <ThemeSwatch key={theme} theme={theme} activeTheme={settings.theme} onClick={() => handleThemeChange(theme)} />
-                                        ))}
-                                    </div>
-                                </div>
                                 <div className="border-t border-theme-border my-1"></div>
                                 <a href="#" onClick={(e) => { e.preventDefault(); onLogout(); }} className="block px-4 py-2 text-sm text-red-500 hover:bg-theme-border">Logout</a>
                             </div>

@@ -55,7 +55,6 @@ import ProfileDetailPage from './pages/ProfileDetailPage';
 // Components
 import PaymentModal from './components/PaymentModal';
 import Snackbar from './components/Snackbar';
-import ProfileDetailDrawer from './components/ProfileDetailDrawer';
 import VerificationModal from './components/VerificationModal';
 import AstroCompatibilityModal from './components/AstroCompatibilityModal';
 import CallModal from './components/CallModal';
@@ -88,7 +87,6 @@ export default function App() {
   const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
   const [snackbar, setSnackbar] = useState<{message: string, onUndo?: () => void} | null>(null);
-  const [selectedProfileForDetail, setSelectedProfileForDetail] = useState<Profile | null>(null);
   const [analysisCache, setAnalysisCache] = useState<{[key: string]: string}>({});
   const [isLoadingAnalysis, setIsLoadingAnalysis] = useState(false);
   const [isVerificationModalOpen, setVerificationModalOpen] = useState(false);
@@ -97,6 +95,7 @@ export default function App() {
   const [isLoadingAstro, setIsLoadingAstro] = useState(false);
   const [callState, setCallState] = useState<{isOpen: boolean; targetUser: Profile | null; callType: 'voice' | 'video'}>({isOpen: false, targetUser: null, callType: 'voice'});
   const [isWhatsNewModalOpen, setWhatsNewModalOpen] = useState(false);
+  const [profileForAstroModal, setProfileForAstroModal] = useState<Profile | null>(null);
 
 
   useEffect(() => {
@@ -181,25 +180,22 @@ export default function App() {
   }
 
   const handleSelectProfile = (profile: Profile) => {
-    setSelectedProfileForDetail(profile);
-  };
-  
-  const handleCloseDetailDrawer = () => {
-    setSelectedProfileForDetail(null);
-    setAnalysisCache(prev => ({ ...prev, [selectedProfileForDetail!.id]: prev[selectedProfileForDetail!.id] || null })); // Persist cache
+    window.location.hash = `#/app/view-profile/${profile.id}`;
   };
 
   const handleFetchAnalysis = async (profileA: Profile, profileB: Profile) => {
-    if (analysisCache[profileB.id]) return; // Already cached
+    const cacheKey = `${profileA.id}-${profileB.id}`;
+    if (analysisCache[cacheKey]) return; // Already cached
     setIsLoadingAnalysis(true);
     const result = await getCompatibilityAnalysis(profileA, profileB, attributes);
-    setAnalysisCache(prev => ({...prev, [profileB.id]: result}));
+    setAnalysisCache(prev => ({...prev, [cacheKey]: result}));
     setIsLoadingAnalysis(false);
   }
   
   const handleFetchAstroReport = async (profileA: Profile, profileB: Profile) => {
       setIsLoadingAstro(true);
       setAstroReport(null);
+      setProfileForAstroModal(profileB);
       setAstroModalOpen(true);
       const result = await getAstrologicalCompatibility(profileA, profileB, attributes);
       setAstroReport(result);
@@ -233,8 +229,8 @@ export default function App() {
     if (!currentUser) return;
     const updatedUser = { ...currentUser, blockedUsers: [...(currentUser.blockedUsers || []), userIdToBlock]};
     handleUpdateProfile(updatedUser);
-    setSelectedProfileForDetail(null);
     setSnackbar({ message: 'User has been blocked.' });
+    window.location.hash = '#/app/home';
   }
   
   const handleReportUser = (reportedUserId: string, reason: string) => {
@@ -253,6 +249,7 @@ export default function App() {
   }
 
   const handleProfileView = (viewedProfileId: string) => {
+      if (!currentUser) return;
       setAllProfiles(prev => prev.map(p => {
           if (p.id === viewedProfileId) {
               const viewers = p.profileViewers || [];
@@ -536,7 +533,7 @@ export default function App() {
   
   return (
     <div className={websiteSettings.theme}>
-        <div className="bg-theme-bg/98 backdrop-blur-sm min-h-screen">
+        <div className="bg-theme-bg min-h-screen">
             {renderContent()}
              {snackbar && (
                   <Snackbar 
@@ -558,22 +555,6 @@ export default function App() {
                       manualPaymentMethods={websiteSettings.manualPaymentMethods}
                   />
               )}
-              {selectedProfileForDetail && (
-                  <ProfileDetailDrawer 
-                      profile={selectedProfileForDetail}
-                      currentUser={currentUser}
-                      isOpen={!!selectedProfileForDetail}
-                      onClose={handleCloseDetailDrawer}
-                      analysisResult={analysisCache[selectedProfileForDetail.id]}
-                      isLoading={isLoadingAnalysis && !analysisCache[selectedProfileForDetail.id]}
-                      onFetchAnalysis={() => handleFetchAnalysis(currentUser!, selectedProfileForDetail)}
-                      onUpgradePlanRequest={() => { setSelectedPlan(pricingPlans[0]); setPaymentModalOpen(true); }}
-                      onBlockUser={handleBlockUser}
-                      onReportUser={handleReportUser}
-                      onSendMessage={() => window.location.hash = '#/app/messages'}
-                      attributes={attributes}
-                  />
-              )}
               <VerificationModal 
                 isOpen={isVerificationModalOpen}
                 onClose={() => setVerificationModalOpen(false)}
@@ -588,7 +569,7 @@ export default function App() {
                   isOpen={isAstroModalOpen}
                   isLoading={isLoadingAstro}
                   report={astroReport}
-                  user={selectedProfileForDetail}
+                  user={profileForAstroModal}
                   onClose={() => setAstroModalOpen(false)}
               />
               <CallModal 

@@ -55,7 +55,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
 
   return (
     <div className="min-h-screen bg-theme-bg flex items-center justify-center p-4">
-        <div className="w-full max-w-md rounded-2xl bg-theme-surface shadow-2xl shadow-theme-accent-secondary/10 overflow-hidden">
+        <div className="w-full max-w-md rounded-2xl bg-theme-surface shadow-2xl shadow-black/20 overflow-hidden">
              <div className="p-8">
                  <div className="flex items-center space-x-2 mb-8 justify-center">
                     <HeartIcon className="h-8 w-8 text-theme-accent-primary" />
@@ -66,30 +66,18 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
                 
                 <form onSubmit={handleSubmit}>
                     <div className="space-y-4">
-                        <input type="text" name="name" placeholder="Full Name" onChange={handleChange} required className="w-full px-4 py-2 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
-                        <input type="email" name="email" placeholder="Email Address" onChange={handleChange} required className="w-full px-4 py-2 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
-                        <input type="password" name="password" placeholder="Password" onChange={handleChange} required className="w-full px-4 py-2 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
+                        <input type="text" name="name" placeholder="Full Name" onChange={handleChange} required className="w-full px-4 py-3 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
+                        <input type="email" name="email" placeholder="Email Address" onChange={handleChange} required className="w-full px-4 py-3 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
+                        <input type="password" name="password" placeholder="Password" onChange={handleChange} required className="w-full px-4 py-3 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
                          <div className="grid grid-cols-2 gap-4">
-                           <input type="number" name="age" placeholder="Age" onChange={handleChange} required className="w-full px-4 py-2 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
-                           <input type="text" name="city" placeholder="City" onChange={handleChange} required className="w-full px-4 py-2 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
+                           <input type="number" name="age" placeholder="Age" onChange={handleChange} required className="w-full px-4 py-3 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
+                           <input type="text" name="city" placeholder="City" onChange={handleChange} required className="w-full px-4 py-3 bg-theme-bg border border-theme-border rounded-lg text-theme-text-primary focus:outline-none focus:ring-2 focus:ring-theme-accent-primary" />
                          </div>
                     </div>
                      <button type="submit" className="w-full bg-theme-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 mt-6">
                         Register
                     </button>
                 </form>
-                
-                 <div className="my-4 flex items-center">
-                    <div className="flex-grow border-t border-theme-border"></div>
-                    <span className="flex-shrink mx-4 text-theme-text-secondary text-sm">Or sign up with</span>
-                    <div className="flex-grow border-t border-theme-border"></div>
-                </div>
-
-                <div className="flex justify-center gap-4">
-                    <button className="p-2 border border-theme-border rounded-full hover:bg-theme-border"><GoogleIcon className="h-5 w-5"/></button>
-                    <button className="p-2 border border-theme-border rounded-full hover:bg-theme-border"><FacebookIcon /></button>
-                    <button className="p-2 border border-theme-border rounded-full hover:bg-theme-border"><TwitterIcon /></button>
-                </div>
                 
                  <p className="text-center text-sm text-theme-text-secondary mt-6">
                     Already have an account? <a href="#/login" className="font-semibold text-theme-accent-primary hover:underline">Login</a>

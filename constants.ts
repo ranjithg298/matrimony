@@ -70,6 +70,7 @@ export const PROFILES: Profile[] = [
       { url: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop", status: 'approved'},
       { url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1887&auto=format&fit=crop", status: 'pending'},
     ],
+    distance: 12,
     customFields: {
       height: "5' 5\"",
       maritalStatus: 'Never Married',
@@ -127,6 +128,7 @@ export const PROFILES: Profile[] = [
     isOnline: false,
     documentForVerification: { url: 'https://i.ibb.co/example-doc.png', type: 'Aadhaar'},
     gallery: [],
+    distance: 25,
     customFields: {
         height: "5' 11\"",
         maritalStatus: 'Never Married',
@@ -166,6 +168,7 @@ export const PROFILES: Profile[] = [
     isPremium: true,
     isOnline: true,
     gallery: [],
+    distance: 4,
     customFields: {
         occupation: "Doctor",
         education: "MD, Pediatrics",
@@ -195,6 +198,7 @@ export const PROFILES: Profile[] = [
     isPremium: false,
     isOnline: false,
     gallery: [],
+    distance: 8,
     customFields: {
         occupation: "Lawyer",
         education: "LL.M",
@@ -223,6 +227,7 @@ export const PROFILES: Profile[] = [
     isPremium: true,
     isOnline: false,
     gallery: [],
+    distance: 5,
     customFields: {
         occupation: "IT Manager",
         education: "MCA",
@@ -251,6 +256,7 @@ export const PROFILES: Profile[] = [
     isPremium: false,
     isOnline: true,
     gallery: [],
+    distance: 19,
     customFields: {
         occupation: "Fashion Designer",
         education: "NIFT Graduate",
@@ -280,6 +286,7 @@ export const PROFILES: Profile[] = [
     isOnline: true,
     documentForVerification: { url: 'https://i.ibb.co/example-passport.png', type: 'Passport'},
     gallery: [],
+    distance: 15,
     customFields: {
         height: "5' 3\"",
         maritalStatus: 'Never Married',
@@ -314,6 +321,7 @@ export const PROFILES: Profile[] = [
     isPremium: true,
     isOnline: false,
     gallery: [],
+    distance: 36,
     customFields: {
         height: "5' 10\"",
         maritalStatus: 'Never Married',
@@ -343,6 +351,7 @@ export const PROFILES: Profile[] = [
     isPremium: false,
     isOnline: true,
     gallery: [],
+    distance: 42,
     customFields: {
         height: "5' 7\"",
         maritalStatus: 'Widowed',
@@ -367,6 +376,7 @@ export const PROFILES: Profile[] = [
     bio: "Cardiologist dedicated to saving lives. I unwind by playing the guitar and exploring nature trails. Looking for a partner who is genuine, has a zest for life, and appreciates a quiet evening at home as much as a spontaneous trip.",
     interests: ["Guitar", "Trekking", "Cardiology", "Cooking"],
     isPremium: true, isOnline: true, gallery: [],
+    distance: 2,
     customFields: { occupation: "Doctor", education: "MD, Cardiology", height: "5' 11\"", maritalStatus: "Never Married", religion: "Hindu", caste: "Gupta", annualIncome: "₹25L+", rasi: "Mesha (Aries)", nakshatra: "Bharani" },
   },
   {
@@ -380,6 +390,7 @@ export const PROFILES: Profile[] = [
     bio: "A dentist with a passion for creating beautiful smiles. I enjoy painting, yoga, and trying out new cafes in the city. Seeking a partner who is understanding, supportive, and has a great sense of humor.",
     interests: ["Painting", "Yoga", "Foodie", "Dentistry"],
     isPremium: false, isOnline: false, gallery: [],
+    distance: 21,
     customFields: { occupation: "Doctor", education: "BDS", height: "5' 4\"", maritalStatus: "Never Married", religion: "Muslim", caste: "Khan", annualIncome: "₹12L - ₹18L", rasi: "Libra (Tula)", nakshatra: "Chitra" },
   },
    {
@@ -393,6 +404,7 @@ export const PROFILES: Profile[] = [
     bio: "Filmmaker and storyteller. I see the world through a camera lens. Love discussing cinema, philosophy, and embarking on spontaneous road trips.",
     interests: ["Filmmaking", "Photography", "Road Trips", "Philosophy"],
     isPremium: true, isOnline: true, gallery: [],
+    distance: 18,
     customFields: { occupation: "Filmmaker", education: "M.A. in Film Studies", height: "5' 10\"", maritalStatus: "Never Married", religion: "Hindu", caste: "Nair", annualIncome: "₹8L - ₹12L", rasi: "Kumbha (Aquarius)", nakshatra: "Shatabhisha" },
   },
   { 

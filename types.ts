@@ -30,6 +30,7 @@ export interface Profile {
   isPhotoVerified?: boolean; // For selfie verification
   documentForVerification?: { url: string; type: 'Aadhaar' | 'Passport' }; // For admin review
   bioDataUrl?: string; // For bio-data document upload
+  distance?: number; // in km
   
   // Dynamic fields controlled by Admin Attribute Builder
   customFields: {
