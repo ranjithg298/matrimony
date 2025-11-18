@@ -1,123 +1,200 @@
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
 import { Profile, Conversation, Message } from '../types';
 import { PROFILES as initialProfiles, CONVERSATIONS as initialConversations } from '../constants';
+import { db, auth } from './firebaseConfig';
 
-// --- DATABASE SIMULATION ---
-// In a real app, this data would live in Firestore.
-let PROFILES: Profile[] = [...initialProfiles];
-let CONVERSATIONS: Conversation[] = [...initialConversations];
-// -------------------------
+// Seed Database Helper
+export const seedDatabase = async () => {
+    try {
+        const profilesRef = db.collection('profiles');
+        const snapshot = await profilesRef.get();
+        
+        // Only seed if profiles collection is empty
+        if (snapshot.empty) {
+            console.log("Seeding database...");
+            const batch = db.batch();
+            
+            // Seed Profiles
+            initialProfiles.forEach(profile => {
+                const docRef = profilesRef.doc(profile.id);
+                batch.set(docRef, profile);
+            });
 
-// --- REAL-TIME LISTENER SIMULATION ---
-type ListenerCallback = (conversation: Conversation) => void;
-const listeners: { [conversationId: string]: ListenerCallback[] } = {};
+            await batch.commit();
+            console.log("Profiles seeded.");
 
-const notifyListeners = (conversationId: string, conversation: Conversation) => {
-    if (listeners[conversationId]) {
-        listeners[conversationId].forEach(callback => callback(conversation));
+            // Seed Conversations separately due to subcollections
+            for (const conv of initialConversations) {
+                 await db.collection('conversations').doc(conv.id).set({
+                     id: conv.id,
+                     participantIds: conv.participantIds,
+                     participants: conv.participants,
+                     lastReadTimestamp: conv.lastReadTimestamp,
+                     typing: conv.typing
+                 });
+                 
+                 for (const msg of conv.messages) {
+                     await db.collection('conversations').doc(conv.id).collection('messages').doc(msg.id).set({
+                         ...msg,
+                         timestamp: firebase.firestore.Timestamp.fromMillis(msg.timestamp)
+                     });
+                 }
+            }
+            console.log("Conversations seeded.");
+        }
+    } catch (error) {
+        console.error("Error seeding database:", error);
     }
 };
-// ------------------------------------
-
-const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-
 
 export const getProfiles = async (): Promise<Profile[]> => {
-    await delay(500); // Simulate network latency
-    return JSON.parse(JSON.stringify(PROFILES));
+    // Check if we need to seed first
+    await seedDatabase();
+
+    const snapshot = await db.collection('profiles').get();
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Profile));
 };
 
 export const getConversations = async (): Promise<Conversation[]> => {
-    await delay(500);
-    return JSON.parse(JSON.stringify(CONVERSATIONS));
+    // In a real app with security rules, you would filter this by user ID
+    const snapshot = await db.collection('conversations').get();
+    
+    // We need to fetch messages for each conversation to match the type definition
+    const conversations: Conversation[] = [];
+    
+    for (const docSnap of snapshot.docs) {
+        const data = docSnap.data();
+        const messagesSnap = await db.collection('conversations').doc(docSnap.id).collection('messages').orderBy('timestamp', 'asc').get();
+        
+        const messages = messagesSnap.docs.map(mDoc => {
+            const mData = mDoc.data();
+            return {
+                ...mData,
+                id: mDoc.id,
+                timestamp: mData.timestamp instanceof firebase.firestore.Timestamp ? mData.timestamp.toMillis() : Date.now()
+            } as Message;
+        });
+
+        conversations.push({
+            id: docSnap.id,
+            participantIds: data.participantIds,
+            participants: data.participants,
+            lastReadTimestamp: data.lastReadTimestamp,
+            typing: data.typing,
+            messages: messages
+        });
+    }
+    
+    return conversations;
 }
 
 export const signIn = async (email: string, password?: string): Promise<Profile> => {
-    await delay(1000);
-    const lowerEmail = email.toLowerCase();
-    
-    let userToLogin: Profile | undefined;
+    if (!password) throw new Error("Password is required.");
 
-    if (lowerEmail === 'admin') {
-        if (password !== 'admin@123') {
-            throw new Error('Invalid password for admin user.');
-        }
-        userToLogin = PROFILES.find(p => p.role === 'admin');
-    } else {
-        userToLogin = PROFILES.find(p => p.email.toLowerCase() === lowerEmail);
-    }
+    // Handle "admin" username mapping for demo purposes
+    const loginEmail = email.toLowerCase() === 'admin' ? 'admin@matrimony.ai' : email;
     
-    if (userToLogin) {
-        return userToLogin;
-    } else {
-        throw new Error('Invalid credentials or user not found.');
+    try {
+        const userCredential = await auth.signInWithEmailAndPassword(loginEmail, password);
+        
+        // Find profile by email since our seeded IDs (u1, u2) don't match Auth UIDs
+        // In a production app, you would use db.collection('profiles').doc(userCredential.user.uid).get()
+        const querySnapshot = await db.collection('profiles').where('email', '==', loginEmail).get();
+
+        if (!querySnapshot.empty) {
+            const doc = querySnapshot.docs[0];
+            return { id: doc.id, ...doc.data() } as Profile;
+        } else {
+            throw new Error("Profile not found in database.");
+        }
+    } catch (error: any) {
+        console.error("Login error:", error);
+        throw new Error(error.message || "Failed to sign in");
     }
 };
 
-export const register = async (newUser: Omit<Profile, 'id' | 'status'>): Promise<Profile> => {
-    await delay(1000);
-     const finalUser: Profile = {
-        ...newUser,
-        id: `u${Date.now()}`,
-        approvalStatus: 'pending',
-        status: 'active',
-      };
-      PROFILES.push(finalUser);
-      return finalUser;
+export const register = async (newUser: Omit<Profile, 'id' | 'status'>, password?: string): Promise<Profile> => {
+    if (!password) throw new Error("Password is required for registration.");
+    
+    try {
+        const userCredential = await auth.createUserWithEmailAndPassword(newUser.email, password);
+        const uid = userCredential.user ? userCredential.user.uid : 'unknown';
+        
+        const finalUser: Profile = {
+            ...newUser,
+            id: uid, // Use Auth UID for new users
+            approvalStatus: 'pending',
+            status: 'active',
+        };
+
+        await db.collection('profiles').doc(uid).set(finalUser);
+        return finalUser;
+    } catch (error: any) {
+        console.error("Registration error:", error);
+        throw new Error(error.message || "Failed to register");
+    }
 };
 
 export const updateProfile = async (updatedProfile: Profile): Promise<Profile> => {
-    await delay(300);
-    PROFILES = PROFILES.map(p => p.id === updatedProfile.id ? updatedProfile : p);
+    const profileRef = db.collection('profiles').doc(updatedProfile.id);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...data } = updatedProfile; // Exclude ID from data payload
+    await profileRef.update(data);
     return updatedProfile;
 };
 
 export const sendMessage = async (conversationId: string, message: { senderId: string, text: string }): Promise<void> => {
-    await delay(200);
-    const conversation = CONVERSATIONS.find(c => c.id === conversationId);
-    if (conversation) {
-        const newMessage: Message = {
-            id: `m${Date.now()}`,
-            senderId: message.senderId,
-            text: message.text,
-            timestamp: Date.now(),
-            isRead: false
-        };
-        conversation.messages.push(newMessage);
-        notifyListeners(conversationId, conversation);
-
-        // Simulate AI reply
-        const otherUserId = conversation.participantIds.find(id => id !== message.senderId);
-        const otherUser = PROFILES.find(p => p.id === otherUserId);
-        if (otherUser) {
-            setTimeout(async () => {
-                // In a real app, this would be a Cloud Function call
-                const replyText = `This is a simulated reply for ${otherUser.name}.`;
-                 const replyMessage: Message = { id: `m${Date.now() + 1}`, senderId: otherUser.id, text: replyText, timestamp: Date.now(), isRead: false };
-                 conversation.messages.push(replyMessage);
-                 notifyListeners(conversationId, conversation);
-            }, 2000 + Math.random() * 2000);
-        }
-    }
+    const messagesRef = db.collection('conversations').doc(conversationId).collection('messages');
+    await messagesRef.add({
+        ...message,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        isRead: false
+    });
 };
 
-export const listenForMessages = (conversationId: string, callback: ListenerCallback): (() => void) => {
-    if (!listeners[conversationId]) {
-        listeners[conversationId] = [];
-    }
-    listeners[conversationId].push(callback);
+export const listenForMessages = (conversationId: string, callback: (conversation: Conversation) => void): (() => void) => {
+    const unsubscribe = db.collection('conversations').doc(conversationId).collection('messages')
+        .orderBy('timestamp', 'asc')
+        .onSnapshot(async (snapshot) => {
+            const messages = snapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    ...data,
+                    id: doc.id,
+                    timestamp: data.timestamp instanceof firebase.firestore.Timestamp ? data.timestamp.toMillis() : Date.now()
+                } as Message;
+            });
 
-    // Return an unsubscribe function
-    return () => {
-        listeners[conversationId] = listeners[conversationId].filter(cb => cb !== callback);
-    };
+            // Fetch parent conversation data to maintain full object structure
+            const convDoc = await db.collection('conversations').doc(conversationId).get();
+            if (convDoc.exists) {
+                const convData = convDoc.data();
+                if (convData) {
+                    const fullConversation: Conversation = {
+                        id: conversationId,
+                        participantIds: convData.participantIds,
+                        participants: convData.participants,
+                        lastReadTimestamp: convData.lastReadTimestamp,
+                        typing: convData.typing || {},
+                        messages: messages
+                    };
+                    callback(fullConversation);
+                }
+            }
+        });
+    
+    return unsubscribe;
 };
 
 export const acceptInterest = async (currentUser: Profile, interestedProfileId: string) => {
-    await delay(500);
+    const otherUserDoc = await db.collection('profiles').doc(interestedProfileId).get();
     
-    const otherUser = PROFILES.find(p => p.id === interestedProfileId);
-    if (!otherUser) throw new Error("User not found");
+    if (!otherUserDoc.exists) throw new Error("User not found");
+    const otherUser = otherUserDoc.data() as Profile;
 
+    // Create updated profile objects
     const updatedCurrentUser = {
         ...currentUser,
         interestsReceived: (currentUser.interestsReceived || []).filter(id => id !== interestedProfileId)
@@ -128,35 +205,42 @@ export const acceptInterest = async (currentUser: Profile, interestedProfileId: 
         interestsSent: (otherUser.interestsSent || []).filter(id => id !== currentUser.id)
     };
 
-    PROFILES = PROFILES.map(p => {
-        if (p.id === updatedCurrentUser.id) return updatedCurrentUser;
-        if (p.id === updatedOtherUser.id) return updatedOtherUser;
-        return p;
+    // Check if conversation already exists
+    const convsSnap = await db.collection('conversations')
+        .where('participantIds', 'array-contains', currentUser.id)
+        .get();
+        
+    let existingConv = convsSnap.docs.find(doc => {
+        const data = doc.data();
+        return data.participantIds.includes(interestedProfileId);
     });
-
-    const existingConversation = CONVERSATIONS.find(c =>
-        c.participantIds.includes(currentUser.id) && c.participantIds.includes(interestedProfileId)
-    );
 
     let conversationId: string;
 
-    if (!existingConversation) {
-        const newConversation: Conversation = {
-            id: `c${Date.now()}`,
+    if (!existingConv) {
+        // Create new conversation
+        const newConvRef = db.collection('conversations').doc();
+        conversationId = newConvRef.id;
+        
+        const newConversation = {
+            id: conversationId,
             participantIds: [currentUser.id, interestedProfileId],
             participants: {
                 [currentUser.id]: { name: currentUser.name, photo: currentUser.photo, isOnline: currentUser.isOnline, isPremium: currentUser.isPremium, isVerified: currentUser.isVerified },
                 [interestedProfileId]: { name: otherUser.name, photo: otherUser.photo, isOnline: otherUser.isOnline, isPremium: otherUser.isPremium, isVerified: otherUser.isVerified },
             },
-            messages: [],
             lastReadTimestamp: { [currentUser.id]: Date.now(), [interestedProfileId]: 0 },
             typing: {}
         };
-        CONVERSATIONS.unshift(newConversation);
-        conversationId = newConversation.id;
+        
+        await newConvRef.set(newConversation);
     } else {
-        conversationId = existingConversation.id;
+        conversationId = existingConv.id;
     }
+
+    // Update both profiles in Firestore
+    await db.collection('profiles').doc(currentUser.id).update({ interestsReceived: updatedCurrentUser.interestsReceived });
+    await db.collection('profiles').doc(otherUser.id).update({ interestsSent: updatedOtherUser.interestsSent });
 
     return { updatedCurrentUser, updatedOtherUser, conversationId };
 }

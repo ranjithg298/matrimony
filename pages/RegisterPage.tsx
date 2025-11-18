@@ -1,11 +1,9 @@
-
-
 import React, { useState } from 'react';
 import { Profile } from '../types';
 import HeartIcon from '../components/icons/HeartIcon';
 
 interface RegisterPageProps {
-  onRegister: (newUser: Omit<Profile, 'id' | 'status'>) => Promise<void>;
+  onRegister: (newUser: Omit<Profile, 'id' | 'status'>, password?: string) => Promise<void>;
 }
 
 const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
@@ -48,7 +46,8 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
       },
       gallery: [],
     };
-    onRegister(newUser).finally(() => setIsLoading(false));
+    // Pass password as second argument
+    onRegister(newUser, formData.password).finally(() => setIsLoading(false));
   };
 
   return (

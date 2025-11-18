@@ -69,7 +69,7 @@ export default function App() {
   const [allProfiles, setAllProfiles] = useState<Profile[]>([]);
   const [allConversations, setAllConversations] = useState<Conversation[]>([]);
   const [pricingPlans, setPricingPlans] = useState<PricingPlan[]>(initialPricingPlans);
-  const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettings>({...initialWebsiteSettings, theme: 'vibrant-pink'});
+  const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettings>({...initialWebsiteSettings, theme: 'vibrant-pink', backendStatus: 'live'});
   const [pages, setPages] = useState<Page[]>(initialPages);
   const [services, setServices] = useState<Service[]>(initialServices);
   const [happyStories, setHappyStories] = useState<HappyStory[]>(initialHappyStories);
@@ -101,16 +101,22 @@ export default function App() {
   const [profileForAstroModal, setProfileForAstroModal] = useState<Profile | null>(null);
 
   useEffect(() => {
-    // Simulate fetching initial app data from Firebase
+    // Fetch initial app data from Firebase
     const loadInitialData = async () => {
-      setAppLoading(true);
-      const [profiles, conversations] = await Promise.all([
-        firebaseService.getProfiles(),
-        firebaseService.getConversations(),
-      ]);
-      setAllProfiles(profiles);
-      setAllConversations(conversations);
-      setAppLoading(false);
+      try {
+        setAppLoading(true);
+        const [profiles, conversations] = await Promise.all([
+          firebaseService.getProfiles(),
+          firebaseService.getConversations(),
+        ]);
+        setAllProfiles(profiles);
+        setAllConversations(conversations);
+      } catch (error) {
+        console.error("Failed to load data:", error);
+        setSnackbar({ message: "Failed to load application data. Check your connection." });
+      } finally {
+        setAppLoading(false);
+      }
     };
     loadInitialData();
   }, []);
@@ -146,9 +152,9 @@ export default function App() {
     }
   };
   
-  const handleRegister = async (newUser: Omit<Profile, 'id' | 'status'>) => {
+  const handleRegister = async (newUser: Omit<Profile, 'id' | 'status'>, password?: string) => {
       try {
-        const finalUser = await firebaseService.register(newUser);
+        const finalUser = await firebaseService.register(newUser, password);
         setAllProfiles(prev => [...prev, finalUser]);
         setCurrentUser(finalUser);
         window.location.hash = '#/app/home';
