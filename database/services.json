@@ -1,0 +1,36 @@
+
+[
+  {
+    "id": "s1",
+    "title": "Doctors Matrimony",
+    "description": "Exclusive matchmaking for medical professionals.",
+    "slug": "doctors-matrimony",
+    "heroImageUrl": "https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "content": "<h2>Find Your Partner in the Medical Field</h2>\n                  <p class=\"lead\">Our specialized service connects doctors, surgeons, and other healthcare professionals who understand the demands and rewards of a life in medicine. We provide a discreet and effective platform to find a like-minded partner who shares your passion and dedication.</p>\n                  <h3>Why Choose Doctors Matrimony?</h3>\n                  <ul>\n                    <li>Verified profiles of medical professionals.</li>\n                    <li>Advanced filters for specialization and lifestyle.</li>\n                    <li>Understanding of busy schedules and unique preferences.</li>\n                    <li>AI-powered matchmaking based on compatibility and values.</li>\n                  </ul>"
+  },
+  {
+    "id": "s2",
+    "title": "Lawyers Matrimony",
+    "description": "Connect with legal eagles and law professionals.",
+    "slug": "lawyers-matrimony",
+    "heroImageUrl": "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "content": "<h2>Legal Minds, United Hearts</h2>\n                  <p class=\"lead\">Navigate the complexities of life and law with a partner who speaks your language. Our dedicated service for legal professionals connects you with individuals who appreciate intellectual rigor, ambition, and a shared understanding of the legal world.</p>\n                  <h3>Benefits for Legal Professionals:</h3>\n                  <ul>\n                    <li>A network of verified lawyers, judges, and paralegals.</li>\n                    <li>Privacy-focused features for a discreet search.</li>\n                    <li>Matchmaking that considers career goals and work-life balance.</li>\n                  </ul>"
+  },
+  {
+    "id": "s3",
+    "title": "90s Nostalgia Hub",
+    "description": "For those who grew up in the vibrant 90s.",
+    "slug": "90s-kids-matrimony",
+    "isSpecialCategory": "90s-hub",
+    "heroImageUrl": "https://i.ibb.co/6g2Sk7B/90s-collage.jpg",
+    "content": "<h2>Find a Love as Classic as a 90s Movie</h2>\n                  <p class=\"lead\">Remember the thrill of a new cassette, the sound of a dial-up modem, and the comfort of your favorite TV show's theme song? This is a space for the generation that experienced the best of both analog and digital worlds. Find someone who not only gets your pop culture references but also shares the values you grew up with.</p>"
+  },
+  {
+    "id": "s4",
+    "title": "Elite Matrimony",
+    "description": "A premium, personalized service for the discerning.",
+    "slug": "elite-matrimony",
+    "heroImageUrl": "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "content": "<h2>A Bespoke Matchmaking Experience</h2>\n                  <p class=\"lead\">Our Elite service is designed for distinguished professionals and high-net-worth individuals who require the utmost discretion and personalization. We offer a white-glove experience tailored to your unique lifestyle and preferences.</p>\n                  <h3>The Elite Advantage:</h3>\n                  <ul>\n                    <li>A dedicated, experienced relationship manager.</li>\n                    <li>Handpicked profiles that meet your exacting criteria.</li>\n                    <li>Confidential introductions and personalized support.</li>\n                    <li>Access to exclusive networking events.</li>\n                  </ul>"
+  }
+]

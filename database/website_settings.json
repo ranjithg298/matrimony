@@ -1,0 +1,115 @@
+
+{
+  "siteName": "matrimony.ai",
+  "siteNamePosition": "right",
+  "logoUrl": "https://i.ibb.co/7zJ4Q0Y/logo.png",
+  "slogan": "Find Your Perfect Match",
+  "stickyHeader": true,
+  "headerLinks": [
+    {
+      "id": "h1",
+      "text": "Home",
+      "url": "#/"
+    },
+    {
+      "id": "h2",
+      "text": "Packages",
+      "url": "#/pricing"
+    },
+    {
+      "id": "h3",
+      "text": "FAQ",
+      "url": "#/faq"
+    },
+    {
+      "id": "h4",
+      "text": "Register Now",
+      "url": "#/register"
+    }
+  ],
+  "heroTitle": "An Elite Marriage Matrimony",
+  "heroSubtitle": "Best Marriage Bureau In India",
+  "heroImageUrl": "https://images.unsplash.com/photo-1597686252444-3644b1c85347?q=80&w=1887&auto=format&fit=crop",
+  "heroImageZoom": 100,
+  "footerContent": "A sleek, modern, AI-powered matrimony platform.",
+  "copyrightText": "© 2025 matrimony.ai. All Rights Reserved.",
+  "socialLinks": [
+    {
+      "id": "s1",
+      "platform": "Facebook",
+      "url": "https://facebook.com"
+    },
+    {
+      "id": "s2",
+      "platform": "Twitter",
+      "url": "https://twitter.com"
+    },
+    {
+      "id": "s3",
+      "platform": "Instagram",
+      "url": "https://instagram.com"
+    }
+  ],
+  "contactEmail": "info@matrimony.ai",
+  "contactPhonePrimary": "9840690727",
+  "address": "7/18 St. Thomas Mount, Alandur, Chennai 600016",
+  "maintenanceMode": {
+    "enabled": false,
+    "message": "We are currently performing maintenance. We will be back shortly."
+  },
+  "theme": "imperial-gold",
+  "typography": "classic",
+  "manualPaymentMethods": [
+    {
+      "id": "mpm1",
+      "name": "Bank Transfer",
+      "type": "Bank Transfer",
+      "thumbnailUrl": "",
+      "instructions": "Please transfer the amount to the account below and submit the transaction ID in the payment modal.",
+      "bankAccounts": [
+        {
+          "id": "ba1",
+          "bankName": "HDFC Bank",
+          "accountName": "matrimony.ai Pvt Ltd",
+          "accountNumber": "50200012345678",
+          "ifscCode": "HDFC0001234"
+        },
+        {
+          "id": "ba2",
+          "bankName": "ICICI Bank",
+          "accountName": "matrimony.ai Pvt Ltd",
+          "accountNumber": "000105123456",
+          "ifscCode": "ICIC0000001"
+        }
+      ],
+      "enabled": true
+    }
+  ],
+  "siteBackgroundImageUrl": "https://www.transparenttextures.com/patterns/lined-paper.png",
+  "homepageSettings": [
+    {
+      "id": "matchmaker",
+      "title": "AI Matchmaker Suggestion",
+      "enabled": true
+    },
+    {
+      "id": "90s-hub",
+      "title": "Step Back in Time",
+      "enabled": true
+    },
+    {
+      "id": "featured-services",
+      "title": "Featured Services",
+      "enabled": true
+    },
+    {
+      "id": "recommendations",
+      "title": "Recommended for You",
+      "enabled": true
+    }
+  ],
+  "backendStatus": "simulated",
+  "storySubmissionFounderName": "Anupam Mittal",
+  "storySubmissionFounderMessage": "The Shaadi Team would like to wish you and your better half, a life full of love, laughter and togetherness!",
+  "storySubmissionFounderImage": "https://i.ibb.co/6rC6P2Q/anupam-mittal.png"
+}

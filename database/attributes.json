@@ -1,0 +1,99 @@
+
+[
+  {
+    "id": "height",
+    "label": "Height",
+    "type": "text",
+    "isCore": true
+  },
+  {
+    "id": "maritalStatus",
+    "label": "Marital Status",
+    "type": "dropdown",
+    "options": [
+      "Never Married",
+      "Divorced",
+      "Widowed"
+    ],
+    "isCore": true
+  },
+  {
+    "id": "motherTongue",
+    "label": "Mother Tongue",
+    "type": "text"
+  },
+  {
+    "id": "religion",
+    "label": "Religion",
+    "type": "text",
+    "isCore": true
+  },
+  {
+    "id": "caste",
+    "label": "Caste / Community",
+    "type": "text"
+  },
+  {
+    "id": "education",
+    "label": "Highest Education",
+    "type": "text"
+  },
+  {
+    "id": "occupation",
+    "label": "Occupation",
+    "type": "text"
+  },
+  {
+    "id": "annualIncome",
+    "label": "Annual Income",
+    "type": "dropdown",
+    "options": [
+      "< ₹1L",
+      "₹1L - ₹3L",
+      "₹3L - ₹5L",
+      "₹5L - ₹8L",
+      "₹8L - ₹12L",
+      "₹12L - ₹18L",
+      "₹18L - ₹25L",
+      "₹25L+"
+    ]
+  },
+  {
+    "id": "diet",
+    "label": "Dietary Habits",
+    "type": "dropdown",
+    "options": [
+      "Vegetarian",
+      "Non-Vegetarian",
+      "Eggetarian",
+      "Vegan"
+    ]
+  },
+  {
+    "id": "rasi",
+    "label": "Vedic Rasi (Moon Sign)",
+    "type": "text",
+    "isCore": true
+  },
+  {
+    "id": "nakshatra",
+    "label": "Nakshatra",
+    "type": "text",
+    "isCore": true
+  },
+  {
+    "id": "phoneNumber",
+    "label": "Phone Number",
+    "type": "text"
+  },
+  {
+    "id": "mangalik",
+    "label": "Mangalik",
+    "type": "dropdown",
+    "options": [
+      "Yes",
+      "No",
+      "Don't Know"
+    ]
+  }
+]

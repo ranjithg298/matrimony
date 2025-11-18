@@ -1,0 +1,28 @@
+
+[
+  {
+    "id": "astro1",
+    "name": "Dr. Vani Sharma",
+    "photo": "https://images.pexels.com/photos/3775540/pexels-photo-3775540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "specializations": [
+      "Vedic Astrology",
+      "Numerology",
+      "Kundli Matching"
+    ],
+    "experience": 15,
+    "bio": "A renowned Vedic astrologer with over 15 years of experience in guiding couples towards a harmonious marital life through deep astrological insights.",
+    "meetLink": "https://meet.google.com"
+  },
+  {
+    "id": "astro2",
+    "name": "Pandit Ramesh Iyer",
+    "photo": "https://images.pexels.com/photos/54123/pexels-photo-54123.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "specializations": [
+      "Prashna (Horary)",
+      "Nadi Astrology"
+    ],
+    "experience": 20,
+    "bio": "Specializing in Nadi Astrology and Horary charts to provide precise answers and remedies for marital queries and challenges.",
+    "meetLink": "https://meet.google.com"
+  }
+]

@@ -1,0 +1,33 @@
+
+[
+  {
+    "id": "hs1",
+    "coupleNames": "Rohan & Meera",
+    "weddingDate": "15th Dec 2023",
+    "imageUrl": "https://images.unsplash.com/photo-1597343449836-9d68c171e367?q=80&w=1887&auto=format&fit=crop",
+    "story": "We connected over our shared love for classic literature and long walks. The AI match was spot on! We knew from our first conversation that this was something special. Thank you matrimony.ai!"
+  },
+  {
+    "id": "hs2",
+    "coupleNames": "Priya & Sameer",
+    "weddingDate": "28th Jan 2024",
+    "imageUrl": "https://images.unsplash.com/photo-1551847683-6d14b6c31899?q=80&w=1887&auto=format&fit=crop",
+    "story": "Finding someone who understands your past and looks forward to your future is a blessing. We found that in each other here. Our families couldn't be happier.",
+    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": "hs3",
+    "coupleNames": "Anjali & Vikram",
+    "weddingDate": "09th Mar 2024",
+    "imageUrl": "https://images.unsplash.com/photo-1599335607392-49593215a31a?q=80&w=1887&auto=format&fit=crop",
+    "story": "We were both busy doctors with little time for socializing. The platform's filters helped us find each other, and the compatibility report was incredibly insightful. It felt like destiny."
+  },
+  {
+    "id": "hs4",
+    "coupleNames": "Aisha & Karan",
+    "weddingDate": "20th May 2024",
+    "imageUrl": "https://images.unsplash.com/photo-1610642372651-fe4e7bc20914?q=80&w=1887&auto=format&fit=crop",
+    "story": "Our first date was a video call set up through the platform's live event feature. We talked for hours, and the rest is history. We are so grateful for this amazing service!",
+    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  }
+]

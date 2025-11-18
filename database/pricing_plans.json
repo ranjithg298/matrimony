@@ -1,0 +1,61 @@
+
+[
+  {
+    "id": "p1",
+    "name": "Premium Monthly",
+    "price": "₹999",
+    "duration": "/month",
+    "planType": "standard",
+    "description": "Get started with premium features.",
+    "features": [
+      "Send Unlimited Messages",
+      "View Contact Details",
+      "Enhanced Privacy",
+      "Send Virtual Gifts"
+    ],
+    "popular": true
+  },
+  {
+    "id": "p2",
+    "name": "Premium Yearly",
+    "price": "₹8,999",
+    "originalPrice": "₹11,988",
+    "duration": "/year",
+    "planType": "standard",
+    "description": "Best value for long-term search.",
+    "features": [
+      "All Premium Features",
+      "Profile Spotlight",
+      "AI Matchmaker Assistance",
+      "Send Unlimited Gifts"
+    ]
+  },
+  {
+    "id": "p3",
+    "name": "Elite Quarterly",
+    "price": "₹14,999",
+    "duration": "/3 months",
+    "planType": "elite",
+    "description": "For discerning clients seeking personalized service.",
+    "features": [
+      "Dedicated Relationship Manager",
+      "Handpicked Matches",
+      "Astrological Compatibility Report",
+      "Unlimited Gifts"
+    ]
+  },
+  {
+    "id": "p4",
+    "name": "Second Innings+",
+    "price": "₹1,499",
+    "duration": "/month",
+    "planType": "late-marriage",
+    "description": "Tailored for those seeking a partner again.",
+    "features": [
+      "Connect with similar profiles",
+      "Enhanced Privacy Controls",
+      "Community Support",
+      "Send Virtual Gifts"
+    ]
+  }
+]

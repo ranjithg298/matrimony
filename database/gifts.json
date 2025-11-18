@@ -1,0 +1,33 @@
+
+[
+  {
+    "id": "gift_rose",
+    "name": "A Single Rose",
+    "icon": "🌹"
+  },
+  {
+    "id": "gift_ring",
+    "name": "A Diamond Ring",
+    "icon": "💍"
+  },
+  {
+    "id": "gift_chocolate",
+    "name": "Box of Chocolates",
+    "icon": "🍫"
+  },
+  {
+    "id": "gift_teddy",
+    "name": "A Cute Teddy Bear",
+    "icon": "🧸"
+  },
+  {
+    "id": "gift_letter",
+    "name": "A Love Letter",
+    "icon": "💌"
+  },
+  {
+    "id": "gift_cake",
+    "name": "A Delicious Cake",
+    "icon": "🍰"
+  }
+]
